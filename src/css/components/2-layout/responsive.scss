@@ -1,0 +1,228 @@
+// 1580px
+@include xxxxlg-xxxxxlg {
+  // base start
+  @include book-xxxxlg-xxxxxlg;
+  // base end
+  // admin page start
+  @include pdf-xxxxlg-xxxxxlg;
+  @include kunde-xxxxlg-xxxxxlg;
+  // admin page end
+}
+// 1480px
+@include xxxlg-xxxxlg {
+  // base start
+  .main {
+    padding: 38px 20px;
+  }
+  .wrapper {
+    padding-left: 280px;
+  }
+  @include sidebar-xxxlg-xxxxlg;
+  @include book-xxxlg-xxxxlg;
+
+  // base end
+  // admin page start
+  @include pdf-xxxlg-xxxxlg;
+  // admin page end
+}
+// 1340px
+@include xxlg-xxxlg {
+  // base start
+  .main {
+    &__header {
+      padding-left: 24px;
+    }
+  }
+  .search {
+    &__input {
+      width: 400px;
+      margin-right: 16px;
+    }
+  }
+  .button {
+    &.pdfBtn {
+      width: 160px;
+      padding: 16px 10px;
+    }
+  }
+  @include book-xxlg-xxxlg;
+  @include info-xxlg-xxxlg;
+
+  // base end
+  // admin page start
+  @include pdf-xxlg-xxxlg;
+  @include kunde-xxlg-xxxlg;
+  // admin page end
+}
+// 1180px
+@include xlg-xxlg {
+  // base start
+  .main {
+    padding: 20px;
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0;
+
+      &-content {
+        order: 2;
+        width: 100%;
+        h1,
+        h2 {
+          margin-bottom: 16px;
+        }
+      }
+      &-btns {
+        order: 1;
+        width: 100%;
+        max-width: unset;
+        padding-bottom: 25px;
+        border-bottom: 2px solid #efefef;
+        margin-bottom: 25px;
+        border-radius: 0;
+      }
+      &-btn {
+        &:nth-child(1) {
+          border-radius: 10px 0 0 10px;
+        }
+        &:nth-child(2) {
+          border-radius: 0 10px 10px 0;
+        }
+      }
+    }
+  }
+  .search {
+    &__input {
+      width: calc(100% - 176px);
+    }
+  }
+  @include book-xlg-xxlg;
+
+  // base end
+  // benutzer page start
+  @include benutzer-xlg-xxlg;
+  // benutzer page end
+}
+// 1024px
+@include lg-xlg {
+  // base start
+  @include header-lg-xlg;
+  @include modal-lg-xlg;
+
+  @include sidebar-lg-xlg;
+  @include info-lg-xlg;
+  @include book-lg-xlg;
+
+  .wrapper {
+    padding-left: 100px;
+  }
+  // base end
+  // login start
+  @include login-lg-xlg;
+  // login end
+}
+// 840px
+@include md-lg {
+  // base start
+  .wrapper {
+    padding-left: 80px;
+  }
+  @include sidebar-md-lg;
+  @include book-md-lg;
+
+  // base end
+  // benutzer page start
+  @include benutzer-md-lg;
+  // benutzer page end
+}
+// 700px
+@include sm-md {
+  // base start
+
+  @include header-sm-md;
+  // base end
+  // login start
+  @include login-sm-md;
+  // login end
+}
+// 650px
+@include xsm-sm {
+  // base start
+  @include header-xsm-sm;
+
+  @include sidebar-xsm-sm;
+  @include modal-xsm-sm;
+  @include comp-xsm-sm;
+  @include book-xsm-sm;
+  @include license-xsm-sm;
+
+  body {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  h1,
+  h2 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .link {
+    font-size: 14px;
+    line-height: 22px;
+  }
+  .wrapper {
+    padding: 0;
+  }
+  .main {
+    padding: 26px 26px 80px 26px;
+    &__header {
+      &-btns {
+        width: calc(100% + 52px);
+        margin: 0 -26px;
+        margin-bottom: 50px;
+        box-sizing: border-box;
+        padding: 0 26px 25px 26px;
+      }
+    }
+  }
+  .checkbox {
+    label {
+      padding-right: 20px;
+    }
+  }
+  .space {
+    height: 0;
+  }
+  .search {
+    flex-direction: column;
+
+    &__input {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .button {
+      width: 100%;
+      max-width: unset;
+      text-align: center;
+    }
+  }
+  // base end
+}
+// 540px
+@include xxsm-xsm {
+  // base start
+  @include upload-xxsm-xsm;
+  @include book-xxsm-xsm;
+  @include info-xxsm-xsm;
+
+  // base end
+  // faq page start
+  @include faq-xxsm-xsm;
+  // faq page end
+  // benutzer page start
+  @include benutzer-xxsm-xsm;
+  // benutzer page end
+}

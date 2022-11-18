@@ -1,12 +1,63 @@
 <template>
   <div id="app">
+    <AppHeader
+      >{{ $store.state.user.vorname }}
+      {{ $store.state.user.nachname }}</AppHeader
+    >
+
+    <main
+      :class="{
+        wrapper: $route.name != 'useYourLink' && $route.name != 'login',
+      }"
+    >
+      <MenuSidebar
+        v-if="$route.name != 'useYourLink' && $route.name != 'login'"
+      ></MenuSidebar>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </transition>
+      </router-view>
+    </main>
+
     <nav>
-      <router-link to="/">Home</router-link> |
+      <router-link class="xyz" to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view />
+
+    <AppSymbols />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import AppHeader from "@/components/AppHeader.vue";
+import AppSymbols from "@/components/AppSymbols.vue";
+import MenuSidebar from "@/components/MenuSidebar.vue";
+
+export default {
+  name: "StdHome",
+  components: {
+    AppHeader,
+    AppSymbols,
+    MenuSidebar,
+  },
+
+  data() {
+    return {
+      state: {},
+      user: {
+        name: "Uwe",
+      },
+    };
+  },
+  computed: {
+    mainMenu() {
+      return this.$store.state.mainMenu;
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

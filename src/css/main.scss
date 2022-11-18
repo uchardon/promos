@@ -1,0 +1,34 @@
+// 1-main components
+@import "./fonts/stylesheet.scss";
+@import "./components/1-main/variables.scss";
+@import "./components/1-main/mixin.scss";
+@import "./components/1-main/nulifier.scss";
+// 2-layout components
+@import "./components/2-layout/components.scss";
+@import "./components/2-layout/footer.scss";
+@import "./components/2-layout/header.scss";
+@import "./components/2-layout/nav.scss";
+
+@import "./components/2-layout/info.scss";
+@import "./components/2-layout/sidebar.scss";
+@import "./components/2-layout/modal.scss";
+@import "./components/2-layout/upload.scss";
+@import "./components/2-layout/access.scss";
+@import "./components/2-layout/license.scss";
+
+// 3-pages components
+@import "./components/3-pages/pdf.scss";
+@import "./components/3-pages/kunde.scss";
+
+@import "./components/3-pages/book.scss";
+
+@import "./components/3-pages/login.scss";
+@import "./components/3-pages/faq.scss";
+@import "./components/3-pages/benutzer.scss";
+
+// responsive
+@import "./components/2-layout/responsive.scss";
+
+// user
+@import "./fonts.scss";
+@import "./styles.scss";

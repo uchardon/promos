@@ -1,0 +1,68 @@
+.login {
+  &__inner {
+    display: flex;
+  }
+  &__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    width: 50%;
+    min-height: calc(100vh - 96px);
+    padding: 30px;
+    box-sizing: border-box;
+    img {
+      width: 100%;
+      max-width: 540px;
+    }
+  }
+  &__form {
+    padding: 15px 30px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    &-inner {
+      max-width: 500px;
+      width: 100%;
+      background: $white;
+      border-radius: 10px;
+      padding: 85px 40px 100px 40px;
+      box-sizing: border-box;
+    }
+    &-logo {
+      width: 128px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 60px auto;
+    }
+    .button {
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+@mixin login-lg-xlg {
+  .login {
+    &__image {
+      display: none;
+    }
+    &__form {
+      width: 100%;
+      padding: 50px 25px;
+    }
+  }
+}
+@mixin login-sm-md {
+  .login {
+    &__form {
+      padding: 25px;
+      &-inner {
+        padding: 30px;
+      }
+    }
+  }
+}

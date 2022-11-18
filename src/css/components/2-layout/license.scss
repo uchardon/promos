@@ -1,0 +1,102 @@
+.license {
+  position: relative;
+  &__row {
+    display: flex;
+  }
+  &__number {
+    display: flex;
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #333;
+    input {
+      display: inline-block;
+      border: 1px solid #efefef;
+      border-radius: 5px;
+      background: #fafbfe;
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: 700;
+      color: $black;
+      padding: 3px;
+      margin-right: 15px;
+      @include transition;
+      color: #333333;
+      max-width: 64px;
+      font-family: $mainFont;
+      text-align: center;
+      box-sizing: border-box;
+      &::placeholder {
+        opacity: 1;
+        color: #333;
+      }
+    }
+  }
+  button {
+    font-size: 14px;
+    @include transition;
+    line-height: 18px;
+    font-weight: 400;
+    color: #333333;
+    cursor: pointer;
+    background: none;
+  }
+  &.user {
+    .license {
+      &__number {
+        input {
+          color: $secondary;
+          max-width: 40px;
+          &::placeholder {
+            color: $secondary;
+          }
+        }
+      }
+    }
+    button {
+      color: $secondary;
+    }
+  }
+  &.uniq {
+    display: none;
+    width: 100%;
+    .license__number {
+      color: #333;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+    }
+    input {
+      padding: 0;
+      border: none;
+      width: 22px;
+      margin: 0;
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: 700;
+      color: $secondary;
+      opacity: 1;
+      margin: 0;
+    }
+    p.sm {
+      margin: 0 !important;
+    }
+  }
+}
+@mixin license-xsm-sm {
+  .license {
+    width: 100%;
+    margin-bottom: 12px;
+    &__number {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    &__row {
+      flex-direction: column;
+    }
+    button {
+      text-align: left;
+    }
+  }
+}

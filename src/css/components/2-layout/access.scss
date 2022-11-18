@@ -1,0 +1,150 @@
+.access {
+  padding: 23px;
+  border-radius: 10px;
+  background: $white;
+  margin-bottom: 32px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &__title {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+    color: $black;
+    margin-bottom: 18px;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      color: #333333;
+      width: 110px;
+    }
+  }
+  &__input {
+    display: flex;
+    overflow: hidden;
+    width: calc(100% - 120px);
+    border-radius: 10px;
+    &.out {
+      input {
+        width: 100%;
+      }
+    }
+    input {
+      width: calc(100% - 148px);
+      box-sizing: border-box;
+      background: #efefef;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      font-family: $mainFont;
+      color: #333333;
+      padding: 14px 16px;
+      &::placeholder {
+        color: #333333;
+        opacity: 1;
+      }
+    }
+    .button.generate {
+      width: 148px;
+    }
+  }
+}
+.url {
+  padding: 23px;
+  border-radius: 10px;
+  background: $secondary;
+  margin-bottom: 32px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &__title {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+    color: $white;
+    margin-bottom: 18px;
+  }
+  &__input {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 10px;
+    &.out {
+      input {
+        width: 100%;
+      }
+    }
+    input {
+      width: calc(100% - 148px);
+      box-sizing: border-box;
+      background: $white;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      font-family: $mainFont;
+      color: #333333;
+      padding: 14px 16px;
+      &::placeholder {
+        color: #333333;
+        opacity: 1;
+      }
+    }
+    .button.copy {
+      width: 148px;
+    }
+  }
+}
+@mixin comp-xsm-sm {
+  .access {
+    &__row {
+      flex-direction: column;
+      align-items: stretch;
+      label {
+        width: unset;
+        margin-bottom: 8px;
+      }
+    }
+    &__input {
+      width: 100%;
+      flex-direction: column;
+      input {
+        margin-bottom: 8px;
+        width: 100%;
+        border-radius: 6px;
+      }
+      .button.generate {
+        width: 100%;
+        border-radius: 6px;
+      }
+    }
+  }
+  .url {
+    &__title {
+      margin-bottom: 8px;
+    }
+    &__input {
+      flex-direction: column;
+      width: 100%;
+      input {
+        margin-bottom: 8px;
+        width: 100%;
+        border-radius: 6px;
+      }
+      .button.copy {
+        width: 100%;
+        border-radius: 6px;
+      }
+    }
+  }
+}

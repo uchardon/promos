@@ -1,14 +1,47 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
-
-Vue.use(VueRouter);
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/mybooks",
+    name: "mybooks",
+    component: () =>
+      import(/* webpackChunkName: "mybooks" */ "../views/MyBooks.vue"),
+  },
+  {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "useYourLink",
+    component: () =>
+      import(/* webpackChunkName: "useYourLink" */ "../views/UseYourLink.vue"),
+  },
+  {
+    path: "/login/:secret?",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/UserLogin.vue"),
+  },
+  {
+    path: "/license",
+    name: "license",
+    component: () =>
+      import(/* webpackChunkName: "license" */ "../views/LicensesUsers.vue"),
+  },
+  {
+    path: "/support",
+    name: "support",
+    component: () =>
+      import(/* webpackChunkName: "support" */ "../views/SupportView.vue"),
+  },
+  {
+    path: "/showBook",
+    name: "showBook",
+    component: () =>
+      import(/* webpackChunkName: "showBook" */ "../views/ShowBookPages.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () =>
+      import(/* webpackChunkName: "notFound" */ "../views/NotFound.vue"),
   },
   {
     path: "/about",
@@ -21,8 +54,10 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({
+const router = new createRouter({
+  history: createWebHistory(),
   routes,
+  linkActiveClass: "active",
 });
 
 export default router;

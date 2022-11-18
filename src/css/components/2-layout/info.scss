@@ -1,0 +1,75 @@
+.info {
+  padding: 36px;
+  display: flex;
+  align-items: flex-start;
+  border-radius: 10px;
+  background: $white;
+  margin-bottom: 24px;
+  display: none;
+  &.active {
+    display: flex;
+  }
+  &__icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+    position: relative;
+    bottom: -4px;
+    img {
+      width: 100%;
+    }
+    span {
+      border-radius: 50%;
+      display: block;
+      width: 100%;
+      height: 100%;
+      &.online {
+        background: $uniq;
+      }
+      &.offline {
+        background: $main;
+      }
+    }
+  }
+  &__content {
+    width: calc(100% - 74px);
+  }
+}
+@mixin info-xxlg-xxxlg {
+  .info {
+    padding: 24px;
+    &__icon {
+      margin-right: 24px;
+    }
+    &__content {
+      width: calc(100% - 58px);
+    }
+  }
+}
+@mixin info-lg-xlg {
+  .info {
+    &__icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 16px;
+    }
+    &__content {
+      width: calc(100% - 40px);
+    }
+  }
+}
+@mixin info-xxsm-xsm {
+  .info {
+    &__icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 16px;
+    }
+    &__content {
+      width: calc(100% - 36px);
+    }
+  }
+}

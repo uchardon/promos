@@ -1,0 +1,78 @@
+body {
+  --main: #fb2682;
+  --secondary: #2699fb;
+  --main-dark: #101820;
+  --uniq: #00e4cc;
+  --save: #5cb85c;
+  --black: #000;
+  --white: #fff;
+
+  --inputColor: #333333;
+  --borderColor: #efefef;
+
+  --gray: #fafbfe;
+}
+h4.error {
+  margin: 10px 0px;
+  background-color: var(--main);
+  color: #fff;
+  padding: 10px 20px;
+}
+.customer_booklist {
+  display: flex;
+  align-items: flex-start;
+  button {
+    padding-right: 20px;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  button {
+    outline: none;
+    background: var(--secondary);
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 5px;
+  }
+  button.notactiv {
+    background-color: var(--gray);
+    border: 1px solid var(--main-dark);
+    color: #bbb;
+  }
+}
+.pdf__image > img {
+  max-width: 100px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from {
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.fade-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.v-enter-from {
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.v-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+

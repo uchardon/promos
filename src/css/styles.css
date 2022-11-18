@@ -1,0 +1,61 @@
+body {
+  --main: #fb2682;
+  --secondary: #2699fb;
+  --main-dark: #101820;
+  --uniq: #00e4cc;
+  --save: #5cb85c;
+  --black: #000;
+  --white: #fff;
+  --inputColor: #333333;
+  --borderColor: #efefef;
+  --gray: #fafbfe;
+}
+
+h4.error {
+  margin: 10px 0px;
+  background-color: var(--main);
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.customer_booklist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.customer_booklist button {
+  padding-right: 20px;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  max-width: 400px;
+}
+
+.pagination button {
+  outline: none;
+  background: var(--secondary);
+  color: #fff;
+  padding: 7px 10px;
+  border-radius: 5px;
+}
+
+.pagination button.notactiv {
+  background-color: var(--gray);
+  border: 1px solid var(--main-dark);
+  color: #bbb;
+}
+
+.pdf__image > img {
+  max-width: 100px;
+}
+/*# sourceMappingURL=styles.css.map */
