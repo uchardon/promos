@@ -11,7 +11,14 @@ const routes = [
     path: "/",
     name: "useYourLink",
     component: () =>
-      import(/* webpackChunkName: "useYourLink" */ "../views/UseYourLink.vue"),
+      // import(/* webpackChunkName: "useYourLink" */ "../views/UseYourLink.vue"),
+      import(/* webpackChunkName: "login" */ "../views/UserLogin.vue"),
+  },
+  {
+    path: "/login",
+    name: "gologin",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/UserLogin.vue"),
   },
   {
     path: "/login/:secret?",
@@ -23,7 +30,7 @@ const routes = [
     path: "/license",
     name: "license",
     component: () =>
-      import(/* webpackChunkName: "license" */ "../views/LicensesUsers.vue"),
+      import(/* webpackChunkName: "license" */ "../views/BookLicense.vue"),
   },
   {
     path: "/support",

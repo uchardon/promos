@@ -29,13 +29,20 @@
     </div>
     <div v-if="books.length > 0" class="main__body">
       <div class="bookCard__row">
-        <a
+        <div
           v-for="book in books"
           :key="book.id"
           href="#"
           class="bookCard"
           @click.prevent="showBook(book)"
         >
+          <svg
+            v-if="book.maxLicense > 0"
+            class="license"
+            title="Lizenzen verwalten"
+          >
+            <use xlink:href="#group"></use>
+          </svg>
           <div class="bookCard__image">
             <img
               :src="`${$store.state.dataUrl}${book.id}/thumb.jpg`"
@@ -48,7 +55,7 @@
             </h6>
             <p>{{ book.isbn }}</p>
           </div>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -110,3 +117,20 @@ export default {
   template: "#my-book",
 };
 </script>
+<style lang="scss" scoped>
+.bookCard {
+  position: relative;
+}
+.license {
+  --size: 25px;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: all 0.2s ease;
+}
+.license:hover {
+  --size: 30px;
+}
+</style>

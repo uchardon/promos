@@ -98,9 +98,9 @@ export default {
         faktorX: 0,
         faktorY: 0,
       },
-      markers: [],
       colors: ["#ff0000", "#ffff00", "#0000ff"],
       currentColor: "",
+      markers: [],
       showMarkers: true,
       currentMarker: {},
     };

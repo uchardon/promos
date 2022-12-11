@@ -49,6 +49,9 @@ export default new Vuex.createStore({
     SET_SECRET: (state, secret) => {
       state.secret = secret;
     },
+    setMarkers: (state, markers) => {
+      state.markers = markers;
+    },
     setBooks: (state, payload) => {
       state.books = payload;
     },
@@ -108,6 +111,17 @@ export default new Vuex.createStore({
     },
     setMarkersForBook: ({ commit }, payload) => {
       commit("setMarkersForBook", payload);
+    },
+    getMarkersFromDb: async ({ state, commit }) => {
+      let markers = [];
+      try {
+        markers = await Axios.post(state.url + "checkSecret.php", {
+          userId: state.user.id,
+        });
+        commit("setMarkers", markers);
+      } catch (error) {
+        console.error("Load Markers fom DB failed! (in store) ");
+      }
     },
   },
   modules: {},

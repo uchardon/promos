@@ -57,42 +57,48 @@ import AuthService from "@/services/AuthService.js";
 export default {
   data() {
     return {
+      // TODO datenvorbelegung entfernen
       email: "kutschuk@schwarzkupfer.de",
       password: "cs42ufkj",
       vorname: "",
       nachname: "",
       msg: "",
-      pagestate: "checkWait",
+      pagestate: "checkOK",
       // checkWait, checkFail, checkOK
     };
   },
   async created() {
+    if (navigator.onLine) {
+      console.log("Die App ist online");
+    } else {
+      console.log("Die App ist offline");
+    }
     // TODO check secret;
     // console.log("secret: ", this.$route.params.secret);
-    if (this.$route.params.secret) {
-      this.pagestate = "checkOK";
-      try {
-        const response = await AuthService.checkSecret(
-          this.$route.params.secret
-        );
-        // console.log("response", response);
-        if (response.error) {
-          this.pagestate = "checkFail";
-        } else {
-          this.pagestate = "checkOK";
-          this.vorname = response.vorname;
-          this.nachname = response.nachname;
-          this.$store.commit("setUserName", {
-            vorname: response.vorname,
-            nachname: response.nachname,
-          });
-        }
-      } catch (error) {
-        this.msg = error.response;
-      }
-    } else {
-      this.pagestate = "checkFail";
-    }
+    // if (this.$route.params.secret) {
+    //   this.pagestate = "checkOK";
+    //   try {
+    //     const response = await AuthService.checkSecret(
+    //       this.$route.params.secret
+    //     );
+    //     // console.log("response", response);
+    //     if (response.error) {
+    //       this.pagestate = "checkFail";
+    //     } else {
+    //       this.pagestate = "checkOK";
+    //       this.vorname = response.vorname;
+    //       this.nachname = response.nachname;
+    //       this.$store.commit("setUserName", {
+    //         vorname: response.vorname,
+    //         nachname: response.nachname,
+    //       });
+    //     }
+    //   } catch (error) {
+    //     this.msg = error.response;
+    //   }
+    // } else {
+    //   this.pagestate = "checkFail";
+    // }
   },
   methods: {
     async login() {
@@ -102,7 +108,7 @@ export default {
         const payload_ = {
           email: this.email,
           password: this.password,
-          secret: this.$route.params.secret,
+          // secret: this.$route.params.secret,
         };
         const response = await AuthService.login(payload_);
 
