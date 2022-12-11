@@ -141,7 +141,11 @@ export default {
       console.log(marker.index);
       this.markers.splice(marker.index, 1);
       this.showModal(false);
-      // TODO del in store
+      this.$store.dispatch("setMarkersForBook", {
+        bookId: this.book.id,
+        page: this.currentPage,
+        markers: this.markers,
+      });
     },
     editMarker(i) {
       // console.log("index: ", i);
@@ -192,6 +196,11 @@ export default {
       } else {
         // UPDATE MARKER
         this.markers[marker.index] = marker;
+        this.$store.dispatch("setMarkersForBook", {
+          bookId: this.book.id,
+          page: this.currentPage,
+          markers: this.markers,
+        });
         this.showModal(false);
       }
       // TODO save to store

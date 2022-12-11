@@ -9,6 +9,7 @@
       <div class="text-input">
         <textarea
           id="marker-text"
+          ref="textinput"
           v-model="marker.desc"
           name="marker-text"
           cols="30"
@@ -72,6 +73,7 @@ export default {
   },
   mounted() {
     this.marker = { ...this.currentMarker };
+    this.$refs.textinput.focus();
   },
   methods: {
     deleteMarker() {
