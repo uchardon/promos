@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <AppHeader
-      >{{ $store.state.user.vorname }}
-      {{ $store.state.user.nachname }}</AppHeader
-    >
+    <Transition name="fadeUp">
+      <ModalBox v-if="modal.state"></ModalBox>
+    </Transition>
+    <AppHeader>
+      {{ $store.state.user.vorname }}
+      {{ $store.state.user.nachname }}
+    </AppHeader>
 
     <main
       :class="{
-        wrapper: $route.name != 'useYourLink' && $route.name != 'login',
+        wrapper: $route.name != 'useYourLink' && $route.name != 'gologin',
       }"
     >
-      <MenuSidebar
-        v-if="$route.name != 'useYourLink' && $route.name != 'login'"
-      ></MenuSidebar>
+      <!-- MenuSidebar
+        v-if="$route.name != 'useYourLink' && $route.name != 'gologin'"
+      ></MenuSidebar -->
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" :key="$route.path" />
@@ -30,17 +33,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 // @ is an alias to /src
 import AppHeader from "@/components/AppHeader.vue";
 import AppSymbols from "@/components/AppSymbols.vue";
-import MenuSidebar from "@/components/MenuSidebar.vue";
+import ModalBox from "@/components/ModalBox.vue";
 
 export default {
   name: "StdHome",
   components: {
     AppHeader,
     AppSymbols,
-    MenuSidebar,
+    ModalBox,
   },
 
   data() {
@@ -52,9 +56,7 @@ export default {
     };
   },
   computed: {
-    mainMenu() {
-      return this.$store.state.mainMenu;
-    },
+    ...mapState(["modal", "mainMenu"]),
   },
 };
 </script>
@@ -79,5 +81,18 @@ nav {
       color: #42b983;
     }
   }
+}
+
+.fadeUp-enter-active,
+.fadeUp-leave-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s ease;
+}
+
+.fadeUp-enter-from,
+.fadeUp-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

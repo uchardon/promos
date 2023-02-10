@@ -3,23 +3,34 @@ import Vuex from "vuex";
 
 export default new Vuex.createStore({
   state: {
-    url: "http://promos-verlag.de/v2/api/",
-    dataUrl: "http://promos-verlag.de/v2/data/",
+    url: "https://front.promosverlag.de/api/",
+    dataUrl: "https://front.promosverlag.de/data/",
     online: true,
     mainMenu: "book",
     token: "",
     secret: "",
     user: {},
     books: [],
-    currentBookId: 0,
+    currentBook: {},
     markers: [],
+    subusers: [],
+    modal: {
+      state: false,
+      content: "",
+    },
   },
   getters: {
+    getModal: (state) => {
+      return state.modal;
+    },
     isLoggedIn: (state) => {
       return state.token;
     },
     getUser: (state) => {
       return state.user;
+    },
+    getBook: (state) => {
+      return state.currentBook;
     },
     getBooks: (state) => {
       return state.books;
@@ -49,18 +60,25 @@ export default new Vuex.createStore({
     SET_SECRET: (state, secret) => {
       state.secret = secret;
     },
+    setModal: (state, payload) => {
+      state.modal.state = payload.state;
+      state.modal.content = payload.content;
+    },
     setMarkers: (state, markers) => {
       state.markers = markers;
     },
     setBooks: (state, payload) => {
       state.books = payload;
     },
-    setCurrentBookId: (state, bookId) => {
-      state.currentBookId = bookId;
+    setCurrentBook: (state, book) => {
+      state.currentBook = book;
     },
     setMainMenu: (state, payload) => {
       // ...
       state.mainMenu = payload;
+    },
+    onlineMode: (state, payload) => {
+      state.online = payload;
     },
     setUserName: (state, payload) => {
       state.user = {
@@ -94,6 +112,17 @@ export default new Vuex.createStore({
         commit("setBooks", response.data.books);
       }
     },
+    getMarkersFromDb: async ({ state, commit }) => {
+      let markers = [];
+      try {
+        markers = await Axios.post(state.url + "checkSecret.php", {
+          userId: state.user.id,
+        });
+        commit("setMarkers", markers);
+      } catch (error) {
+        console.error("Load Markers fom DB failed! (in store) ");
+      }
+    },
     // eslint-disable-next-line
     login: ({ commit, dispatch }, payload) => {
       // console.log('login', payload)
@@ -109,19 +138,18 @@ export default new Vuex.createStore({
     logout: ({ commit }) => {
       commit("RESET", "");
     },
+    setCurrentBook: ({ commit }, book) => {
+      commit("setCurrentBook", book);
+    },
+    setOnlineMode: ({ commit }, payload) => {
+      commit("onlineMode", payload);
+    },
     setMarkersForBook: ({ commit }, payload) => {
       commit("setMarkersForBook", payload);
     },
-    getMarkersFromDb: async ({ state, commit }) => {
-      let markers = [];
-      try {
-        markers = await Axios.post(state.url + "checkSecret.php", {
-          userId: state.user.id,
-        });
-        commit("setMarkers", markers);
-      } catch (error) {
-        console.error("Load Markers fom DB failed! (in store) ");
-      }
+    setModal: ({ commit }, payload) => {
+      console.log("setModal", payload);
+      commit("setModal", payload);
     },
   },
   modules: {},

@@ -11,6 +11,9 @@ module.exports = {
   },
 
   pwa: {
+    // workboxOptions: {
+    //   skipWaiting: true
+    // },
     name: "Promos Web App",
   },
 };

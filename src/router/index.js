@@ -26,12 +26,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/UserLogin.vue"),
   },
-  {
-    path: "/license",
-    name: "license",
-    component: () =>
-      import(/* webpackChunkName: "license" */ "../views/BookLicense.vue"),
-  },
+  // {
+  //   path: "/license",
+  //   name: "license",
+  //   component: () =>
+  //     import(/* webpackChunkName: "license" */ "../components/BookLicense.vue"),
+  // },
   {
     path: "/support",
     name: "support",

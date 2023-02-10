@@ -367,6 +367,7 @@
 
 <script>
 export default {
+  name: "LicensesUsers",
   props: [],
   emits: [],
   data() {

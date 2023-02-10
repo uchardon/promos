@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
-    <div class="main__header">
-      <div class="main__header-content">
+  <div class="licenseManager">
+    <div class="main_header">
+      <div class="header-content">
         <h1>Lizenzen</h1>
         <p>
           Nach Erwerb im Onlineshop werden die Lizenzen Ihrem Account
@@ -25,10 +25,10 @@
       class="info active"
       data-bl="all"
     >
-      <div class="info__icon">
+      <div class="info_icon">
         <img src="images/icons/attentRed.svg" alt="" />
       </div>
-      <div class="info__content">
+      <div class="info_content">
         <h6>Sie sind offline.</h6>
         <p>
           Im Offlinemodus können Lizenzen und Benutzer nicht verwaltet werden.
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div v-if="state.subPage == 'users'" class="main__body">
+    <div v-if="state.subPage == 'users'" class="_body">
       <form action="#" class="search">
         <div class="search__input">
           <input
@@ -235,64 +235,97 @@
       </div>
     </div>
 
-    <div class="main__body">
-      <div class="bookLic">
-        <div class="bookLic__image">
-          <img src="@/assets/images/book.png" alt="" />
+    <div class="main_body">
+      <div class="bookLic_">
+        <div class="bookLic_image">
+          <img
+            :src="`${$store.state.dataUrl}${currentBook.id}/thumb.jpg`"
+            :alt="currentBook.title"
+          />
         </div>
         <div class="bookLic__content">
-          <div class="bookLic__content-text">
-            <h6 class="sm">
-              Karl Friedmann: Fit sein durch Ausdauer und Kraft, Präsentation
-              2017
-            </h6>
-            <p class="sm modBtn" data-tab="#tableLicense-1">
-              Lizenzverlauf ansehen
-            </p>
+          <div class="bookLic_content-text">
+            <h6 class="sm">{{ currentBook.title }}</h6>
           </div>
-          <div class="license__row">
+          <div class="license_row">
             <div class="license user">
-              <div class="license__number">
+              <div class="license_number">
                 <p class="sm">
-                  Verfügbare
-                  <br />
+                  Verfügbare<br />
                   Lizenzen
                 </p>
-                <input type="text" value="6" />
+                <div>
+                  {{ currentBook.maxLicense - currentBook.usedLicense }}
+                </div>
               </div>
             </div>
             <div class="license">
-              <div class="license__number">
-                <p class="sm">
-                  Lizenzen bereits
-                  <br />
-                  in Verwendung
-                </p>
-                <input type="text" value="6/12" />
+              <div class="license_number">
+                <p class="sm">in Verwendung</p>
+                <div>
+                  {{ currentBook.usedLicense - 1 }}
+                </div>
               </div>
             </div>
           </div>
           <div class="license uniq">
             <div class="license__number">
-              <input type="text" value="6" />
-              / 12
+              <div>
+                {{ currentBook.usedLicense }}/{{ currentBook.maxLicense }}
+              </div>
             </div>
             <p class="sm">Verfügbare Lizenzen</p>
           </div>
         </div>
       </div>
+      <div v-if="subusers.length > 0" class="licensList">
+        <h3>Vergebene Lizenzen</h3>
+        <ul>
+          <li v-for="sub in subusers" :key="sub.id">
+            <span>{{ sub.email }}</span>
+            <button
+              v-if="sub.lastuse == '0000-00-00'"
+              class="button delete"
+              @click="delSubuser(sub.id)"
+            >
+              Löschen
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div
+        v-if="currentBook.usedLicense < currentBook.maxLicense"
+        class="new_license"
+      >
+        <h6>Neue Lizenz für diese Buch vergeben</h6>
+        <p>
+          Dem neuen Benutzer wird eine EMail mit seinem Passwort zugesendet.<br />Bis
+          zu ersen Verwndung kann diese Lizenz vergabe gelöscht werden.
+        </p>
+        <form @submit.prevent="saveSubUser()">
+          <input
+            v-model="subuser.email"
+            type="email"
+            onfocus="this.select()"
+            onblur="this.placeholder=!this.placeholder?'E-Mail Adresse' : 
+          this.placeholder;"
+            placeholder="E-Mail Adresse"
+            required
+          />
+          <button class="button save">Speichern</button>
+        </form>
+      </div>
       <div id="info-lizenzen" class="info active">
-        <div class="info__icon">
+        <div class="info_icon">
           <img src="@/assets/images/icons/attentBlue.svg" alt="" />
         </div>
-        <div class="info__content">
+        <div class="info_content">
           <h6>Lizenzen werden permanent an Benutzer vergeben.</h6>
           <p>
             Bitte beachten Sie, dass die Zuteilung der Lizenzen permanent an den
             jeweiligen Benutzer verknüpft ist. Die zugeteilte Lizenz ist
             anschließend nicht auf andere Benutzer übertragbar.
           </p>
-          <a href="#" class="link"> Benutzer verwalten </a>
         </div>
       </div>
     </div>
@@ -301,22 +334,83 @@
 
 <script>
 export default {
+  name: "BookLicense",
   props: [],
   emits: [],
   data() {
     return {
+      id: 0,
+      currentUser: {},
+      currentBook: {
+        title: "Hallo Welt",
+      },
+      subuser: {},
+      subusers: [],
       state: {
         subPage: "BookLicense",
         offline: false,
       },
     };
   },
+
+  // id	int(11) Auto-Inkrement
+  // kunde_id	int(11)
+  // book_id	int(11)
+  // lastuse	date
+  // email	varchar(255)
+  // password	varchar(255)
+  // book_kunde_id	int(11)
+
   mounted() {
     this.$store.commit("setMainMenu", "book");
+    this.currentBook = this.$store.getters.getBook;
+    this.currentUser = this.$store.getters.getUser;
+    this.getSubUsers();
   },
   methods: {
     chgSubPage(page) {
       this.state.subPage = page;
+    },
+    delSubuser(lid) {
+      console.log("delSubuser", lid);
+      let currentindex = this.subusers.findIndex((s) => s.id == lid);
+      this.subusers.splice(currentindex, 1);
+      this.currentBook.usedLicense--;
+    },
+    generatePassword(length = 8) {
+      let password = "";
+      let possibleCharacters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-";
+
+      for (let i = 0; i < length; i++) {
+        password += possibleCharacters.charAt(
+          Math.floor(Math.random() * possibleCharacters.length)
+        );
+      }
+
+      return password;
+    },
+    getSubUsers() {
+      console.log("getSubUsers");
+    },
+    saveSubUser() {
+      console.log("saveSubUser");
+      this.currentBook.usedLicense++;
+      this.id++;
+      let newSubuser = {
+        id: this.id,
+        kunde_id: this.currentUser.id,
+        book_id: this.currentBook.id,
+        email: this.subuser.email,
+        password: this.generatePassword(),
+        book_kunde_id: this.currentBook.kb_id,
+        lastuse: "0000-00-00",
+      };
+      this.subusers.push(newSubuser);
+      this.subuser.email = "";
+    },
+    updateSubUser() {
+      console.log("saveSubUser");
     },
   },
   template: "#book-license",
@@ -324,7 +418,73 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main__header {
+.licenseManager {
   text-align: left;
+  padding: 48px;
+}
+.bookLic_ {
+  display: grid;
+  grid-template-columns: minmax(auto, 70px) 1fr;
+  gap: 20px;
+  img {
+    max-width: 100%;
+  }
+  .bookLic__content {
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+}
+.license_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  .license_number {
+    display: grid;
+    grid-template-columns: min-content auto;
+    gap: 10px;
+  }
+}
+input[type="email"] {
+  box-sizing: border-box;
+  background: #efefef;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  color: #333333;
+  padding: 14px 16px;
+  border-radius: 10px;
+  width: calc(100% - 160px);
+}
+.new_license {
+  text-align: left;
+  border-radius: 10px;
+  align-items: flex-start;
+  background: #fff;
+  margin-bottom: 15px;
+  form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+.licensList {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    gap: 10px;
+    &:nth-child(even) {
+      background-color: #eee;
+    }
+    span:nth-child(-1) {
+      background-color: #fff;
+    }
+  }
 }
 </style>

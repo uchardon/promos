@@ -9,8 +9,11 @@
       @close-modal="showModal(false)"
     />
     <nav class="pageNav">
-      <div class="leftNav" @click="$router.push({ name: 'mybooks' })">
-        <span class="big click">&larr;</span>
+      <div class="leftNav">
+        <div class="big click" @click="$router.push({ name: 'mybooks' })">
+          &larr;
+        </div>
+        <div class="inhalt pointer" @click="showIndex()">Index</div>
       </div>
       <div class="centerNav">
         <svg
@@ -70,6 +73,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
 import IconShow from "@/components/IconShow.vue";
 import MarkerEdit from "@/components/MarkerEdit.vue";
@@ -106,7 +110,8 @@ export default {
     };
   },
   mounted() {
-    let bookId = this.$store.state.currentBookId;
+    let bookId = this.$store.state.currentBook.id;
+    console.log("bookId-->", bookId);
     this.books = this.$store.getters.getBooks;
     this.book = this.books.find((b) => b.id == bookId);
     this.getMarkersByPage();
@@ -120,6 +125,7 @@ export default {
   //   window.removeEventListener("resize", this.resizeEvent);
   // },
   methods: {
+    ...mapActions(["setModal"]),
     debug(p) {
       console.log(p);
       this.resizeEvent();
@@ -239,9 +245,12 @@ export default {
         this.state.setNewMarker = false;
       }
     },
-
+    showIndex() {
+      // console.log("showIndex");
+      this.setModal({ state: true, content: "ShowBookIndex" });
+    },
     resizeEvent() {
-      console.log("resizeEvent");
+      // console.log("resizeEvent");
       const target = document.getElementById("imgcanvas");
       this.getBox(target);
       // TODO make it work

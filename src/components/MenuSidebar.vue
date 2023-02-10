@@ -12,13 +12,6 @@
           <span>Meine Bücher</span>
         </router-link>
 
-        <router-link class="sidebar__nav-link" :to="{ name: 'license' }">
-          <svg>
-            <use xlink:href="#group"></use>
-          </svg>
-          <span>Lizenzen / Benutzer</span>
-        </router-link>
-
         <router-link class="sidebar__nav-link" :to="{ name: 'support' }">
           <svg>
             <use xlink:href="#group"></use>

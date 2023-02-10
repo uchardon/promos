@@ -1,0 +1,181 @@
+.header__inner {
+  
+}
+
+.sidebar {
+  display: none;
+}
+
+.wrapper {
+  padding-left:0px !important;
+}
+
+.bookCard { 
+  width:calc(25% - 36px) !important;
+}
+
+#info-online {
+  margin-bottom:50px !important;
+  text-align: left !important;
+}
+#info-lizenzen {
+  text-align: left !important;
+}
+
+.main__header {
+  margin-bottom: 10px !important;
+  margin-top: 0px !important;
+}
+.main__header h2 { 
+  text-align: left;
+}
+
+.main__header-content {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-bottom: 50px !important;
+}
+
+.bookCard__content p {
+  font-size: 14px !important;
+  margin-bottom: 10px !important;
+}
+
+.bookCard h6 {
+  margin-bottom:10px !important ;
+}
+
+.bookCard .buttons {
+  margin-top: 25px !important;
+}
+
+.bookCard .buttons button {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  font-family:roboto !important;
+  padding: 20px 0px !important;
+  border-radius: 10px !important;
+}
+.bookCard .buttons button.adminlicences {
+  margin-bottom: 15px !important;
+}
+.bookCard .buttons button.adminlicences:hover {
+  background:#2699FB;
+  color:#fff
+}
+.bookCard .buttons button.offline {
+  color:#fff;
+}
+
+.bookCard .buttons button.startdownload {
+  cursor: pointer;
+  background: #efefef;
+}
+.bookCard .buttons button.startdownload:hover {
+  background:#00e4cc;
+  color:#fff
+}
+
+
+
+.bookLic__content-text h6 {
+  font-size: 16px;
+  text-align: left;
+}
+
+.bookLic__image {
+  width:80px !important;
+}
+
+/* LIZEN-LISTE */
+
+.bookLic { margin-bottom: 25px !important ;}
+.new_license { margin-bottom: 25px !important; padding:30px !important}
+.new_license p {
+  padding: 5px 0px 25px !important;
+}
+
+.licensList h3 {
+  text-align: left !important;
+  margin-top: 50px !important;
+  padding-left:30px;
+}
+
+.licensList ul {
+  margin-top: 25px !important;
+  margin-bottom: 15px !important;
+  display: block !important;
+}
+
+.licensList li {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 15px !important;
+  border-radius: 10px !important;
+  padding:5px 30px !important;
+}
+
+.licensList li span {
+  line-height: 60px;
+}
+
+
+
+
+/* ------------------------------------ */
+
+@media (max-width: 1480px) {
+
+  .wrapper { 
+    padding-left: 0px !important;
+  }
+
+}
+
+@media (max-width: 1340px) {
+  .bookCard { 
+    width:calc(25% - 24px) !important;
+  }
+  .bookCard__image img { 
+    max-height:80% !important ;
+  }
+}
+
+@media (max-width: 1024px) {
+  .bookCard { 
+    width:calc(33.3% - 24px) !important;
+  }
+  .bookCard__content p {
+    font-size: 12px !important;
+  }
+  .bookCard__content h6 {
+    font-size: 14px !important;
+    line-height: 22px !important;
+    margin-bottom:10px !important;
+  }
+  .bookCard__image {
+    margin-bottom: 20px !important;
+  }
+  
+}
+
+@media (max-width: 700px) {
+  .bookCard { 
+    width:calc(50% - 24px) !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .bookCard { 
+    width:100% !important;
+  }
+  .bookCard__content {
+    text-align:left !important
+  }
+  .bookCard__image {
+    margin-bottom: 0px !important;
+  }
+}
+
+

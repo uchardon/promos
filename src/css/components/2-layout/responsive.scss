@@ -14,9 +14,9 @@
   .main {
     padding: 38px 20px;
   }
-  .wrapper {
-    padding-left: 280px;
-  }
+  // .wrapper {
+  //   padding-left: 280px;
+  // }
   @include sidebar-xxxlg-xxxxlg;
   @include book-xxxlg-xxxxlg;
 
@@ -113,9 +113,9 @@
   @include info-lg-xlg;
   @include book-lg-xlg;
 
-  .wrapper {
-    padding-left: 100px;
-  }
+  // .wrapper {
+  //   padding-left: 100px;
+  // }
   // base end
   // login start
   @include login-lg-xlg;
@@ -124,9 +124,9 @@
 // 840px
 @include md-lg {
   // base start
-  .wrapper {
-    padding-left: 80px;
-  }
+  // .wrapper {
+  //   padding-left: 80px;
+  // }
   @include sidebar-md-lg;
   @include book-md-lg;
 

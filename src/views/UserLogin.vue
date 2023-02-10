@@ -68,11 +68,7 @@ export default {
     };
   },
   async created() {
-    if (navigator.onLine) {
-      console.log("Die App ist online");
-    } else {
-      console.log("Die App ist offline");
-    }
+    this.$store.dispatch("setOnlineMode", navigator.onLine);
     // TODO check secret;
     // console.log("secret: ", this.$route.params.secret);
     // if (this.$route.params.secret) {

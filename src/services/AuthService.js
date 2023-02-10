@@ -2,7 +2,8 @@
 import axios from "axios";
 
 // const url = 'http://localhost:3000/api/';
-const url = "http://promos-verlag.de/v2/api/";
+// const url = "http://promos-verlag.de/v2/api/";
+const url = "https://front.promosverlag.de/api/";
 
 export default {
   async login(payload) {
