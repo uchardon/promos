@@ -302,7 +302,7 @@
           Dem neuen Benutzer wird eine EMail mit seinem Passwort zugesendet.<br />Bis
           zu ersen Verwndung kann diese Lizenz vergabe gelöscht werden.
         </p>
-        <form @submit.prevent="saveSubUser()">
+        <form @submit.prevent="saveNewSubUser()">
           <input
             v-model="subuser.email"
             type="email"
@@ -393,8 +393,8 @@ export default {
     getSubUsers() {
       console.log("getSubUsers");
     },
-    saveSubUser() {
-      console.log("saveSubUser");
+    saveNewSubUser() {
+      console.log("saveNewSubUser");
       this.currentBook.usedLicense++;
       this.id++;
       let newSubuser = {
@@ -410,7 +410,7 @@ export default {
       this.subuser.email = "";
     },
     updateSubUser() {
-      console.log("saveSubUser");
+      console.log("saveNewSubUser");
     },
   },
   template: "#book-license",
