@@ -182,7 +182,7 @@ export default {
     width: var(--seize);
     height: var(--seize);
     background-color: var(--blue);
-    z-index: 202;
+    z-index: 99;
   }
 }
 @media (max-width: 540px) {

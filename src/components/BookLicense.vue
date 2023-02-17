@@ -37,204 +37,6 @@
       </div>
     </div>
 
-    <div v-if="state.subPage == 'users'" class="_body">
-      <form action="#" class="search">
-        <div class="search__input">
-          <input
-            type="text"
-            onclick="this.placeholder=''"
-            onfocus="this.select()"
-            onblur="this.placeholder=!this.placeholder?'Benutzer suchen...':this.placeholder;"
-            placeholder="Benutzer suchen..."
-          />
-          <button type="submit">
-            <img src="images/icons/search.svg" alt="" />
-          </button>
-        </div>
-        <button
-          type="button"
-          class="button pdfBtn modBtn"
-          data-tab="#addBenutzer"
-        >
-          + Benutzer erstellen
-        </button>
-      </form>
-      <div class="benutzer">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Kunde</th>
-              <th>Lizenzen</th>
-              <th>Ebooks</th>
-              <th>Bearbeiten</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="benutzer__number">1</td>
-              <td>
-                <button
-                  type="button"
-                  class="benutzer__btn uniq modBtn"
-                  data-tab="#client-1"
-                >
-                  Max Mustermann
-                </button>
-              </td>
-              <td class="benutzer__detail">
-                <button
-                  type="button"
-                  class="benutzer__btn modBtn"
-                  data-tab="#adminLicense-1"
-                >
-                  2 <span>Lizenzen</span>
-                </button>
-              </td>
-              <td class="benutzer__product">
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-              </td>
-              <td>
-                <div class="benutzer__md-row">
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#client-1"
-                  >
-                    <svg>
-                      <use xlink:href="#account"></use>
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#adminBook-1"
-                  >
-                    <svg>
-                      <use xlink:href="#book"></use>
-                    </svg>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="benutzer__number">1</td>
-              <td>
-                <button
-                  type="button"
-                  class="benutzer__btn uniq modBtn"
-                  data-tab="#client-1"
-                >
-                  Max Mustermann
-                </button>
-              </td>
-              <td class="benutzer__detail">
-                <button
-                  type="button"
-                  class="benutzer__btn modBtn"
-                  data-tab="#adminLicense-1"
-                >
-                  2 <span>Lizenzen</span>
-                </button>
-              </td>
-              <td class="benutzer__product">
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-              </td>
-              <td>
-                <div class="benutzer__md-row">
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#client-1"
-                  >
-                    <svg>
-                      <use xlink:href="#account"></use>
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#adminBook-1"
-                  >
-                    <svg>
-                      <use xlink:href="#book"></use>
-                    </svg>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="benutzer__number">1</td>
-              <td>
-                <button
-                  type="button"
-                  class="benutzer__btn uniq modBtn"
-                  data-tab="#client-1"
-                >
-                  Max Mustermann
-                </button>
-              </td>
-              <td class="benutzer__detail">
-                <button
-                  type="button"
-                  class="benutzer__btn modBtn"
-                  data-tab="#adminLicense-1"
-                >
-                  2 <span>Lizenzen</span>
-                </button>
-              </td>
-              <td class="benutzer__product">
-                <p>
-                  Karl Friedmann: Fit sein durch Ausdauer und Kraft,
-                  Präsentation 2017
-                </p>
-              </td>
-              <td>
-                <div class="benutzer__md-row">
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#client-1"
-                  >
-                    <svg>
-                      <use xlink:href="#account"></use>
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="benutzer__md modBtn"
-                    data-tab="#adminBook-1"
-                  >
-                    <svg>
-                      <use xlink:href="#book"></use>
-                    </svg>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
     <div class="main_body">
       <div class="bookLic_">
         <div class="bookLic_image">
@@ -302,7 +104,7 @@
           Dem neuen Benutzer wird eine EMail mit seinem Passwort zugesendet.<br />Bis
           zu ersen Verwndung kann diese Lizenz vergabe gelöscht werden.
         </p>
-        <form @submit.prevent="saveNewSubUser()">
+        <form @submit.prevent="saveNewSub()">
           <input
             v-model="subuser.email"
             type="email"
@@ -333,6 +135,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "BookLicense",
   props: [],
@@ -345,7 +149,6 @@ export default {
         title: "Hallo Welt",
       },
       subuser: {},
-      subusers: [],
       state: {
         subPage: "BookLicense",
         offline: false,
@@ -361,18 +164,27 @@ export default {
   // password	varchar(255)
   // book_kunde_id	int(11)
 
+  computed: {
+    ...mapState(["subusers"]),
+  },
   mounted() {
     this.$store.commit("setMainMenu", "book");
     this.currentBook = this.$store.getters.getBook;
     this.currentUser = this.$store.getters.getUser;
-    this.getSubUsers();
+    this.getSubusers();
   },
   methods: {
+    ...mapActions(["saveNewSubuser", "getSubusers", "deleteSubuser"]),
     chgSubPage(page) {
       this.state.subPage = page;
     },
     delSubuser(lid) {
-      console.log("delSubuser", lid);
+      // console.log("delSubuser", lid);
+      let payload = {
+        subid: lid,
+        kbid: this.currentBook.kb_id,
+      };
+      this.deleteSubuser(payload);
       let currentindex = this.subusers.findIndex((s) => s.id == lid);
       this.subusers.splice(currentindex, 1);
       this.currentBook.usedLicense--;
@@ -390,15 +202,11 @@ export default {
 
       return password;
     },
-    getSubUsers() {
-      console.log("getSubUsers");
-    },
-    saveNewSubUser() {
-      console.log("saveNewSubUser");
+    saveNewSub() {
+      console.log("saveNewSub");
       this.currentBook.usedLicense++;
       this.id++;
       let newSubuser = {
-        id: this.id,
         kunde_id: this.currentUser.id,
         book_id: this.currentBook.id,
         email: this.subuser.email,
@@ -406,11 +214,11 @@ export default {
         book_kunde_id: this.currentBook.kb_id,
         lastuse: "0000-00-00",
       };
-      this.subusers.push(newSubuser);
+      this.saveNewSubuser(newSubuser);
       this.subuser.email = "";
     },
     updateSubUser() {
-      console.log("saveNewSubUser");
+      console.log("saveNewSub");
     },
   },
   template: "#book-license",
@@ -418,6 +226,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.button {
+  padding: 6px 20px 6px 20px;
+}
 .licenseManager {
   text-align: left;
   padding: 48px;

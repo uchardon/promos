@@ -35,6 +35,9 @@ export default new Vuex.createStore({
     getBooks: (state) => {
       return state.books;
     },
+    getSubUsers: (state) => {
+      return state.subusers;
+    },
     getMarkersByBookpage: (state) => (payload) => {
       const result = state.markers.find(
         (m) => m.bookId == payload.bookId && m.page == payload.page
@@ -51,21 +54,20 @@ export default new Vuex.createStore({
       // Object.assign(state, getDefaultState());
       console.log("STATE ", state);
     },
+    SET_SECRET: (state, secret) => {
+      state.secret = secret;
+    },
+    SET_SUBUSERS: (state, payload) => {
+      state.subusers = payload;
+    },
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
     SET_USER: (state, user) => {
       state.user = user;
     },
-    SET_SECRET: (state, secret) => {
-      state.secret = secret;
-    },
-    setModal: (state, payload) => {
-      state.modal.state = payload.state;
-      state.modal.content = payload.content;
-    },
-    setMarkers: (state, markers) => {
-      state.markers = markers;
+    onlineMode: (state, payload) => {
+      state.online = payload;
     },
     setBooks: (state, payload) => {
       state.books = payload;
@@ -77,8 +79,12 @@ export default new Vuex.createStore({
       // ...
       state.mainMenu = payload;
     },
-    onlineMode: (state, payload) => {
-      state.online = payload;
+    setMarkers: (state, markers) => {
+      state.markers = markers;
+    },
+    setModal: (state, payload) => {
+      state.modal.state = payload.state;
+      state.modal.content = payload.content;
     },
     setUserName: (state, payload) => {
       state.user = {
@@ -121,6 +127,42 @@ export default new Vuex.createStore({
         commit("setMarkers", markers);
       } catch (error) {
         console.error("Load Markers fom DB failed! (in store) ");
+      }
+    },
+    getSubusers: async ({ state, commit }) => {
+      const response = await Axios.post(state.url + "subuser.php", {
+        todo: "getsubusers",
+        userid: state.user.id,
+        bookid: state.currentBook.id,
+        kbid: state.currentBook.kb_id,
+      });
+      console.log("RESPONSE: ", response);
+      if (!response.error) {
+        commit("SET_SUBUSERS", response.data);
+      }
+    },
+    saveNewSubuser: async ({ state, dispatch }, payload) => {
+      const response = await Axios.post(state.url + "subuser.php", {
+        todo: "savesub",
+        subData: payload,
+      });
+      console.log("RESPONSE: ", response);
+      if (!response.error) {
+        dispatch("getSubusers");
+        console.log("xxx");
+      }
+    },
+    deleteSubuser: async ({ state, dispatch }, payload) => {
+      console.log("delete subuser", payload);
+      const response = await Axios.post(state.url + "subuser.php", {
+        todo: "delsub",
+        subId: payload.subid,
+        kbId: payload.kbid,
+      });
+      console.log("RESPONSE: ", response);
+      if (!response.error) {
+        dispatch("getSubusers");
+        console.log("xxx");
       }
     },
     // eslint-disable-next-line
