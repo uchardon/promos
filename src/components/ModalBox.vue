@@ -1,17 +1,18 @@
 <template>
-  <div class="modal">
-    <div class="modalContent">
-      <div class="close">
-        <img
-          src="@/assets/images/icons/delete.svg"
-          alt=""
-          @click="setModal(false, '')"
-        />
+  <div class="modal mod modEvent">
+    <div class="mod__inner">
+      <div class="mod__inner-header">
+        <h2></h2>
+        <div class="mod__inner-close modClose" @click="setModal(false, '')">
+          <img src="@/assets/images/icons/delete.svg" alt="" />
+        </div>
       </div>
-      <BookLicense v-if="modal.content == 'BookLicense'" />
-      <ModalDownload v-if="modal.content == 'ModalDownload'" />
-      <BriefDescription v-if="modal.content == 'BriefDescription'" />
-      <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
+      <div class="mod__inner-body">
+        <BookLicense v-if="modal.content == 'BookLicense'" />
+        <ModalDownload v-if="modal.content == 'ModalDownload'" />
+        <BriefDescription v-if="modal.content == 'BriefDescription'" />
+        <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
+      </div>
     </div>
   </div>
 </template>
@@ -45,4 +46,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.mod__inner-body {
+  background: #fff;
+  border-radius: 0 0 20px 20px;
+  padding-top: 0px;
+  margin-top: -20px;
+  text-align: left;
+}
+</style>
