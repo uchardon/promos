@@ -3,19 +3,6 @@
     <div class="main_header">
       <div class="header-content">
         <h1>Lizenzen</h1>
-        <p>
-          Nach Erwerb im Onlineshop werden die Lizenzen Ihrem Account
-          zugeordnet. Bitte beachten Sie, dass die Zuordnung 1-2 Werktage in
-          Anspruch nehmen kann.
-        </p>
-        <!-- /div>
-      <div class="main__header-content">
-        <h1>Benutzer</h1 -->
-        <p>
-          Bitte beachten Sie, dass die Zuteilung der Lizenzen permanent an den
-          jeweiligen Benutzer verknüpft ist. Die zugeteilte Lizenz ist
-          anschließend nicht auf andere Benutzer übertragbar.
-        </p>
       </div>
     </div>
 
@@ -122,11 +109,20 @@
           <img src="@/assets/images/icons/attentBlue.svg" alt="" />
         </div>
         <div class="info_content">
-          <h6>Lizenzen werden permanent an Benutzer vergeben.</h6>
+          <h6>Hinweis</h6>
           <p>
-            Bitte beachten Sie, dass die Zuteilung der Lizenzen permanent an den
-            jeweiligen Benutzer verknüpft ist. Die zugeteilte Lizenz ist
-            anschließend nicht auf andere Benutzer übertragbar.
+            Sie können zusätzlich zu Ihrer erworbenen Ebook Version auch
+            Nutzungslizenzen für weitere Nutzer (z.B. Schüler) im
+            <a href="https://shop.strato.de/epages/244823.sf/" target="blank"
+              >Onlineshop erwerben</a
+            >. Bitte beachten Sie, das die Aktivierung nach Erwerb der Lizenzen
+            1-2 Werktage in Anspruch nehmen könnte, da jede Bestellung aus
+            sicherheitsgründen manuell geprüft und aktiviert wird.
+          </p>
+          <p>
+            Die Lizenzen haben jeweils eine Laufzeit von 12 Monaten, beginnend
+            ab dem ersten Login des Nutzers. Zugangsdaten zum lizensierten
+            Nutzer werden an die hinterlegte Mailadresse zugesendet.
           </p>
         </div>
       </div>
@@ -231,7 +227,7 @@ export default {
 }
 .licenseManager {
   text-align: left;
-  padding: 48px;
+  padding: 0px;
 }
 .bookLic_ {
   display: grid;

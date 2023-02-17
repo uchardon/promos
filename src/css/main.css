@@ -803,7 +803,7 @@ p.sm {
   z-index: 1000;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.5);
-  display: none;
+  display: block;
 }
 
 .mod::-webkit-scrollbar {

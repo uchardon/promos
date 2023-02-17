@@ -1,6 +1,19 @@
 <template>
-  <div class="modalDownload">
-    <p>Download dauert.... nur bei guter Verbindung ....</p>
+  <div class="modalDownload" style="text-align: center">
+    <br /><br />
+    <img
+      src="@/assets/images/internet-wifi.svg"
+      style="width: 10%; text-align: center"
+    />
+    <br /><br />
+    <h2>Download</h2>
+    <br />
+    <p>
+      Bitte vergewissern Sie sich, dass eine
+      <strong>schnelle Internetverbindung</strong>
+      existiert und Sie <strong>keine mobile Daten</strong> verwenden.
+    </p>
+
     <div class="buttons">
       <button class="btn" @click="setModal(false, '')">OK</button>
       <button class="btn" @click="setModal(false, '')">Abbrechen</button>
@@ -33,5 +46,24 @@ export default {
   flex-direction: row;
   gap: 10px;
   justify-content: center;
+  width: 50%;
+  margin: 0px auto;
+  margin-bottom: 50px;
+}
+.btn {
+  min-width: 100px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 15px 0px;
+  border-radius: 10px;
+  background: #efefef;
+  font-weight: bold;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #2799fa;
+  color: #fff;
 }
 </style>

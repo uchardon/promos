@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__inner">
-      <div class="header__inner-logo">promos verlag gmbh</div>
+      <div class="header__inner-logo">promos verlag</div>
       <div
         v-if="$route.name != 'login' && $route.name != 'useYourLink'"
         class="dashboard link"
@@ -20,21 +20,20 @@
           Hilfe / Support
         </router-link>
       </div>
-      <div class="spacer">&nbsp;</div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="logout"
+      >
+        <router-link class="" :to="{ name: 'gologin' }">
+          <img src="@/assets/logout.svg" alt="" />
+        </router-link>
+      </div>
       <div
         v-if="$route.name != 'login' && $route.name != 'useYourLink'"
         class="header__inner-account"
       >
         <span class="online"></span>
         <slot></slot>
-      </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="logout link"
-      >
-        <router-link class="" :to="{ name: 'gologin' }">
-          <img src="@/assets/logout.svg" alt="" />
-        </router-link>
       </div>
     </div>
   </header>
@@ -48,6 +47,79 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 header {
+  height: 70px;
+  background: #000 !important;
+  padding: 0px;
+  margin: 0px;
+}
+.header__inner {
+  display: block;
+  height: 70px;
+  padding: 0px;
+  margin: 0px;
+  background: #101820;
+  width: 95%;
+  max-width: 95%;
+  padding: 0 2.5%;
+}
+.header__inner-logo {
+  float: left;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 25px 0 0;
+  font-size: 20px;
+}
+.header__inner .link {
+  float: left;
+  height: 70px;
+}
+.link a {
+  display: block;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 25px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border-left: 1px solid #333;
+}
+.link a:hover {
+  color: #2699fb;
+}
+.link a.active {
+  color: #fff;
+  background: #2699fb;
+}
+.header__inner .logout {
+  float: right;
+  height: 70px;
+  width: 50px;
+  overflow: hidden;
+}
+.logout a {
+  height: 35px;
+  width: 50px;
+  display: block;
+  background: #fb2682;
+  border-radius: 50px;
+  margin-top: 17px;
+  opacity: 0.8;
+}
+.logout a:hover {
+  opacity: 1;
+}
+.logout img {
+  height: 65%;
+  margin-top: 10%;
+}
+.header__inner-account {
+  float: right;
+  font-size: 16px;
+  line-height: 70px;
+  padding: 0 25px 0 0;
+}
+
+/*header {
   --blue: #2799fa;
   --red: #fb2682;
   div {
@@ -70,11 +142,11 @@ header {
     background-color: var(--blue);
   }
   .header__inner {
-    display: grid;
+    // display: grid;
     // grid-template-columns:
     //   minmax(min-content, 2fr) 1fr 1fr 4fr minmax(min-content, 2fr)
     //   70px;
-    grid-template-columns: auto auto auto 1fr auto 70px;
+    // grid-template-columns: auto auto auto 1fr auto 70px;
     background: transparent;
     padding: 0px;
     margin: 0;
@@ -91,5 +163,5 @@ header {
       }
     }
   }
-}
+}*/
 </style>

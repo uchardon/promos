@@ -32,8 +32,8 @@
         <div
           v-for="book in books"
           :key="book.id"
-          href="#"
-          class="bookCard book"
+          href="my-book-saved.html"
+          class="bookCard"
         >
           <div
             v-if="book.maxLicense >= 1"
@@ -42,13 +42,13 @@
           >
             {{ book.maxLicense }}
           </div>
-          <div class="bookCard__image pointer" @click.prevent="showBook(book)">
+          <div class="bookCard__image" @click.prevent="showBook(book)">
             <img
               :src="`${$store.state.dataUrl}${book.id}/thumb.jpg`"
               :alt="book.title"
             />
           </div>
-          <div class="bookCard_content pointer" @click.prevent="showBook(book)">
+          <div class="bookCard__content" @click.prevent="showBook(book)">
             <h6>
               {{ book.title }}
             </h6>
@@ -138,72 +138,195 @@ export default {
   template: "#my-book",
 };
 </script>
-<style lang="scss" scoped>
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 5px;
+<style scoped>
+.main__header {
+  margin-bottom: 15px;
+  margin-top: 50px;
+  text-align: left !important;
 }
-.bookCard {
-  position: relative;
+.buttons {
+  clear: both;
+  padding-top: 30px;
 }
 .license {
   --size: 25px;
   width: var(--size);
   height: var(--size);
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   transition: all 0.2s ease;
 }
 .license:hover {
   --size: 30px;
 }
-.bookCard.book {
-  display: grid;
-  gap: 20px;
-  grid-template-rows: auto 1fr auto;
+.info_content {
+  width: 100%;
+  text-align: left;
+}
+.adminlicences.license {
+  --seize: 30px;
+  --blue: #2799fa;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: var(--seize);
+  height: var(--seize);
+  background-color: var(--blue);
+  z-index: 2;
+  font-size: 12px;
+  font-weight: bold;
+}
+.btn {
+  min-width: 100px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 15px 0px;
+  border-radius: 10px;
+  background: #efefef;
+  font-weight: bold;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #2799fa;
+  color: #fff;
+}
+
+.bookCard {
+  margin: 18px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: calc(25% - 36px);
+  background: #fff;
+  border-radius: 10px;
+  padding: 50px 36px 40px;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+  -moz-transition: all 0.2s ease-in-out 0s;
+  position: relative;
+}
+.bookCard:hover {
+  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+.bookCard__row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -18px 34px -18px;
+}
+
+.bookCard p {
+  font-size: 12px;
+  text-align: left;
+}
+.bookCard__image {
+  width: 100%;
+  padding-bottom: 80%;
+  position: relative;
+  margin-bottom: 0px !important;
+}
+.bookCard__image img {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  max-height: 80%;
+  max-width: 80%;
+  transform: translate(-50%, -50%);
+  -moz-ransform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  width: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+  height: 100%;
+  cursor: pointer;
+}
+.bookCard__image img:hover {
+  transition: 0.3s;
+  max-height: 85%;
+  max-width: 85%;
+}
+.bookCard__content h6 {
+  margin-bottom: 5px !important;
+  text-align: left;
+}
+
+@media (max-width: 1480px) {
+  .main {
+    padding: 38px 30px;
+  }
+}
+
+@media (max-width: 1580px) {
+  .bookCard__row {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 1340px) {
+  .bookCard {
+    padding: 35px;
+    margin: 12px;
+    width: calc(33.3% - 24px);
+  }
   .bookCard__image {
-    margin-bottom: 0;
-    margin: 0 auto;
+    margin-bottom: 30px;
   }
-  .adminlicences.license {
-    --seize: 30px;
-    --blue: #2799fa;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: var(--seize);
-    height: var(--seize);
-    background-color: var(--blue);
-    z-index: 99;
+  .bookCard__row {
+    margin: 0 -12px;
   }
 }
+
+@media (max-width: 1024px) {
+  .bookCard {
+    width: calc(50% - 24px);
+  }
+}
+
 @media (max-width: 540px) {
-  .bookCard__image[data-v-5b43c814] {
-    width: 85px;
+  .bookCard {
+    display: block;
+    padding: 28px 25px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 16px 0;
   }
-  .bookCard.book {
-    display: grid;
-    grid-template-columns: auto 1fr;
+  .bookCard__row {
+    margin: 0;
   }
-  .buttons {
-    grid-column: span 2;
+  .bookCard__image {
+    width: 25%;
+    margin: 0 25px 0 0;
+    padding: 0;
+    float: left;
   }
-}
-@media (max-width: 400px) {
-  .bookCard.book {
-    display: grid;
-    grid-template-columns: 1fr;
+  .bookCard__image img {
+    position: static;
+    width: 100%;
+    height: auto;
+    transform: translate(0, 0);
+    -moz-ransform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
   }
-  .buttons {
-    grid-column: span 1;
+  .bookCard__content {
+    width: calc(100% - 130px);
+    float: left;
+    text-align: left;
+  }
+  .bookCard__content h5 {
+    margin-bottom: 8px;
   }
 }
 </style>

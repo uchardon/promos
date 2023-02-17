@@ -12,6 +12,7 @@ body {
 
   --gray: #fafbfe;
 }
+
 .btn {
   display: flex;
   justify-content: center;
@@ -24,35 +25,43 @@ body {
   outline: none;
   padding: 7px 10px;
 }
+
 btn.sec {
   background: var(--secondary);
   color: #fff;
 }
+
 btn.notactiv {
   background-color: var(--gray);
   border: 1px solid var(--main-dark);
   color: #bbb;
 }
+
 h4.error {
   margin: 10px 0px;
   background-color: var(--main);
   color: #fff;
   padding: 10px 20px;
 }
+
 .customer_booklist {
   display: flex;
   align-items: flex-start;
+
   button {
     padding-right: 20px;
   }
 }
+
 .pointer {
   cursor: pointer;
 }
+
 .pagination {
   display: flex;
   justify-content: space-between;
   max-width: 400px;
+
   button {
     outline: none;
     background: var(--secondary);
@@ -60,15 +69,18 @@ h4.error {
     padding: 7px 10px;
     border-radius: 5px;
   }
+
   button.notactiv {
     background-color: var(--gray);
     border: 1px solid var(--main-dark);
     color: #bbb;
   }
 }
-.pdf__image > img {
+
+.pdf__image>img {
   max-width: 100px;
 }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -98,28 +110,11 @@ h4.error {
   transform: translateX(100px);
   opacity: 0;
 }
-.modal {
-  position: fixed;
-  inset: 0;
-  background: #00000033;
-  z-index: 100;
-  backdrop-filter: blur(2px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .modalContent {
-    background-color: #fff;
-    z-index: 101;
-    color: #000;
-    width: 95vw;
-    height: 95vh;
-    max-width: 1000px;
-  }
-  .close {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 10px 0 0;
-    cursor: pointer;
-  }
-}
 
+
+.modal {
+
+  display: block;
+
+
+}

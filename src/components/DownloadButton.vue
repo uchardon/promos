@@ -63,20 +63,30 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 100px;
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 5px;
+  padding: 15px 0px;
+  margin: 12px 0 0;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
   --current: 0;
   background: #00e4cb;
   background: linear-gradient(
     90deg,
     #00e4cb 0%,
     #00e4cb calc(var(--current) * 1%),
-    #f0f0f0 calc(var(--current) * 1%),
-    #f0f0f0 100%
+    #efefef calc(var(--current) * 1%),
+    #efefef 100%
   );
 }
+.btn:hover {
+  background: #2799fa;
+  color: #fff;
+}
+
 .btn.offline {
   --current: 100;
 }
