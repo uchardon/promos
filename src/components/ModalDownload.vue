@@ -8,14 +8,17 @@
     <br /><br />
     <h2>Download</h2>
     <br />
-    <p>
-      Bitte vergewissern Sie sich, dass eine
+    <p v-if="online">
+      Der Download kann je nach Geschwindigkeit der Internetverbindung einige
+      Zeit in Anspruch nehmen. Bitte vergewissern Sie sich, dass eine
       <strong>schnelle Internetverbindung</strong>
       existiert und Sie <strong>keine mobile Daten</strong> verwenden.
     </p>
 
+    <p v-if="!online">offline</p>
+
     <div class="buttons">
-      <button class="btn" @click="setModal(false, '')">OK</button>
+      <button class="btn" @click="setModal(false, '')">Download</button>
       <button class="btn" @click="setModal(false, '')">Abbrechen</button>
     </div>
   </div>
@@ -32,7 +35,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["modal"]),
+    ...mapState(["modal", "online"]),
   },
   methods: {
     ...mapActions(["setModal"]),
@@ -49,6 +52,7 @@ export default {
   width: 50%;
   margin: 0px auto;
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 .btn {
   min-width: 100px;

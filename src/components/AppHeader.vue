@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header__inner">
+    <div id="headerDesktop" class="header__inner">
       <div class="header__inner-logo">promos verlag</div>
       <div
         v-if="$route.name != 'login' && $route.name != 'useYourLink'"
@@ -36,6 +36,7 @@
         <slot></slot>
       </div>
     </div>
+    <div id="headerMobile">header mobile</div>
   </header>
 </template>
 <script>
@@ -117,6 +118,14 @@ header {
   font-size: 16px;
   line-height: 70px;
   padding: 0 25px 0 0;
+}
+
+#headerDesktop {
+  display: block;
+}
+#headerMobile {
+  display: none;
+  color: #fff;
 }
 
 /*header {

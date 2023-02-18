@@ -52,7 +52,7 @@
             <h6>
               {{ book.title }}
             </h6>
-            <p>{{ book.isbn }}</p>
+            <p>Mehr Informationen</p>
           </div>
           <div class="buttons">
             <button class="adminlicences btn" @click="showLicense(book)">
@@ -257,6 +257,17 @@ export default {
 .bookCard__content h6 {
   margin-bottom: 5px !important;
   text-align: left;
+  cursor: pointer;
+}
+.bookCard__content p {
+  font-size: 14px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.bookCard__content p:hover {
+  opacity: 1;
+  color: #2799fa;
 }
 
 @media (max-width: 1480px) {

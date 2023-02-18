@@ -70,6 +70,7 @@ export default new Vuex.createStore({
     },
     onlineMode: (state, payload) => {
       state.online = payload;
+      /*state.online = false;*/
     },
     setBooks: (state, payload) => {
       state.books = payload;
