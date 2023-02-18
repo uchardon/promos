@@ -48,8 +48,8 @@
               :alt="book.title"
             />
           </div>
-          <div class="bookCard__content" @click.prevent="showBookJPGs(book)">
-            <h6>
+          <div class="bookCard__content">
+            <h6 @click.prevent="showBookJPGs(book)">
               {{ book.title }}
             </h6>
             <p @click.prevent="showBook(book)">Mehr Informationen</p>
