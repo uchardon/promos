@@ -25,59 +25,50 @@
     </div>
 
     <div class="main_body">
-      <div class="bookLic_">
-        <div class="bookLic_image">
+      <div class="lmmWrap">
+        <div class="lmmLeft">
           <img
             :src="`${$store.state.dataUrl}${currentBook.id}/thumb.jpg`"
             :alt="currentBook.title"
           />
         </div>
-        <div class="bookLic__content">
-          <div class="bookLic_content-text">
-            <h6 class="sm">{{ currentBook.title }}</h6>
-          </div>
-          <div class="license_row">
-            <div class="license user">
-              <div class="license_number">
-                <p class="sm">
-                  Verfügbare<br />
-                  Lizenzen
-                </p>
-                <div>
-                  {{ currentBook.maxLicense - currentBook.usedLicense }}
-                </div>
-              </div>
+        <div class="lmmRight">
+          <h6 class="sm">
+            {{ currentBook.title }}
+          </h6>
+          <div class="lmm-state">
+            <div class="lmm-state-left">
+              <span
+                >{{ currentBook.usedLicense }}/{{
+                  currentBook.maxLicense
+                }}</span
+              >
+              Verfügbare Lizenzen
             </div>
-            <div class="license">
-              <div class="license_number">
-                <p class="sm">in Verwendung</p>
-                <div>
-                  {{ currentBook.usedLicense - 1 }}
-                </div>
-              </div>
+            <div class="lmm-state-right">
+              <span>{{ currentBook.usedLicense - 1 }}</span>
+              Lizenzen in Verwendung
             </div>
-          </div>
-          <div class="license uniq">
-            <div class="license__number">
-              <div>
-                {{ currentBook.usedLicense }}/{{ currentBook.maxLicense }}
-              </div>
-            </div>
-            <p class="sm">Verfügbare Lizenzen</p>
+            <div class="lmm-clear"></div>
           </div>
         </div>
+        <div class="lmm-clear"></div>
       </div>
       <div v-if="subusers.length > 0" class="licensList">
         <h3>Vergebene Lizenzen</h3>
         <ul>
-          <li v-for="sub in subusers" :key="sub.id">
+          <li
+            v-for="sub in subusers"
+            :key="sub.id"
+            :class="{ used: sub.lastuse != '0000-00-00' }"
+          >
             <span>{{ sub.email }}</span>
             <button
               v-if="sub.lastuse == '0000-00-00'"
               class="button delete"
               @click="delSubuser(sub.id)"
             >
-              Löschen
+              <img src="@/assets/images/icons/close.svg" />
             </button>
           </li>
         </ul>
@@ -87,10 +78,6 @@
         class="new_license"
       >
         <h6>Neue Lizenz für diese Buch vergeben</h6>
-        <p>
-          Dem neuen Benutzer wird eine EMail mit seinem Passwort zugesendet.<br />Bis
-          zu ersen Verwndung kann diese Lizenz vergabe gelöscht werden.
-        </p>
         <form @submit.prevent="saveNewSub()">
           <input
             v-model="subuser.email"
@@ -103,6 +90,11 @@
           />
           <button class="button save">Speichern</button>
         </form>
+        <p>
+          Die Zugangsdaten werden dem neuen Benutzer per Mail zugestellt. Mit
+          dem ersten Login beginnt die Lizenzlaufzeit. Solange kein Login
+          stattgefunden hat, können Sie die Vergabe jederzeit löschen.
+        </p>
       </div>
       <div id="info-lizenzen" class="info active">
         <div class="info_icon">
@@ -222,8 +214,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button {
-  padding: 6px 20px 6px 20px;
+.button.delete {
+  background: none;
+  padding: 0px;
+  height: 15px;
+  width: 15px;
+  margin-top: -5px;
+  opacity: 0.5;
+  img {
+    height: 15px;
+    width: 15px;
+  }
+  &:hover {
+    opacity: 1;
+  }
 }
 .licenseManager {
   text-align: left;
@@ -233,12 +237,21 @@ export default {
   display: grid;
   grid-template-columns: minmax(auto, 70px) 1fr;
   gap: 20px;
+  background: #fafbfe;
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   img {
     max-width: 100%;
   }
   .bookLic__content {
     display: grid;
     grid-template-rows: auto auto;
+    width: 100%;
+  }
+  h6 {
+    font-size: 16px;
   }
 }
 .license_row {
@@ -252,7 +265,7 @@ export default {
 }
 input[type="email"] {
   box-sizing: border-box;
-  background: #efefef;
+  background: #fff;
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
@@ -261,6 +274,7 @@ input[type="email"] {
   padding: 14px 16px;
   border-radius: 10px;
   width: calc(100% - 160px);
+  border: 1px solid #ccc;
 }
 .new_license {
   text-align: left;
@@ -268,29 +282,140 @@ input[type="email"] {
   align-items: flex-start;
   background: #fff;
   margin-bottom: 15px;
+  padding: 25px;
+  background: #fafbfe;
+  margin-top: 0px;
+  border-radius: 10px;
   form {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin: 15px 0px;
+  }
+  p {
+    margin-bottom: 0px;
   }
 }
 .licensList {
+  margin-top: 35px;
   ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
+    background: #fff;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+    margin-bottom: 25px;
   }
   li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 500px;
-    gap: 10px;
-    &:nth-child(even) {
-      background-color: #eee;
+    gap: 0px;
+    padding: 15px 25px;
+    border-top: 1px solid #efefef;
+    &:first-child {
+      border-top: 0px !important;
     }
-    span:nth-child(-1) {
-      background-color: #fff;
+    &.used {
+      color: #2699fb;
+      button {
+        display: none;
+      }
+    }
+  }
+}
+
+.lmmWrap {
+  background: #fafbfe;
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.lmmLeft {
+  width: 13%;
+  float: left;
+}
+.lmmLeft img {
+  width: 100%;
+}
+.lmmRight {
+  width: 82%;
+  float: right;
+  h6 {
+    font-size: 16px;
+  }
+}
+.lmmAdd {
+  clear: both;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.lmm-state {
+  width: 100%;
+  clear: both;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.lmm-state-left {
+  width: 50%;
+  float: left;
+  height: 40px;
+  line-height: 40px;
+}
+.lmm-state span {
+  display: inline-block;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.lmm-state-right {
+  width: 50%;
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  color: #2699fb;
+  cursor: pointer;
+}
+.lmm-state-right span {
+  background: #2699fb;
+  color: #fff;
+}
+
+.lmm-clear {
+  clear: both;
+}
+@media (max-width: 650px) {
+  .lmmRight {
+    width: 78%;
+  }
+  .lmm-state-left {
+    width: 100%;
+  }
+  .lmm-state-right {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .new_license {
+    form {
+      display: block;
+      input {
+        width: 100%;
+        clear: both;
+      }
+      button {
+        width: 100%;
+        clear: both;
+        margin-top: 10px;
+        padding: 14px 30px !important;
+      }
     }
   }
 }

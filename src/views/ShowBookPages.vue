@@ -268,9 +268,14 @@ nav.pageNav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #999;
-  padding: 10px;
+  background: #101820;
+  padding: 0px 2.5%;
   color: #fff;
+  position: fixed;
+  z-index: 3;
+  bottom: 0px;
+  width: 95%;
+  height: 70px;
   div {
     gap: 10px;
     display: flex;
