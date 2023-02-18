@@ -4,10 +4,10 @@
     <!-- eslint-disable vue/no-v-html -->
     <p v-html="currentBook.kurzbeschreibung"></p>
     <!--eslint-enable-->
-    <button class="btn" @click="showBook()">Buch anzeigen</button>
-    <button class="btn" @click="setModal(false, '')">
-      zurück zur Übersicht
-    </button>
+    <div class="buttons">
+      <button class="btn" @click="showBook()">Weiter zum Buch</button>
+      <button class="btn" @click="setModal(false, '')">Schließen</button>
+    </div>
   </div>
 </template>
 
@@ -35,4 +35,31 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  width: 60%;
+  margin: 0px auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+.btn {
+  min-width: 100px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 15px 0px;
+  border-radius: 10px;
+  background: #efefef;
+  font-weight: bold;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #2799fa;
+  color: #fff;
+}
+</style>
