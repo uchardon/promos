@@ -42,17 +42,17 @@
           >
             {{ book.maxLicense }}
           </div>
-          <div class="bookCard__image" @click.prevent="showBook(book)">
+          <div class="bookCard__image" @click.prevent="showBookJPGs(book)">
             <img
               :src="`${$store.state.dataUrl}${book.id}/thumb.jpg`"
               :alt="book.title"
             />
           </div>
-          <div class="bookCard__content" @click.prevent="showBook(book)">
+          <div class="bookCard__content" @click.prevent="showBookJPGs(book)">
             <h6>
               {{ book.title }}
             </h6>
-            <p>Mehr Informationen</p>
+            <p @click.prevent="showBook(book)">Mehr Informationen</p>
           </div>
           <div class="buttons">
             <button class="adminlicences btn" @click="showLicense(book)">
@@ -128,6 +128,10 @@ export default {
       // console.log("book->", book);
       this.setCurrentBook(book);
       this.setModal({ state: true, content: "BriefDescription" });
+    },
+    showBookJPGs(book) {
+      this.setCurrentBook(book);
+      this.$router.push({ name: "showBook" });
     },
     showLicense(book) {
       this.setCurrentBook(book);
