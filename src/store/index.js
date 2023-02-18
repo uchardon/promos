@@ -5,6 +5,8 @@ export default new Vuex.createStore({
   state: {
     url: "https://front.promosverlag.de/api/",
     dataUrl: "https://front.promosverlag.de/data/",
+    // url: "https://bib.promosverlag.de/api/",
+    // dataUrl: "https://bib.promosverlag.de/data/",
     online: true,
     mainMenu: "book",
     token: "",

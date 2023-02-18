@@ -161,7 +161,7 @@ export default {
   // book_kunde_id	int(11)
 
   computed: {
-    ...mapState(["subusers"]),
+    ...mapState(["subusers", "online"]),
   },
   mounted() {
     this.$store.commit("setMainMenu", "book");
@@ -181,9 +181,9 @@ export default {
         kbid: this.currentBook.kb_id,
       };
       this.deleteSubuser(payload);
-      let currentindex = this.subusers.findIndex((s) => s.id == lid);
-      this.subusers.splice(currentindex, 1);
-      this.currentBook.usedLicense--;
+      // let currentindex = this.subusers.findIndex((s) => s.id == lid);
+      // this.subusers.splice(currentindex, 1);
+      // this.currentBook.usedLicense--;
     },
     generatePassword(length = 8) {
       let password = "";
