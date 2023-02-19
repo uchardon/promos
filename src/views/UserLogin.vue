@@ -38,6 +38,7 @@
           >
             Login
           </button>
+          <a class="passwort-vergessen-link">Passwort vergessen</a>
         </div>
       </form>
       <p v-if="msg">{{ msg }}</p>
@@ -128,8 +129,24 @@ export default {
 </script>
 
 <style lang="css" scoped>
+a.passwort-vergessen-link {
+  margin-top: 25px;
+  display: block;
+  color: #ccc;
+}
+a.passwort-vergessen-link:hover {
+  color: #2699fb;
+}
 .center {
   text-align: center;
   padding-top: 20vh;
+}
+@media (max-width: 700px) {
+  .login__form-inner {
+    padding: 60px 30px;
+  }
+  .login__form-logo {
+    margin-bottom: 50px;
+  }
 }
 </style>

@@ -36,7 +36,29 @@
         <slot></slot>
       </div>
     </div>
-    <div id="headerMobile">header mobile</div>
+    <div id="headerMobile">
+      <div class="Mob1 mobIcons"></div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob2 mobIcons active dashboard link"
+        :class="{ active: $route.name != 'support' }"
+      >
+        <router-link class="" :to="{ name: 'mybooks' }"> </router-link>
+      </div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob3 mobIcons support link"
+        :class="{ active: $route.name == 'support' }"
+      >
+        <router-link class="" :to="{ name: 'support' }"> </router-link>
+      </div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob4 mobIcons logout"
+      >
+        <router-link class="" :to="{ name: 'gologin' }"> </router-link>
+      </div>
+    </div>
   </header>
 </template>
 <script>
@@ -47,6 +69,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+main {
+  overflow-x: hidden;
+}
 header {
   height: 70px;
   background: #000 !important;
@@ -126,6 +151,77 @@ header {
 #headerMobile {
   display: none;
   color: #fff;
+}
+@media (max-width: 650px) {
+  main {
+    overflow-y: hidden;
+  }
+  .header {
+    display: block;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    z-index: 10;
+  }
+  #headerDesktop {
+    display: none;
+  }
+  #headerMobile {
+    display: block;
+    color: #fff;
+    padding: 0px 0px;
+  }
+  .mobIcons {
+    float: left;
+    height: 70px;
+    width: 25%;
+    text-align: center;
+  }
+
+  .Mob1 {
+    background: #2699fb;
+    display: none;
+  }
+  .Mob2 {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/home.svg) no-repeat center;
+    mask: url(@/assets/images/icons/home.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 33px;
+    &:hover {
+      background-color: #2699fb;
+    }
+    a {
+      background: none;
+    }
+  }
+  .Mob3 {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/faq.svg) no-repeat center;
+    mask: url(@/assets/images/icons/faq.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 35px;
+    &:hover {
+      background-color: #2699fb;
+    }
+    a {
+      background: none;
+    }
+  }
+  .Mob4 {
+    background-color: #fb2682;
+    -webkit-mask: url(@/assets/logout.svg) no-repeat center;
+    mask: url(@/assets/logout.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 33px;
+    float: right;
+    &:hover {
+      background-color: #fb2682;
+    }
+    a {
+      background: none;
+    }
+  }
 }
 
 /*header {

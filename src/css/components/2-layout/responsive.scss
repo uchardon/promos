@@ -8,12 +8,15 @@
   @include kunde-xxxxlg-xxxxxlg;
   // admin page end
 }
+
 // 1480px
 @include xxxlg-xxxxlg {
+
   // base start
   .main {
     padding: 38px 20px;
   }
+
   // .wrapper {
   //   padding-left: 280px;
   // }
@@ -25,26 +28,31 @@
   @include pdf-xxxlg-xxxxlg;
   // admin page end
 }
+
 // 1340px
 @include xxlg-xxxlg {
+
   // base start
   .main {
     &__header {
       padding-left: 24px;
     }
   }
+
   .search {
     &__input {
       width: 400px;
       margin-right: 16px;
     }
   }
+
   .button {
     &.pdfBtn {
       width: 160px;
       padding: 16px 10px;
     }
   }
+
   @include book-xxlg-xxxlg;
   @include info-xxlg-xxxlg;
 
@@ -54,11 +62,14 @@
   @include kunde-xxlg-xxxlg;
   // admin page end
 }
+
 // 1180px
 @include xlg-xxlg {
+
   // base start
   .main {
     padding: 20px;
+
     &__header {
       flex-direction: column;
       align-items: stretch;
@@ -67,11 +78,13 @@
       &-content {
         order: 2;
         width: 100%;
+
         h1,
         h2 {
           margin-bottom: 16px;
         }
       }
+
       &-btns {
         order: 1;
         width: 100%;
@@ -81,21 +94,25 @@
         margin-bottom: 25px;
         border-radius: 0;
       }
+
       &-btn {
         &:nth-child(1) {
           border-radius: 10px 0 0 10px;
         }
+
         &:nth-child(2) {
           border-radius: 0 10px 10px 0;
         }
       }
     }
   }
+
   .search {
     &__input {
       width: calc(100% - 176px);
     }
   }
+
   @include book-xlg-xxlg;
 
   // base end
@@ -103,6 +120,7 @@
   @include benutzer-xlg-xxlg;
   // benutzer page end
 }
+
 // 1024px
 @include lg-xlg {
   // base start
@@ -121,6 +139,7 @@
   @include login-lg-xlg;
   // login end
 }
+
 // 840px
 @include md-lg {
   // base start
@@ -135,6 +154,7 @@
   @include benutzer-md-lg;
   // benutzer page end
 }
+
 // 700px
 @include sm-md {
   // base start
@@ -145,6 +165,7 @@
   @include login-sm-md;
   // login end
 }
+
 // 650px
 @include xsm-sm {
   // base start
@@ -160,24 +181,32 @@
     font-size: 14px;
     line-height: 22px;
   }
+
   h1,
   h2 {
     font-size: 20px;
     line-height: 28px;
   }
+
   h3 {
     font-size: 18px;
     line-height: 24px;
   }
+
   .link {
     font-size: 14px;
     line-height: 22px;
   }
+
   .wrapper {
     padding: 0;
+    min-height: auto;
+    overflow-y: hidden;
   }
+
   .main {
     padding: 26px 26px 80px 26px;
+
     &__header {
       &-btns {
         width: calc(100% + 52px);
@@ -188,14 +217,17 @@
       }
     }
   }
+
   .checkbox {
     label {
       padding-right: 20px;
     }
   }
+
   .space {
     height: 0;
   }
+
   .search {
     flex-direction: column;
 
@@ -203,14 +235,17 @@
       width: 100%;
       margin-bottom: 16px;
     }
+
     .button {
       width: 100%;
       max-width: unset;
       text-align: center;
     }
   }
+
   // base end
 }
+
 // 540px
 @include xxsm-xsm {
   // base start
