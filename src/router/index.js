@@ -42,7 +42,9 @@ const routes = [
     path: "/showBook",
     name: "showBook",
     component: () =>
-      import(/* webpackChunkName: "showBook" */ "../views/ShowBookPages.vue"),
+      import(
+        /* webpackChunkName: "showBook" */ "../views/ShowBookMultiPages.vue"
+      ),
   },
   {
     path: "/:pathMatch(.*)*",

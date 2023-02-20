@@ -162,7 +162,12 @@ export default {
     this.getSubusers();
   },
   methods: {
-    ...mapActions(["saveNewSubuser", "getSubusers", "deleteSubuser"]),
+    ...mapActions([
+      "saveNewSubuser",
+      "getSubusers",
+      "deleteSubuser",
+      "sendNotificationToSubuser",
+    ]),
     chgSubPage(page) {
       this.state.subPage = page;
     },
@@ -194,15 +199,22 @@ export default {
       console.log("saveNewSub");
       this.currentBook.usedLicense++;
       this.id++;
+      let pw = this.generatePassword();
       let newSubuser = {
         kunde_id: this.currentUser.id,
         book_id: this.currentBook.id,
         email: this.subuser.email,
-        password: this.generatePassword(),
+        password: pw,
         book_kunde_id: this.currentBook.kb_id,
         lastuse: "0000-00-00",
       };
       this.saveNewSubuser(newSubuser);
+      let payload = {
+        email: this.subuser.email,
+        book: this.currentBook.title,
+        password: pw,
+      };
+      this.sendNotificationToSubuser(payload);
       this.subuser.email = "";
     },
     updateSubUser() {

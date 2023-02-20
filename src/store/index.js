@@ -3,10 +3,10 @@ import Vuex from "vuex";
 
 export default new Vuex.createStore({
   state: {
-    url: "https://front.promosverlag.de/api/",
-    dataUrl: "https://front.promosverlag.de/data/",
-    // url: "https://bib.promosverlag.de/api/",
-    // dataUrl: "https://bib.promosverlag.de/data/",
+    // url: "https://front.promosverlag.de/api/",
+    // dataUrl: "https://front.promosverlag.de/data/",
+    url: "https://bib.promosverlag.de/api/",
+    dataUrl: "https://bib.promosverlag.de/data/",
     online: true,
     mainMenu: "book",
     token: "",
@@ -195,6 +195,14 @@ export default new Vuex.createStore({
     setModal: ({ commit }, payload) => {
       console.log("setModal", payload);
       commit("setModal", payload);
+    },
+    sendNotificationToSubuser: async ({ state }, payload) => {
+      const response = await Axios.post(state.url + "mail.php", {
+        email: payload.email,
+        book: payload.book,
+        password: payload.password,
+      });
+      console.log("RESPONSE: ", response);
     },
   },
   modules: {},
