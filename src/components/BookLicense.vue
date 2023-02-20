@@ -101,7 +101,6 @@
           <img src="@/assets/images/icons/attentBlue.svg" alt="" />
         </div>
         <div class="info_content">
-          <h6>Hinweis</h6>
           <p>
             Sie können zusätzlich zu Ihrer erworbenen Ebook Version auch
             Nutzungslizenzen für weitere Nutzer (z.B. Schüler) im
@@ -112,9 +111,12 @@
             sicherheitsgründen manuell geprüft und aktiviert wird.
           </p>
           <p>
-            Die Lizenzen haben jeweils eine Laufzeit von 12 Monaten, beginnend
-            ab dem ersten Login des Nutzers. Zugangsdaten zum lizensierten
-            Nutzer werden an die hinterlegte Mailadresse zugesendet.
+            Die Lizenzen haben jeweils eine Laufzeit von 25 Monaten, beginnend
+            ab dem ersten Login des Nutzers. Nach Ablauf wird das Buch
+            automatisch aus dem jeweiligen Benutzeraccount entfernt.
+          </p>
+          <p>
+            <a>Weitere Informationen zu Nutzerlizenzen / Laufzeiten</a>
           </p>
         </div>
       </div>
@@ -226,6 +228,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#info-lizenzen {
+  background: #fafbfe;
+  font-size: 12px;
+  line-height: 18px;
+  .info_icon {
+    display: none;
+  }
+  a {
+    font-size: 12px;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+  p:last-child {
+    margin-bottom: 0px;
+  }
+  h6 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+}
+
 .button.delete {
   background: none;
   padding: 0px;
