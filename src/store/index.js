@@ -15,6 +15,7 @@ export default new Vuex.createStore({
     books: [],
     currentBook: {},
     markers: [],
+    curMarker: "",
     subusers: [],
     modal: {
       state: false,
@@ -55,6 +56,9 @@ export default new Vuex.createStore({
     RESET: (state) => {
       // Object.assign(state, getDefaultState());
       console.log("STATE ", state);
+    },
+    SET_CURMARKER: (state, color) => {
+      state.curMarker = color;
     },
     SET_SECRET: (state, secret) => {
       state.secret = secret;
@@ -185,6 +189,9 @@ export default new Vuex.createStore({
     },
     setCurrentBook: ({ commit }, book) => {
       commit("setCurrentBook", book);
+    },
+    setCurrentMarker: ({ commit }, color) => {
+      commit("SET_CURMARKER", color);
     },
     setOnlineMode: ({ commit }, payload) => {
       commit("onlineMode", payload);
