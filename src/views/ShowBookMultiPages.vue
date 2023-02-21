@@ -1,5 +1,6 @@
 <template>
-  <div class="showPages">
+  <div class="showPages" :class="{ hideMarkers: !showMarkers }">
+    markers: {{ markers }}
     <nav class="pageNav">
       <div class="leftNav">
         <div class="big click" @click="$router.push({ name: 'mybooks' })">
@@ -39,7 +40,7 @@
         >
           &#10093;
         </span>
-        <span> Seite {{ currentPage + 1 }} / {{ book.pages }} </span>
+        <!-- span> Seite {{ currentPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
     <ImageCanvas
@@ -48,12 +49,11 @@
       :no="index"
       :imgurl="page"
     />
-    {{ markers }}
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import IconShow from "@/components/IconShow.vue";
 import ImageCanvas from "@/components/ImageCanvas.vue";
 
@@ -82,21 +82,22 @@ export default {
       },
       colors: ["#ff0000", "#ffff00", "#0000ff"],
       currentColor: "",
-      markers: [],
       showMarkers: true,
       currentMarker: {},
       pages: [],
     };
   },
   computed: {
-    ...mapState(["curMarker"]),
+    ...mapState(["curMarker", "markers", "currentBook"]),
+    ...mapGetters(["getBooks"]),
   },
   mounted() {
-    let bookId = this.$store.state.currentBook.id;
+    let bookId = this.currentBook.id;
     // console.log("bookId-->", bookId);
-    this.books = this.$store.getters.getBooks;
+    this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == bookId);
     this.setPagesArray();
+    this.getMarkersFromDb();
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
   },
@@ -104,16 +105,18 @@ export default {
   //   window.removeEventListener("resize", this.resizeEvent);
   // },
   methods: {
-    ...mapActions(["setModal", "setCurrentMarker"]),
+    ...mapActions(["setModal", "setCurrentMarker", "getMarkersFromDb"]),
     setPagesArray() {
       this.pages = [];
       for (let i = 0; this.book.pages > i; i++) {
         this.pages.push(this.getImgUrl(i));
       }
     },
-    debug(p) {
-      console.log(p);
-      this.resizeEvent();
+    getElement(no) {
+      let arg = "[data-page=page-" + no + "]";
+      // console.log("arg", arg);
+      this.target = document.querySelector(arg);
+      return this.target;
     },
     chgPage(dir) {
       if (dir == "next") {
@@ -126,24 +129,8 @@ export default {
           this.currentPage--;
         }
       }
-    },
-    deleteMarker(marker) {
-      // console.log(marker.index);
-      this.markers.splice(marker.index, 1);
-      this.showModal(false);
-      this.$store.dispatch("setMarkersForBook", {
-        bookId: this.book.id,
-        page: this.currentPage,
-        markers: this.markers,
-      });
-    },
-    editMarker(i) {
-      // console.log("index: ", i);
-      this.state.setNewMarker = false;
-      this.setNewMarkerColor(this.currentColor);
-      this.markers[i].index = i;
-      this.currentMarker = this.markers[i];
-      this.showModal(true);
+      let pageBox = this.getElement(this.currentPage);
+      pageBox.scrollIntoView();
     },
     getBox(target) {
       let rect = target.getBoundingClientRect();
@@ -160,44 +147,6 @@ export default {
     },
     getImgUrl(i) {
       return `${this.$store.state.dataUrl}${this.book.id}/page-${i}.jpg`;
-    },
-    saveMarker(marker) {
-      if (marker.index == -1) {
-        // NEW MARKER
-        this.markers.push(marker);
-        this.$store.dispatch("setMarkersForBook", {
-          bookId: this.book.id,
-          page: this.currentPage,
-          markers: this.markers,
-        });
-        this.showModal(false);
-      } else {
-        // UPDATE MARKER
-        this.markers[marker.index] = marker;
-        this.$store.dispatch("setMarkersForBook", {
-          bookId: this.book.id,
-          page: this.currentPage,
-          markers: this.markers,
-        });
-        this.showModal(false);
-      }
-      // TODO save to store
-    },
-    setNewMarker(e) {
-      if (this.currentColor != "" && !this.state.showMarkerEdit) {
-        this.getBox(e.target);
-        var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
-        var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
-        this.currentMarker = {
-          index: -1,
-          desc: "",
-          x: Math.round(x),
-          y: Math.round(y),
-          color: this.currentColor,
-        };
-        // openModal
-        this.showModal(true);
-      }
     },
     setNewMarkerColor(color) {
       // console.log("setNewMarkerColor: ", color);
@@ -218,13 +167,6 @@ export default {
     showIndex() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
-    },
-    resizeEvent() {
-      // console.log("resizeEvent");
-      const target = document.getElementById("imgcanvas");
-      this.getBox(target);
-      // TODO make it work
-      // this.getBox();
     },
   },
 };
@@ -257,14 +199,6 @@ nav.pageNav {
   position: relative;
   img {
     width: 100%;
-  }
-  &.showMarkers {
-    svg {
-      display: block;
-    }
-  }
-  svg {
-    display: none;
   }
 }
 .big {

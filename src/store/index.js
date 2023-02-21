@@ -120,18 +120,36 @@ export default new Vuex.createStore({
       const response = await Axios.post(state.url + "getBooks.php", {
         kid: userId,
       });
-      console.log("RESPONSE: ", response);
+      // console.log("RESPONSE: ", response);
       if (!response.error) {
         commit("setBooks", response.data.books);
       }
     },
     getMarkersFromDb: async ({ state, commit }) => {
-      let markers = [];
+      state.markers = [];
       try {
-        markers = await Axios.post(state.url + "checkSecret.php", {
-          userId: state.user.id,
+        const response = await Axios.post(state.url + "marker.php", {
+          toDo: "getMarker",
+          customerId: state.user.id,
+          bookId: state.currentBook.id,
         });
-        commit("setMarkers", markers);
+        console.log("RESULT----------", response.data.markers);
+        console.log("RESULT------vnbcvbn----", response.data);
+        commit("setMarkers", response.data.markers);
+      } catch (error) {
+        console.error("Load Markers fom DB failed! (in store) ");
+      }
+    },
+    saveMarkersToDB: async ({ state }) => {
+      console.log("saveMarkersToDB", state.markers);
+      try {
+        const response = await Axios.post(state.url + "marker.php", {
+          toDo: "saveMarker",
+          customerId: state.user.id,
+          bookId: state.currentBook.id,
+          markers: state.markers,
+        });
+        console.log("RESULT", response);
       } catch (error) {
         console.error("Load Markers fom DB failed! (in store) ");
       }
@@ -143,7 +161,7 @@ export default new Vuex.createStore({
         bookid: state.currentBook.id,
         kbid: state.currentBook.kb_id,
       });
-      console.log("RESPONSE: ", response);
+      // console.log("RESPONSE: ", response);
       if (!response.error) {
         commit("SET_SUBUSERS", response.data);
       }
@@ -153,7 +171,7 @@ export default new Vuex.createStore({
         todo: "savesub",
         subData: payload,
       });
-      console.log("RESPONSE: ", response);
+      // console.log("RESPONSE: ", response);
       if (!response.error) {
         dispatch("getSubusers");
         console.log("xxx");
@@ -166,7 +184,7 @@ export default new Vuex.createStore({
         subId: payload.subid,
         kbId: payload.kbid,
       });
-      console.log("RESPONSE: ", response);
+      // console.log("RESPONSE: ", response);
       if (!response.error) {
         dispatch("getSubusers");
         console.log("xxx");

@@ -33,7 +33,7 @@ export default {
   },
   emits: ["editMarker"],
   mounted() {
-    console.log("box: ", this.box);
+    // console.log("box: ", this.box);
   },
 };
 </script>
