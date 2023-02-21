@@ -1,5 +1,13 @@
 <template>
-  <div class="showPage" :data-page="'page-' + no">
+  <div class="showPage">
+    <MarkerEdit
+      v-if="state.showMarkerEdit"
+      :new-marker="state.setNewMarker"
+      :current-marker="currentMarker"
+      @del-marker="deleteMarker($event)"
+      @save-marker="saveMarker($event)"
+      @close-modal="showModal(false)"
+    />
     <div
       :data-page="'page-' + no"
       class="imgContent"
@@ -18,18 +26,21 @@
       </ImgMarkerSvg>
       <img :src="imgurl" :alt="book.title" @load="resizeEvent()" />
     </div>
-    {{ imgurl }}{{ no }}
+    <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
+    <div v-else class="pageno">&nbsp;</div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
+import MarkerEdit from "@/components/MarkerEdit.vue";
 
 export default {
   name: "ImageCanvas",
   components: {
     ImgMarkerSvg,
+    MarkerEdit,
   },
   props: {
     imgurl: {
@@ -65,6 +76,9 @@ export default {
       showMarkers: true,
       currentMarker: {},
     };
+  },
+  computed: {
+    ...mapState(["curMarker"]),
   },
   mounted() {
     let bookId = this.$store.state.currentBook.id;
@@ -119,7 +133,6 @@ export default {
     editMarker(i) {
       // console.log("index: ", i);
       this.state.setNewMarker = false;
-      this.setNewMarkerColor(this.currentColor);
       this.markers[i].index = i;
       this.currentMarker = this.markers[i];
       this.showModal(true);
@@ -137,7 +150,7 @@ export default {
       }
     },
     getBox(target) {
-      console.log("getBox", target);
+      // console.log("getBox", target);
       let rect = target.getBoundingClientRect();
       let width = target.offsetWidth;
       let height = target.offsetHeight;
@@ -173,7 +186,9 @@ export default {
       // TODO save to store
     },
     setNewMarker(e) {
-      if (this.currentColor != "" && !this.state.showMarkerEdit) {
+      console.log("setNewMarker");
+      if (this.curMarker != "" && !this.state.showMarkerEdit) {
+        console.log("setNewMarker2");
         this.getBox(e.target);
         var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
         var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
@@ -182,27 +197,17 @@ export default {
           desc: "",
           x: Math.round(x),
           y: Math.round(y),
-          color: this.currentColor,
+          color: this.curMarker,
         };
         // openModal
+        console.log("setNewMarker2");
         this.showModal(true);
       }
     },
-    setNewMarkerColor(color) {
-      // console.log("setNewMarkerColor: ", color);
-      if (color == this.currentColor) {
-        // console.log("reset: ", color);
-        this.currentColor = "";
-      } else {
-        // console.log("chg: ", color);
-        this.currentColor = color;
-        this.state.setNewMarker = true;
-      }
-    },
     showModal(state) {
+      console.log("showModal");
       this.state.showMarkerEdit = state;
       if (!state) {
-        this.setNewMarkerColor(this.currentColor);
         this.state.setNewMarker = false;
       }
     },
@@ -221,6 +226,9 @@ export default {
 <style lang="scss">
 .click {
   cursor: pointer;
+}
+.showPage {
+  position: relative;
 }
 nav.pageNav {
   display: flex;

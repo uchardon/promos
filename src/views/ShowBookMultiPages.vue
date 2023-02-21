@@ -1,13 +1,5 @@
 <template>
   <div class="showPages">
-    <MarkerEdit
-      v-if="state.showMarkerEdit"
-      :new-marker="state.setNewMarker"
-      :current-marker="currentMarker"
-      @del-marker="deleteMarker($event)"
-      @save-marker="saveMarker($event)"
-      @close-modal="showModal(false)"
-    />
     <nav class="pageNav">
       <div class="leftNav">
         <div class="big click" @click="$router.push({ name: 'mybooks' })">
@@ -19,7 +11,7 @@
         <svg
           v-for="(color, index) in colors"
           :key="index"
-          :class="{ active: currentColor == color }"
+          :class="{ active: curMarker == color }"
           viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
           style="width: 30px; height: 30px"
@@ -61,15 +53,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import MarkerEdit from "@/components/MarkerEdit.vue";
+import { mapActions, mapState } from "vuex";
 import IconShow from "@/components/IconShow.vue";
 import ImageCanvas from "@/components/ImageCanvas.vue";
 
 export default {
   name: "ShowBookMultiPages",
   components: {
-    MarkerEdit,
     IconShow,
     ImageCanvas,
   },
@@ -98,6 +88,9 @@ export default {
       pages: [],
     };
   },
+  computed: {
+    ...mapState(["curMarker"]),
+  },
   mounted() {
     let bookId = this.$store.state.currentBook.id;
     // console.log("bookId-->", bookId);
@@ -111,7 +104,7 @@ export default {
   //   window.removeEventListener("resize", this.resizeEvent);
   // },
   methods: {
-    ...mapActions(["setModal"]),
+    ...mapActions(["setModal", "setCurrentMarker"]),
     setPagesArray() {
       this.pages = [];
       for (let i = 0; this.book.pages > i; i++) {
@@ -135,7 +128,7 @@ export default {
       }
     },
     deleteMarker(marker) {
-      console.log(marker.index);
+      // console.log(marker.index);
       this.markers.splice(marker.index, 1);
       this.showModal(false);
       this.$store.dispatch("setMarkersForBook", {
@@ -208,12 +201,10 @@ export default {
     },
     setNewMarkerColor(color) {
       // console.log("setNewMarkerColor: ", color);
-      if (color == this.currentColor) {
-        // console.log("reset: ", color);
-        this.currentColor = "";
+      if (color == this.curMarker) {
+        this.setCurrentMarker("");
       } else {
-        // console.log("chg: ", color);
-        this.currentColor = color;
+        this.setCurrentMarker(color);
         this.state.setNewMarker = true;
       }
     },
