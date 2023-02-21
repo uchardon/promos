@@ -307,6 +307,12 @@ export default {
 }
 
 @media (max-width: 540px) {
+  .main {
+    padding: 35px 20px;
+  }
+}
+
+@media (max-width: 540px) {
   .bookCard {
     display: block;
     padding: 28px 25px;
@@ -342,6 +348,9 @@ export default {
   }
   .bookCard__content h5 {
     margin-bottom: 8px;
+  }
+  .main {
+    padding: 35px 20px;
   }
 }
 </style>

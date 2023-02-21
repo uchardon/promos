@@ -8,26 +8,32 @@
 html {
   scroll-behavior: smooth;
 }
+
 * {
   margin: 0px;
   padding: 0px;
   border: none;
   outline: none;
 }
+
 button {
   outline: none;
 }
+
 button:focus {
   outline: none;
 }
+
 button:focus {
   outline: none;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
@@ -48,6 +54,7 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba($color: #000, $alpha: 0.3);
 }
+
 /*** 
   ====================================================================
       Global Settings
@@ -62,9 +69,15 @@ body {
   background: $gray;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
+
   &.active {
     overflow: hidden;
   }
+
+  @media (max-width: 650px) {
+    background: #efefef;
+  }
+
 }
 
 a {
@@ -75,6 +88,7 @@ a {
   line-height: 26px;
   font-weight: 400;
 }
+
 h1,
 h2,
 h3,
@@ -87,12 +101,14 @@ p {
   margin: 0px;
   background: none;
 }
+
 .auto__container {
   position: relative;
   max-width: 1640px;
   margin: 0 auto;
   padding: 0 60px;
 }
+
 ul,
 li {
   list-style: none;
