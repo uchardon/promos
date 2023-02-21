@@ -243,6 +243,10 @@ export default {
 .click {
   cursor: pointer;
 }
+.wrapper {
+  width: 100%;
+  max-width: 100%;
+}
 nav.pageNav {
   display: flex;
   justify-content: space-between;
@@ -254,7 +258,7 @@ nav.pageNav {
   z-index: 3;
   bottom: 0px;
   width: 95%;
-  max-width: 1600px;
+  max-width: 100%;
   height: 70px;
   div {
     gap: 10px;
@@ -297,5 +301,14 @@ circle {
 }
 .showPages {
   position: relative;
+}
+@media (max-width: 650px) {
+  .pageNav {
+    position: fixed;
+    top: 0px;
+  }
+  .showPage {
+    margin-top: 70px;
+  }
 }
 </style>

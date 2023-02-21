@@ -74,7 +74,7 @@ main {
 }
 header {
   height: 70px;
-  background: #000 !important;
+  background: #101820 !important;
   padding: 0px;
   margin: 0px;
 }
@@ -162,6 +162,7 @@ header {
     width: 100%;
     bottom: 0px;
     z-index: 10;
+    height: 50px;
   }
   #headerDesktop {
     display: none;
@@ -173,9 +174,12 @@ header {
   }
   .mobIcons {
     float: left;
-    height: 70px;
+    height: 50px;
     width: 25%;
     text-align: center;
+    a {
+      height: 50px;
+    }
   }
 
   .Mob1 {
@@ -187,7 +191,7 @@ header {
     -webkit-mask: url(@/assets/images/icons/home.svg) no-repeat center;
     mask: url(@/assets/images/icons/home.svg) no-repeat center;
     cursor: pointer;
-    mask-size: 33px;
+    mask-size: 23px;
     &:hover {
       background-color: #2699fb;
     }
@@ -200,7 +204,7 @@ header {
     -webkit-mask: url(@/assets/images/icons/faq.svg) no-repeat center;
     mask: url(@/assets/images/icons/faq.svg) no-repeat center;
     cursor: pointer;
-    mask-size: 35px;
+    mask-size: 25px;
     &:hover {
       background-color: #2699fb;
     }
@@ -213,7 +217,7 @@ header {
     -webkit-mask: url(@/assets/logout.svg) no-repeat center;
     mask: url(@/assets/logout.svg) no-repeat center;
     cursor: pointer;
-    mask-size: 33px;
+    mask-size: 23px;
     float: right;
     &:hover {
       background-color: #fb2682;

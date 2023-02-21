@@ -3,10 +3,14 @@
     <Transition name="fadeUp">
       <ModalBox v-if="modal.state"></ModalBox>
     </Transition>
-    <AppHeader>
+    <AppHeader v-if="$route.name != 'showBook'">
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
     </AppHeader>
+    <AppHeaderEbook v-if="$route.name == 'showBook'">
+      {{ $store.state.user.vorname }}
+      {{ $store.state.user.nachname }}
+    </AppHeaderEbook>
 
     <main
       :class="{
@@ -36,6 +40,7 @@
 import { mapState } from "vuex";
 // @ is an alias to /src
 import AppHeader from "@/components/AppHeader.vue";
+import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
 import AppSymbols from "@/components/AppSymbols.vue";
 import ModalBox from "@/components/ModalBox.vue";
 
@@ -43,6 +48,7 @@ export default {
   name: "StdHome",
   components: {
     AppHeader,
+    AppHeaderEbook,
     AppSymbols,
     ModalBox,
   },

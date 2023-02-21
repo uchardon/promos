@@ -1,8 +1,25 @@
 <template>
   <header class="header">
     <div id="headerDesktop" class="header__inner">
-      <div class="header__inner-logo">Ebook Header</div>
-
+      <div class="header__inner-logo">AppHeaderEbook</div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="dashboard link"
+        :class="{ active: $route.name != 'support' }"
+      >
+        <router-link class="" :to="{ name: 'mybooks' }">
+          Dashboard
+        </router-link>
+      </div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="support link"
+        :class="{ active: $route.name == 'support' }"
+      >
+        <router-link class="" :to="{ name: 'support' }">
+          Hilfe / Support
+        </router-link>
+      </div>
       <div
         v-if="$route.name != 'login' && $route.name != 'useYourLink'"
         class="logout"
@@ -19,20 +36,45 @@
         <slot></slot>
       </div>
     </div>
-    <div id="headerMobile">header mobile</div>
+    <div id="headerMobile">
+      <div class="Mob1 mobIcons"></div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob2 mobIcons active dashboard link"
+        :class="{ active: $route.name != 'support' }"
+      >
+        <router-link class="" :to="{ name: 'mybooks' }"> </router-link>
+      </div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob3 mobIcons support link"
+        :class="{ active: $route.name == 'support' }"
+      >
+        <router-link class="" :to="{ name: 'support' }"> </router-link>
+      </div>
+      <div
+        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        class="Mob4 mobIcons logout"
+      >
+        <router-link class="" :to="{ name: 'gologin' }"> </router-link>
+      </div>
+    </div>
   </header>
 </template>
 <script>
 export default {
-  name: "AppHeader",
+  name: "AppHeaderEbook",
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+main {
+  overflow-x: hidden;
+}
 header {
   height: 70px;
-  background: #000 !important;
+  background: #101820 !important;
   padding: 0px;
   margin: 0px;
 }
@@ -109,6 +151,81 @@ header {
 #headerMobile {
   display: none;
   color: #fff;
+}
+@media (max-width: 650px) {
+  main {
+    overflow-y: hidden;
+  }
+  .header {
+    display: block;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    z-index: 10;
+    height: 50px;
+  }
+  #headerDesktop {
+    display: none;
+  }
+  #headerMobile {
+    display: block;
+    color: #fff;
+    padding: 0px 0px;
+  }
+  .mobIcons {
+    float: left;
+    height: 50px;
+    width: 25%;
+    text-align: center;
+    a {
+      height: 50px;
+    }
+  }
+
+  .Mob1 {
+    background: #2699fb;
+    display: none;
+  }
+  .Mob2 {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/home.svg) no-repeat center;
+    mask: url(@/assets/images/icons/home.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 23px;
+    &:hover {
+      background-color: #2699fb;
+    }
+    a {
+      background: none;
+    }
+  }
+  .Mob3 {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/faq.svg) no-repeat center;
+    mask: url(@/assets/images/icons/faq.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 25px;
+    &:hover {
+      background-color: #2699fb;
+    }
+    a {
+      background: none;
+    }
+  }
+  .Mob4 {
+    background-color: #fb2682;
+    -webkit-mask: url(@/assets/logout.svg) no-repeat center;
+    mask: url(@/assets/logout.svg) no-repeat center;
+    cursor: pointer;
+    mask-size: 23px;
+    float: right;
+    &:hover {
+      background-color: #fb2682;
+    }
+    a {
+      background: none;
+    }
+  }
 }
 
 /*header {
