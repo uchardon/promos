@@ -25,6 +25,9 @@
         </div>
       </div>
       <div class="rightNav">
+        <span class="addbtn click" @click="zoomin('in')">+</span>
+        <span>{{ zoom }}%</span>
+        <span class="addbtn click" @click="zoomin('out')">-</span>
         <span
           class="big click"
           :class="{ notActive: currentPage <= 0 }"
@@ -48,6 +51,7 @@
       :key="index"
       :no="index"
       :imgurl="page"
+      :zoom="zoom"
     />
   </div>
 </template>
@@ -85,6 +89,7 @@ export default {
       showMarkers: true,
       currentMarker: {},
       pages: [],
+      zoom: 100,
     };
   },
   computed: {
@@ -106,6 +111,22 @@ export default {
   // },
   methods: {
     ...mapActions(["setModal", "setCurrentMarker", "getMarkersFromDb"]),
+    zoomin(inout) {
+      const max = 150;
+      const min = 50;
+      if (inout == "in") {
+        this.zoom = this.zoom + 25;
+      }
+      if (inout == "out") {
+        this.zoom = this.zoom - 25;
+      }
+      if (this.zoom < min) {
+        this.zoom = min;
+      }
+      if (this.zoom > max) {
+        this.zoom = max;
+      }
+    },
     setPagesArray() {
       this.pages = [];
       for (let i = 0; this.book.pages > i; i++) {
@@ -173,6 +194,9 @@ export default {
 </script>
 
 <style lang="scss">
+.addbtn {
+  font-size: 1.6em;
+}
 .click {
   cursor: pointer;
 }

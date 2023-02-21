@@ -1,5 +1,5 @@
 <template>
-  <div class="showPage">
+  <div class="showPage" :style="'--zoom: calc(' + zoom + ' / 100)'">
     <MarkerEdit
       v-if="state.showMarkerEdit"
       :new-marker="state.setNewMarker"
@@ -29,6 +29,8 @@
     <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
     <div v-else class="pageno">&nbsp;</div>
     {{ pageMarkers }}
+
+    <button @click="getMarkersByPage()">get</button>
   </div>
 </template>
 
@@ -49,6 +51,10 @@ export default {
       required: true,
     },
     no: {
+      type: Number,
+      required: true,
+    },
+    zoom: {
       type: Number,
       required: true,
     },
@@ -220,7 +226,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .click {
   cursor: pointer;
 }
@@ -248,6 +254,9 @@ nav.pageNav {
 }
 .imgContent {
   position: relative;
+  transform: scale(1);
+  overflow: auto;
+  transform: scale(var(--zoom, 1));
   img {
     width: 100%;
   }

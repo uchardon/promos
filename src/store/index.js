@@ -48,7 +48,7 @@ export default new Vuex.createStore({
       if (result !== undefined) {
         return result;
       } else {
-        return -1;
+        return [];
       }
     },
   },
@@ -133,8 +133,6 @@ export default new Vuex.createStore({
           customerId: state.user.id,
           bookId: state.currentBook.id,
         });
-        console.log("RESULT----------", response.data.markers);
-        console.log("RESULT------vnbcvbn----", response.data);
         commit("setMarkers", response.data.markers);
       } catch (error) {
         console.error("Load Markers fom DB failed! (in store) ");
