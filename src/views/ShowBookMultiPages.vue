@@ -1,6 +1,5 @@
 <template>
   <div class="showPages" :class="{ hideMarkers: !showMarkers }">
-    markers: {{ markers }}
     <nav class="pageNav">
       <div class="leftNav">
         <div class="big click" @click="$router.push({ name: 'mybooks' })">
@@ -52,6 +51,7 @@
       :no="index"
       :imgurl="page"
       :zoom="zoom"
+      :showmarkers="showMarkers"
     />
   </div>
 </template>
@@ -86,7 +86,7 @@ export default {
       },
       colors: ["#ff0000", "#ffff00", "#0000ff"],
       currentColor: "",
-      showMarkers: true,
+      showMarkers: false,
       currentMarker: {},
       pages: [],
       zoom: 100,

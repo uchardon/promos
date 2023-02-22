@@ -15,6 +15,18 @@ export default new Vuex.createStore({
     books: [],
     currentBook: {},
     markers: [],
+    markerToEdit: {
+      todo: "",
+      bookId: 0,
+      page: -1,
+      content: {
+        index: -1,
+        desc: "",
+        x: 1,
+        y: 1,
+        color: "",
+      },
+    },
     curMarker: "",
     subusers: [],
     modal: {
@@ -134,6 +146,8 @@ export default new Vuex.createStore({
           bookId: state.currentBook.id,
         });
         commit("setMarkers", response.data.markers);
+        console.log("MARKERSxxxx", response.data);
+        console.log("MARKERS", response.data.markers);
       } catch (error) {
         console.error("Load Markers fom DB failed! (in store) ");
       }

@@ -1,13 +1,5 @@
 <template>
   <div class="showPage" :style="'--zoom: calc(' + zoom + ' / 100)'">
-    <MarkerEdit
-      v-if="state.showMarkerEdit"
-      :new-marker="state.setNewMarker"
-      :current-marker="currentMarker"
-      @del-marker="deleteMarker($event)"
-      @save-marker="saveMarker($event)"
-      @close-modal="showModal(false)"
-    />
     <div
       :data-page="'page-' + no"
       class="imgContent"
@@ -15,7 +7,7 @@
       @click="setNewMarker($event)"
     >
       <ImgMarkerSvg
-        v-for="(marker, index) in pageMarkers"
+        v-for="(marker, index) in filteredMarkers"
         :key="index"
         :box="box"
         :pos-x="(box.width / 100) * marker.x"
@@ -28,22 +20,17 @@
     </div>
     <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
     <div v-else class="pageno">&nbsp;</div>
-    {{ pageMarkers }}
-
-    <button @click="getMarkersByPage()">get</button>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
-import MarkerEdit from "@/components/MarkerEdit.vue";
 
 export default {
   name: "ImageCanvas",
   components: {
     ImgMarkerSvg,
-    MarkerEdit,
   },
   props: {
     imgurl: {
@@ -84,8 +71,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["curMarker"]),
+    ...mapState(["curMarker", "markers", "markerToEdit"]),
     ...mapGetters(["getBooks", "getMarkersByBookpage"]),
+    filteredMarkers() {
+      return this.getMarkersByBookpage({
+        bookId: this.book.id,
+        page: this.no,
+      }).markers;
+    },
   },
   mounted() {
     let bookId = this.$store.state.currentBook.id;
@@ -114,22 +107,34 @@ export default {
       console.log(p);
       this.resizeEvent();
     },
-    deleteMarker(marker) {
-      console.log(marker.index);
-      this.pageMarkers.splice(marker.index, 1);
-      this.showModal(false);
-      this.setMarkersForBook({
-        bookId: this.book.id,
-        page: this.no,
-        markers: this.pageMarkers,
-      });
-      this.saveMarkersToDB();
-    },
+    // deleteMarker(marker,i) {
+    //   console.log(marker.index);
+    //   // this.pageMarkers.splice(marker.index, 1);
+    //   // tod marker data to store
+    //   this.markerToEdit.content = {
+    //     index: -1,
+    //     desc: "",
+    //     x: 1,
+    //     y: 1,
+    //     color: this.curMarker,
+    //   };
+    //   this.markerToEdit.content = this.pageMarkers[i];
+    //   this.markerToEdit.todo = "del";
+    //   this.markerToEdit.bookId = this.book.id;
+    //   this.markerToEdit.page = this.no;
+    //   this.setModal({ state: true, content: "MarkerEdit" });
+
+    //   this.saveMarkersToDB();
+    // },
     editMarker(i) {
       // console.log("index: ", i);
       this.state.setNewMarker = false;
-      this.currentMarker = this.pageMarkers[i];
-      this.showModal(true);
+      this.markerToEdit.content = this.filteredMarkers[i];
+      this.markerToEdit.todo = "edit";
+      this.markerToEdit.bookId = this.book.id;
+      this.markerToEdit.page = this.no;
+      // this.showModal(true);
+      this.setModal({ state: true, content: "MarkerEdit" });
     },
     getMarkersByPage() {
       // console.log("getMarkersByPage", this.no);
@@ -166,24 +171,22 @@ export default {
     saveMarker(marker) {
       console.log("saveMarker");
       if (marker.index == -1) {
-        console.log("NEW MARKER");
-        // NEW MARKER
+        // console.log("NEW MARKER");
         this.pageMarkers.push(marker);
         this.setIndex();
-        this.setMarkersForBook({
-          bookId: this.book.id,
-          page: this.no,
-          markers: this.pageMarkers,
-        });
+        // this.setMarkersForBook({
+        //   bookId: this.book.id,
+        //   page: this.no,
+        //   markers: this.pageMarkers,
+        // });
       } else {
-        // UPDATE MARKER
-        console.log("NEW UPDATE");
+        // console.log("UPDATE MARKER");
         this.pageMarkers[marker.index] = marker;
-        this.setMarkersForBook({
-          bookId: this.book.id,
-          page: this.no,
-          markers: this.pageMarkers,
-        });
+        // this.setMarkersForBook({
+        //   bookId: this.book.id,
+        //   page: this.no,
+        //   markers: this.pageMarkers,
+        // });
       }
       this.showModal(false);
       this.saveMarkersToDB();
@@ -195,16 +198,17 @@ export default {
         this.getBox(e.target);
         var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
         var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
-        this.currentMarker = {
+        this.markerToEdit.content = {
           index: -1,
           desc: "",
           x: Math.round(x),
           y: Math.round(y),
           color: this.curMarker,
         };
-        // openModal
-        console.log("setNewMarker2");
-        this.showModal(true);
+        this.markerToEdit.todo = "new";
+        this.markerToEdit.bookId = this.book.id;
+        this.markerToEdit.page = this.no;
+        this.setModal({ state: true, content: "MarkerEdit" });
       }
     },
     showModal(state) {
@@ -213,10 +217,6 @@ export default {
       if (!state) {
         this.state.setNewMarker = false;
       }
-    },
-    showIndex() {
-      // console.log("showIndex");
-      this.setModal({ state: true, content: "ShowBookIndex" });
     },
     resizeEvent() {
       // console.log("resizeEvent");

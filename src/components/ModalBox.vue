@@ -12,6 +12,7 @@
         <ModalDownload v-if="modal.content == 'ModalDownload'" />
         <BriefDescription v-if="modal.content == 'BriefDescription'" />
         <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
+        <MarkerEdit v-if="modal.content == 'MarkerEdit'" />
       </div>
     </div>
   </div>
@@ -23,6 +24,7 @@ import BookLicense from "@/components/BookLicense.vue";
 import ModalDownload from "@/components/ModalDownload.vue";
 import BriefDescription from "@/components/BriefDescription.vue";
 import ShowBookIndex from "@/components/ShowBookIndex.vue";
+import MarkerEdit from "@/components/MarkerEdit.vue";
 
 export default {
   name: "ModalBox",
@@ -31,6 +33,7 @@ export default {
     ModalDownload,
     BriefDescription,
     ShowBookIndex,
+    MarkerEdit,
   },
   data() {
     return {
