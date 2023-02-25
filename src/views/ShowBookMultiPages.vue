@@ -1,12 +1,10 @@
 <template>
   <div class="showPages" :class="{ hideMarkers: !showMarkers }">
+    <AppHeaderEbook v-if="$route.name == 'showBook'">
+      {{ $store.state.user.vorname }}
+      {{ $store.state.user.nachname }}
+    </AppHeaderEbook>
     <nav class="pageNav">
-      <div class="leftNav">
-        <div class="big click" @click="$router.push({ name: 'mybooks' })">
-          &larr;
-        </div>
-        <div class="inhalt pointer" @click="showIndex()">Index</div>
-      </div>
       <div class="centerNav">
         <svg
           v-for="(color, index) in colors"
@@ -60,12 +58,14 @@
 import { mapActions, mapState, mapGetters } from "vuex";
 import IconShow from "@/components/IconShow.vue";
 import ImageCanvas from "@/components/ImageCanvas.vue";
+import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
 
 export default {
   name: "ShowBookMultiPages",
   components: {
     IconShow,
     ImageCanvas,
+    AppHeaderEbook,
   },
   data() {
     return {
@@ -193,7 +193,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scroped lang="scss">
 .addbtn {
   font-size: 1.6em;
 }

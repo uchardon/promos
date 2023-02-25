@@ -116,7 +116,9 @@
             automatisch aus dem jeweiligen Benutzeraccount entfernt.
           </p>
           <p>
-            <a>Weitere Informationen zu Nutzerlizenzen / Laufzeiten</a>
+            <a @click="supportlink()"
+              >Weitere Informationen zu Nutzerlizenzen / Laufzeiten</a
+            >
           </p>
         </div>
       </div>
@@ -169,7 +171,12 @@ export default {
       "getSubusers",
       "deleteSubuser",
       "sendNotificationToSubuser",
+      "setModal",
     ]),
+    supportlink() {
+      this.$router.push({ name: "support" });
+      this.setModal(false);
+    },
     chgSubPage(page) {
       this.state.subPage = page;
     },

@@ -3,7 +3,11 @@
     <div id="headerDesktop" class="header__inner">
       <div class="header__inner-logo">promos verlag</div>
       <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        v-if="
+          $route.name != 'login' &&
+          $route.name != 'useYourLink' &&
+          $route.name != 'gologin'
+        "
         class="dashboard link"
         :class="{ active: $route.name != 'support' }"
       >
@@ -12,7 +16,11 @@
         </router-link>
       </div>
       <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        v-if="
+          $route.name != 'login' &&
+          $route.name != 'useYourLink' &&
+          $route.name != 'gologin'
+        "
         class="support link"
         :class="{ active: $route.name == 'support' }"
       >
@@ -21,7 +29,11 @@
         </router-link>
       </div>
       <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        v-if="
+          $route.name != 'login' &&
+          $route.name != 'useYourLink' &&
+          $route.name != 'gologin'
+        "
         class="logout"
       >
         <router-link class="" :to="{ name: 'gologin' }">
@@ -29,7 +41,11 @@
         </router-link>
       </div>
       <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
+        v-if="
+          $route.name != 'login' &&
+          $route.name != 'useYourLink' &&
+          $route.name != 'gologin'
+        "
         class="header__inner-account"
       >
         <span class="online"></span>
@@ -56,7 +72,9 @@
         v-if="$route.name != 'login' && $route.name != 'useYourLink'"
         class="Mob4 mobIcons logout"
       >
-        <router-link class="" :to="{ name: 'gologin' }"> </router-link>
+        <router-link class="" :to="{ name: 'gologin' }">
+          <img src="@/assets/logout.svg" alt="" />
+        </router-link>
       </div>
     </div>
   </header>

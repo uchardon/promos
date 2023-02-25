@@ -18,9 +18,9 @@
       <div class="inhalt inhaltPreview pointer" @click="showIndex()">
         <img src="@/assets/images/icons/threebar.svg" />
       </div>
-      <div class="BookAnsichten">
-        <div class="baSingle baActive"></div>
-        <div class="baDouble"></div>
+      <div class="BookAnsichten" :class="{ xyz: ShowDouble }">
+        <div class="baSingle baActive" @click="ShowDouble = false"></div>
+        <div class="baDouble" @click="ShowDouble = true"></div>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/lesezeichen.svg" />
@@ -48,8 +48,21 @@
   </header>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "AppHeaderEbook",
+  data() {
+    return {
+      ShowDouble: false,
+    };
+  },
+  methods: {
+    ...mapActions(["setModal"]),
+    showIndex() {
+      console.log("showIndex");
+      this.setModal({ state: true, content: "ShowBookIndex" });
+    },
+  },
 };
 </script>
 
