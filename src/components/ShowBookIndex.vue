@@ -14,7 +14,8 @@
       </li>
     </ul>
     <!--eslint-enable-->
-    <button class="btn" @click="setModal(false, '')">zurück zum Buch</button>
+    <button class="btn" @click="setModal(false, '')">Schließen</button>
+    <div style="clear: both"></div>
   </div>
 </template>
 
@@ -53,10 +54,44 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.btn {
+  min-width: 100px;
+  width: 100%;
+  margin: 0px auto;
+  padding: 15px 0px;
+  border-radius: 10px;
+  background: #2699fb;
+  font-weight: bold;
+  font-family: roboto;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #fff;
+  &:hover {
+    background: #217fcf;
+  }
+}
+ul {
+  margin-top: 25px;
+}
 .contensPage {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #efefef;
   cursor: pointer;
+  height: 50px;
+  line-height: 50px;
+  background: #fafbfe;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 0px 25px;
+  &:hover {
+    background-color: #2699fb;
+    color: #fff;
+  }
+  :nth-child(2) {
+    font-weight: bold;
+  }
 }
 </style>

@@ -89,7 +89,7 @@ export default {
       showMarkers: false,
       currentMarker: {},
       pages: [],
-      zoom: 100,
+      zoom: 50,
     };
   },
   computed: {
@@ -222,6 +222,9 @@ nav.pageNav {
     display: flex;
     align-items: center;
   }
+  @media (max-width: 650px) {
+    height: 50px;
+  }
 }
 .imgContent {
   position: relative;
@@ -250,14 +253,11 @@ circle {
 }
 .showPages {
   position: relative;
+  margin-top: 70px;
 }
 @media (max-width: 650px) {
-  .pageNav {
-    position: fixed;
-    top: 0px;
-  }
   .showPage {
-    margin-top: 70px;
+    margin-top: 50px;
   }
 }
 </style>

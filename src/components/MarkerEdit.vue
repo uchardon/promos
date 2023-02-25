@@ -1,7 +1,7 @@
 <template>
   <div class="edit-area inner">
     <div class="text-input">
-      {{ markerToEdit }}
+      <!-- {{ markerToEdit }} -->
       <textarea
         id="marker-text"
         ref="textinput"
@@ -22,7 +22,7 @@
           class="button denie modBtn"
           @click="deleteMarker()"
         >
-          Löschen
+          LöschenXXX
         </button>
       </span>
       <span class="right">
@@ -76,6 +76,8 @@ export default {
     deleteMarker() {
       this.filteredMarkers.splice(this.markerToEdit.content.index, 1);
       this.setIndex();
+      this.setModal(false, "");
+      // this.setModal({ state: true, content: "ModalVerify" });
     },
     saveMarker() {
       // console.log("met: saveMarker");
@@ -91,6 +93,7 @@ export default {
         this.filteredMarkers[this.markerToEdit.content.index] =
           this.markerToEdit.content;
       }
+      this.setModal(false, "");
     },
     setIndex() {
       this.filteredMarkers.forEach((m, i) => {

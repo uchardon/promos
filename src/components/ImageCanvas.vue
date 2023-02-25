@@ -230,8 +230,18 @@ export default {
 .click {
   cursor: pointer;
 }
+
+.showPages {
+  position: relative;
+}
 .showPage {
   position: relative;
+  width: calc(var(--zoom) * 100%);
+  overflow: hidden;
+  margin: 0px auto;
+  .imgContent {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  }
 }
 nav.pageNav {
   display: flex;
@@ -254,9 +264,9 @@ nav.pageNav {
 }
 .imgContent {
   position: relative;
-  transform: scale(1);
+  /*transform: scale(1);*/
   overflow: auto;
-  transform: scale(var(--zoom, 1));
+  /* transform: scale(var(--zoom, 1));*/
   img {
     width: 100%;
   }
@@ -282,8 +292,5 @@ circle {
 }
 .active circle {
   stroke: #fff;
-}
-.showPages {
-  position: relative;
 }
 </style>
