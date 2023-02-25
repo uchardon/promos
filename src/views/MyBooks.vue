@@ -40,7 +40,7 @@
             class="adminlicences license pointer"
             @click="showLicense(book)"
           >
-            {{ book.maxLicense }}
+            {{ book.maxLicense - 1 }}
           </div>
           <div class="bookCard__image" @click.prevent="showBookJPGs(book)">
             <img

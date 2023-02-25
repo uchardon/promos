@@ -76,6 +76,7 @@ export default new Vuex.createStore({
       state.secret = secret;
     },
     SET_SUBUSERS: (state, payload) => {
+      // console.log("SET_SUBUSERS");
       state.subusers = payload;
     },
     SET_TOKEN: (state, token) => {
@@ -196,10 +197,10 @@ export default new Vuex.createStore({
         subId: payload.subid,
         kbId: payload.kbid,
       });
-      // console.log("RESPONSE: ", response);
+      console.log("RESPONSE: ", response);
       if (!response.error) {
         dispatch("getSubusers");
-        console.log("xxx");
+        console.log("x-x-x");
       }
     },
     // eslint-disable-next-line
