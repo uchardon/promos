@@ -7,10 +7,6 @@
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
     </AppHeader>
-    <AppHeaderEbook v-if="$route.name == 'showBook'">
-      {{ $store.state.user.vorname }}
-      {{ $store.state.user.nachname }}
-    </AppHeaderEbook>
 
     <main
       :class="{

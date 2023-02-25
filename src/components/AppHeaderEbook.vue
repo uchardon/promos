@@ -1,69 +1,68 @@
 <template>
   <header class="header">
     <div id="headerDesktop" class="header__inner">
-      <div class="header__inner-logo">AppHeaderEbook</div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="dashboard link"
-        :class="{ active: $route.name != 'support' }"
-      >
-        <router-link class="" :to="{ name: 'mybooks' }">
-          Dashboard
-        </router-link>
+      <div class="big click" @click="$router.push({ name: 'mybooks' })">
+        <img src="@/assets/images/icons/back.svg" />
       </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="support link"
-        :class="{ active: $route.name == 'support' }"
-      >
-        <router-link class="" :to="{ name: 'support' }">
-          Hilfe / Support
-        </router-link>
+      <div class="BookPages">
+        <input
+          type="number"
+          maxlength="3"
+          placeholder="1"
+          onclick="this.placeholder=''"
+          onfocus="this.select()"
+          onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
+        />
+        <span>/ 55</span>
       </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="logout"
-      >
-        <router-link class="" :to="{ name: 'gologin' }">
-          <img src="@/assets/logout.svg" alt="" />
-        </router-link>
+      <div class="inhalt inhaltPreview pointer" @click="showIndex()">
+        <img src="@/assets/images/icons/threebar.svg" />
       </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="header__inner-account"
-      >
-        <span class="online"></span>
-        <slot></slot>
+      <div class="BookAnsichten" :class="{ xyz: ShowDouble }">
+        <div class="baSingle baActive" @click="ShowDouble = false"></div>
+        <div class="baDouble" @click="ShowDouble = true"></div>
+      </div>
+      <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
+        <img src="@/assets/images/icons/lesezeichen.svg" />
       </div>
     </div>
     <div id="headerMobile">
-      <div class="Mob1 mobIcons"></div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob2 mobIcons active dashboard link"
-        :class="{ active: $route.name != 'support' }"
-      >
-        <router-link class="" :to="{ name: 'mybooks' }"> </router-link>
+      <div class="Mob1" @click="$router.push({ name: 'mybooks' })">
+        <img src="@/assets/images/icons/back.svg" />
       </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob3 mobIcons support link"
-        :class="{ active: $route.name == 'support' }"
-      >
-        <router-link class="" :to="{ name: 'support' }"> </router-link>
+      <div class="BookPages">
+        <input
+          type="number"
+          maxlength="3"
+          placeholder="1"
+          onclick="this.placeholder=''"
+          onfocus="this.select()"
+          onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
+        />
+        <span>/ 55</span>
       </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob4 mobIcons logout"
-      >
-        <router-link class="" :to="{ name: 'gologin' }"> </router-link>
+      <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
+        <img src="@/assets/images/icons/lesezeichen.svg" />
       </div>
     </div>
   </header>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "AppHeaderEbook",
+  data() {
+    return {
+      ShowDouble: false,
+    };
+  },
+  methods: {
+    ...mapActions(["setModal"]),
+    showIndex() {
+      console.log("showIndex");
+      this.setModal({ state: true, content: "ShowBookIndex" });
+    },
+  },
 };
 </script>
 
@@ -77,6 +76,10 @@ header {
   background: #101820 !important;
   padding: 0px;
   margin: 0px;
+  position: fixed;
+  top: 0px;
+  z-index: 3;
+  width: 100%;
 }
 .header__inner {
   display: block;
@@ -88,13 +91,13 @@ header {
   max-width: 95%;
   padding: 0 2.5%;
 }
-.header__inner-logo {
-  float: left;
-  height: 70px;
-  line-height: 70px;
-  padding: 0 25px 0 0;
-  font-size: 20px;
-}
+// .header__inner-logo {
+//   float: left;
+//   height: 70px;
+//   line-height: 70px;
+//   padding: 0 25px 0 0;
+//   font-size: 20px;
+// }
 .header__inner .link {
   float: left;
   height: 70px;
@@ -116,28 +119,6 @@ header {
   color: #fff;
   background: #2699fb;
 }
-.header__inner .logout {
-  float: right;
-  height: 70px;
-  width: 50px;
-  overflow: hidden;
-}
-.logout a {
-  height: 35px;
-  width: 50px;
-  display: block;
-  background: #fb2682;
-  border-radius: 50px;
-  margin-top: 17px;
-  opacity: 0.8;
-}
-.logout a:hover {
-  opacity: 1;
-}
-.logout img {
-  height: 65%;
-  margin-top: 10%;
-}
 .header__inner-account {
   float: right;
   font-size: 16px;
@@ -152,6 +133,128 @@ header {
   display: none;
   color: #fff;
 }
+.header__inner {
+  width: 100%;
+  max-width: 100%;
+  padding: 0px;
+}
+.big.click {
+  float: left;
+  height: 70px;
+  width: auto;
+  display: block;
+  padding: 0px 25px;
+  background: #2699fb;
+  &:hover {
+    background: #217fcf;
+  }
+  img {
+    width: 25x;
+    height: 25px;
+    display: block;
+    margin-top: 22px;
+  }
+}
+.BookPages {
+  float: left;
+  height: 70px;
+  line-height: 70px;
+  padding: 0px 25px;
+  span {
+    margin-left: 10px;
+    color: #fff;
+  }
+  input {
+    width: 30px;
+    overflow: hidden;
+    text-align: right;
+    padding: 5px;
+    border-radius: 5px;
+    height: 20px;
+    font-size: 16px;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  @media (max-width: 650px) {
+    height: 50px;
+    line-height: 53px;
+    padding: 0px 20px;
+    span {
+      font-size: 14px;
+    }
+  }
+}
+.inhalt {
+  float: right;
+  height: 70px;
+  width: auto;
+  display: block;
+  padding: 0px 25px;
+  &:hover {
+    background: #2699fb;
+  }
+  img {
+    width: 25x;
+    height: 25px;
+    display: block;
+    margin-top: 22px;
+  }
+  &.inhaltPreview img {
+    width: 22px;
+  }
+  @media (max-width: 650px) {
+    height: 50px;
+    padding: 0px 20px;
+    img {
+      height: 22px;
+      margin-top: 13px;
+    }
+  }
+}
+
+.BookAnsichten {
+  width: 150px;
+  float: left;
+  height: 70px;
+  position: relative;
+  left: calc(50% - 70px);
+  margin-left: -200px;
+  div {
+    cursor: pointer;
+    mask-size: 22px;
+    height: 70px;
+    padding: 0px 37px;
+    float: left;
+    &:hover {
+      background: #2699fb;
+    }
+  }
+  .baSingle {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/baSingle.svg) no-repeat center;
+    mask: url(@/assets/images/icons/baSingle.svg) no-repeat center;
+  }
+  .baDouble {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/baDouble.svg) no-repeat center;
+    mask: url(@/assets/images/icons/baDouble.svg) no-repeat center;
+  }
+  .baFull {
+    background-color: #fff;
+    -webkit-mask: url(@/assets/images/icons/baFull.svg) no-repeat center;
+    mask: url(@/assets/images/icons/baFull.svg) no-repeat center;
+  }
+  .baActive {
+    background: #2699fb;
+  }
+}
+
 @media (max-width: 650px) {
   main {
     overflow-y: hidden;
@@ -175,7 +278,7 @@ header {
   .mobIcons {
     float: left;
     height: 50px;
-    width: 25%;
+    width: auto;
     text-align: center;
     a {
       height: 50px;
@@ -183,47 +286,21 @@ header {
   }
 
   .Mob1 {
+    float: left;
+    height: 50px;
+    width: auto;
+    display: block;
+    padding: 0px 20px;
     background: #2699fb;
-    display: none;
-  }
-  .Mob2 {
-    background-color: #fff;
-    -webkit-mask: url(@/assets/images/icons/home.svg) no-repeat center;
-    mask: url(@/assets/images/icons/home.svg) no-repeat center;
     cursor: pointer;
-    mask-size: 23px;
     &:hover {
-      background-color: #2699fb;
+      background: #217fcf;
     }
-    a {
-      background: none;
-    }
-  }
-  .Mob3 {
-    background-color: #fff;
-    -webkit-mask: url(@/assets/images/icons/faq.svg) no-repeat center;
-    mask: url(@/assets/images/icons/faq.svg) no-repeat center;
-    cursor: pointer;
-    mask-size: 25px;
-    &:hover {
-      background-color: #2699fb;
-    }
-    a {
-      background: none;
-    }
-  }
-  .Mob4 {
-    background-color: #fb2682;
-    -webkit-mask: url(@/assets/logout.svg) no-repeat center;
-    mask: url(@/assets/logout.svg) no-repeat center;
-    cursor: pointer;
-    mask-size: 23px;
-    float: right;
-    &:hover {
-      background-color: #fb2682;
-    }
-    a {
-      background: none;
+    img {
+      width: 20x;
+      height: 20px;
+      display: block;
+      margin-top: 15px;
     }
   }
 }

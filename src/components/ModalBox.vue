@@ -9,6 +9,7 @@
       </div>
       <div class="mod__inner-body">
         <BookLicense v-if="modal.content == 'BookLicense'" />
+        <ModalVerify v-if="modal.content == 'ModalVerify'" />
         <ModalDownload v-if="modal.content == 'ModalDownload'" />
         <BriefDescription v-if="modal.content == 'BriefDescription'" />
         <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
@@ -25,6 +26,7 @@ import ModalDownload from "@/components/ModalDownload.vue";
 import BriefDescription from "@/components/BriefDescription.vue";
 import ShowBookIndex from "@/components/ShowBookIndex.vue";
 import MarkerEdit from "@/components/MarkerEdit.vue";
+import ModalVerify from "@/components/ModalVerify.vue";
 
 export default {
   name: "ModalBox",
@@ -34,6 +36,7 @@ export default {
     BriefDescription,
     ShowBookIndex,
     MarkerEdit,
+    ModalVerify,
   },
   data() {
     return {

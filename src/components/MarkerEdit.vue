@@ -21,7 +21,7 @@
           class="button denie modBtn"
           @click="deleteMarker()"
         >
-          Löschen
+          LöschenXXX
         </button>
       </span>
       <span class="right">
