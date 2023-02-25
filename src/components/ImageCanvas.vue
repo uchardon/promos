@@ -1,9 +1,11 @@
 <template>
   <div class="showPage" :style="'--zoom: calc(' + zoom + ' / 100)'">
     <div
+      xv-touch:drag="movingHandler()"
       :data-page="'page-' + no"
       class="imgContent"
       :class="{ showMarkers: showMarkers }"
+      draggable="true"
       @click="setNewMarker($event)"
     >
       <ImgMarkerSvg
@@ -97,6 +99,9 @@ export default {
   // },
   methods: {
     ...mapActions(["setModal", "setMarkersForBook", "saveMarkersToDB"]),
+    movingHandler() {
+      console.log("myTouchStartHandler");
+    },
     getElement() {
       let arg = "[data-page=page-" + this.no + "]";
       // console.log("arg", arg);
@@ -168,36 +173,13 @@ export default {
         m.index = i;
       });
     },
-    saveMarker(marker) {
-      console.log("saveMarker");
-      if (marker.index == -1) {
-        // console.log("NEW MARKER");
-        this.pageMarkers.push(marker);
-        this.setIndex();
-        // this.setMarkersForBook({
-        //   bookId: this.book.id,
-        //   page: this.no,
-        //   markers: this.pageMarkers,
-        // });
-      } else {
-        // console.log("UPDATE MARKER");
-        this.pageMarkers[marker.index] = marker;
-        // this.setMarkersForBook({
-        //   bookId: this.book.id,
-        //   page: this.no,
-        //   markers: this.pageMarkers,
-        // });
-      }
-      this.showModal(false);
-      this.saveMarkersToDB();
-      // TODO save to store
-    },
     setNewMarker(e) {
-      console.log("setNewMarker");
+      console.log("setNewMarker", this.state.showMarkerEdit);
       if (this.curMarker != "" && !this.state.showMarkerEdit) {
+        let zoomFaktor = 100 / this.zoom;
         this.getBox(e.target);
-        var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
-        var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
+        var x = ((e.clientX - this.box.posX) / this.box.faktorX) * zoomFaktor; // x position within the element. <->
+        var y = ((e.clientY - this.box.posY) / this.box.faktorY) * zoomFaktor; // y position within the element.  |
         this.markerToEdit.content = {
           index: -1,
           desc: "",
@@ -260,6 +242,7 @@ nav.pageNav {
   img {
     width: 100%;
   }
+  outline: 2px solid red;
 }
 .big {
   font-size: 1.7em;

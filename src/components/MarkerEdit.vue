@@ -1,7 +1,6 @@
 <template>
   <div class="edit-area inner">
     <div class="text-input">
-      {{ markerToEdit }}
       <textarea
         id="marker-text"
         ref="textinput"
@@ -76,6 +75,7 @@ export default {
     deleteMarker() {
       this.filteredMarkers.splice(this.markerToEdit.content.index, 1);
       this.setIndex();
+      this.setModal(false, "");
     },
     saveMarker() {
       // console.log("met: saveMarker");
@@ -90,7 +90,9 @@ export default {
         // console.log("UPDATE MARKER");
         this.filteredMarkers[this.markerToEdit.content.index] =
           this.markerToEdit.content;
+        this.saveMarkersToDB();
       }
+      this.setModal(false, "");
     },
     setIndex() {
       this.filteredMarkers.forEach((m, i) => {

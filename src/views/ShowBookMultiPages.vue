@@ -19,7 +19,7 @@
         >
           <circle cx="50" cy="50" r="40" stroke-width="7px" :fill="color" />
         </svg>
-        <div @click="showMarkers = !showMarkers">
+        <div @click="toggleShowMarkers()">
           <IconShow size="35px" fill="#fff" :on="showMarkers" />
         </div>
       </div>
@@ -111,6 +111,12 @@ export default {
   // },
   methods: {
     ...mapActions(["setModal", "setCurrentMarker", "getMarkersFromDb"]),
+    toggleShowMarkers() {
+      this.showMarkers = !this.showMarkers;
+      if (!this.showMarkers) {
+        this.setNewMarkerColor("");
+      }
+    },
     zoomin(inout) {
       const max = 150;
       const min = 50;
@@ -176,6 +182,9 @@ export default {
       } else {
         this.setCurrentMarker(color);
         this.state.setNewMarker = true;
+      }
+      if (color != "") {
+        this.showMarkers = true;
       }
     },
     showModal(state) {
