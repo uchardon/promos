@@ -5,11 +5,9 @@
     :data-no="no"
   >
     <div
-      xv-touch:drag="movingHandler()"
       :data-page="'page-' + no"
       class="imgContent"
       :class="{ showMarkers: showMarkers }"
-      draggable="true"
       @click="setNewMarker($event)"
     >
       <ImgMarkerSvg

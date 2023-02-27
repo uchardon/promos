@@ -152,9 +152,7 @@ export default {
         setTimeout(() => {
           const i = target.getAttribute("data-no");
           this.pageInViewport = i;
-          // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", i);
         }, 1000);
-        // console.log("----------");
       });
     },
     toggleShowMarkers() {
@@ -223,7 +221,7 @@ export default {
       };
     },
     getImgUrl(i) {
-      return `${this.$store.state.dataUrl}${this.book.id}/page-${i}.jpg`;
+      return `${this.$store.state.dataUrl}${this.book.id}/page-${i}`;
     },
     getDataUrl() {
       return `data/${this.book.id}/`;
