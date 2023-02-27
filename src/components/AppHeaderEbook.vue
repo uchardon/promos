@@ -19,8 +19,11 @@
         <img src="@/assets/images/icons/threebar.svg" />
       </div>
       <div class="BookAnsichten" :class="{ xyz: ShowDouble }">
-        <div class="baSingle baActive" @click="ShowDouble = false"></div>
-        <div class="baDouble" @click="ShowDouble = true"></div>
+        <div
+          class="baSingle baActive"
+          @click="TriggerPageAnsicht = false"
+        ></div>
+        <div class="baDouble" @click="TriggerPageAnsicht = true"></div>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/lesezeichen.svg" />

@@ -43,14 +43,17 @@
         <!-- span> Seite {{ currentPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
-    <ImageCanvas
-      v-for="(page, index) in pages"
-      :key="index"
-      :no="index"
-      :imgurl="page"
-      :zoom="zoom"
-      :showmarkers="showMarkers"
-    />
+    <div class="ShowPageContainer">
+      <h1>{{ book.title }}</h1>
+      <ImageCanvas
+        v-for="(page, index) in pages"
+        :key="index"
+        :no="index"
+        :imgurl="page"
+        :zoom="zoom"
+        :showmarkers="showMarkers"
+      />
+    </div>
   </div>
 </template>
 
@@ -194,6 +197,18 @@ export default {
 </script>
 
 <style scroped lang="scss">
+h1 {
+  padding: 50px;
+  text-align: left;
+  @media (max-width: 650px) {
+    padding: 0px 25px 25px 25px;
+  }
+}
+
+.DoublePageAnsicht {
+  background: #000;
+}
+
 .addbtn {
   font-size: 1.6em;
 }

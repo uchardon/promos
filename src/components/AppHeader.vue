@@ -73,7 +73,7 @@
         class="Mob4 mobIcons logout"
       >
         <router-link class="" :to="{ name: 'gologin' }">
-          <img src="@/assets/logout.svg" alt="" />
+          <!-- <img src="@/assets/logout.svg" alt="" /> -->
         </router-link>
       </div>
     </div>
@@ -234,7 +234,6 @@ header {
     background-color: #fb2682;
     -webkit-mask: url(@/assets/logout.svg) no-repeat center;
     mask: url(@/assets/logout.svg) no-repeat center;
-    cursor: pointer;
     mask-size: 23px;
     float: right;
     &:hover {
@@ -242,6 +241,9 @@ header {
     }
     a {
       background: none;
+      margin-top: 0px;
+      width: 110px;
+      float: right;
     }
   }
 }

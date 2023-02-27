@@ -102,7 +102,7 @@
           <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
         </div>
         <div
-          id="faq-3"
+          id="faq-5"
           class="faqItem__body tabEvent"
           :class="{ active: state.currentTab == 5 }"
         >
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="faqItem wow fadeInLeft">
-        <div class="faqItem__header tabBtn" @click="chgCurrentTab(5)">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(6)">
           <h6>
             2. Einer meiner Lizenznutzer hat sein Passwort verloren und kann
             sich nicht mehr einlogen.
@@ -125,9 +125,9 @@
           <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
         </div>
         <div
-          id="faq-3"
+          id="faq-6"
           class="faqItem__body tabEvent"
-          :class="{ active: state.currentTab == 5 }"
+          :class="{ active: state.currentTab == 6 }"
         >
           <p>
             Sie gehen wie gewohnt über die Lizenzverwaltung des jeweiligen
@@ -180,6 +180,10 @@ export default {
 };
 </script>
 <style scoped>
+.main {
+  max-width: 1024px;
+  margin: 0px auto;
+}
 p {
   text-align: left;
   width: 100%;
@@ -193,7 +197,10 @@ p {
 }
 h2 {
   margin-bottom: 5px;
-  margin-top: 35px;
+  margin-top: 60px;
+}
+.faqItem__header {
+  padding: 20px 25px;
 }
 .main__header:first-child h2 {
   margin-top: 0px;
