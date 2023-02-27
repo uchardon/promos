@@ -1,5 +1,10 @@
 <template>
   <div class="edit-area inner">
+    <div class="comment-title">
+      <img src="@/assets/images/icons/kommentar-active.svg" />
+      <h2>Notiz hinzufügen</h2>
+      <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p>
+    </div>
     <div class="text-input">
       <!-- MARKERS: {{ markers }}--- <br />
       TO EDIT: {{ markerToEdit }}--- <br />
@@ -115,11 +120,11 @@ textarea {
   font-size: 16px;
   line-height: 21px;
   font-weight: 400;
-  color: #333333;
+  color: #000;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 19px 20px;
-  background: #fff;
+  background: #fafbfe;
   width: 100%;
   font-family: "Roboto", sans-serif;
   border-radius: 10px;
@@ -128,5 +133,30 @@ textarea {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+.mod__inner-footer {
+  padding: 20px 0px;
+  padding-bottom: 0px;
+}
+
+.comment-title {
+  width: 100%;
+  margin-top: -30px;
+  img {
+    float: left;
+    width: 4%;
+    margin-top: 5px;
+  }
+  h2 {
+    width: 93.5%;
+    float: right;
+    font-size: 20px;
+    font-family: roboto;
+  }
+  p {
+    width: 100%;
+    float: right;
+    font-size: 16px;
+  }
 }
 </style>

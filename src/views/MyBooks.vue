@@ -56,8 +56,15 @@
           </div>
           <div class="buttons">
             <button
+              v-if="book.maxLicense <= 1"
               class="adminlicences btn"
-              :disabled="book.maxLicense <= 1"
+              @click="showBuyLicense()"
+            >
+              Lizenzen kaufen
+            </button>
+            <button
+              v-if="book.maxLicense > 1"
+              class="adminlicences btn"
               @click="showLicense(book)"
             >
               Lizenzen verwalten
@@ -144,6 +151,10 @@ export default {
     showLicense(book) {
       this.setCurrentBook(book);
       this.setModal({ state: true, content: "BookLicense" });
+      // this.$router.push({ name: "license" });
+    },
+    showBuyLicense() {
+      this.setModal({ state: true, content: "BuyLicense" });
       // this.$router.push({ name: "license" });
     },
   },

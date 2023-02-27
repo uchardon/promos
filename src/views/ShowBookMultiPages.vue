@@ -47,33 +47,23 @@
         <!-- span> Seite {{ curPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
-    <div v-if="false">
-      <ImageCanvas
+    <div class="showAllPages" :class="seitenAnsicht">
+      <PdfCanvas
         v-for="(page, index) in pages"
         :key="index"
-        :no="index"
-        :imgurl="page"
+        :no="index + 1"
+        :dataurl="getDataUrl()"
         :zoom="zoom"
         :showmarkers="showMarkers"
+        :observer="observer"
       />
     </div>
-
-    <PdfCanvas
-      v-for="(page, index) in pages"
-      :key="index"
-      :no="index + 1"
-      :dataurl="getDataUrl()"
-      :zoom="zoom"
-      :showmarkers="showMarkers"
-      :observer="observer"
-    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
 import IconShow from "@/components/IconShow.vue";
-import ImageCanvas from "@/components/ImageCanvas.vue";
 import PdfCanvas from "@/components/PdfCanvas.vue";
 import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
 
@@ -81,7 +71,6 @@ export default {
   name: "ShowBookMultiPages",
   components: {
     IconShow,
-    ImageCanvas,
     AppHeaderEbook,
     PdfCanvas,
   },
@@ -112,7 +101,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(["curMarker", "markers", "currentBook", "curPage"]),
+    ...mapState([
+      "curMarker",
+      "markers",
+      "currentBook",
+      "curPage",
+      "seitenAnsicht",
+    ]),
     ...mapGetters(["getBooks"]),
   },
   created() {
@@ -261,6 +256,18 @@ export default {
 </script>
 
 <style scroped lang="scss">
+h1 {
+  padding: 50px;
+  text-align: left;
+  @media (max-width: 650px) {
+    padding: 0px 25px 25px 25px;
+  }
+}
+
+.DoublePageAnsicht {
+  background: #000;
+}
+
 .addbtn {
   font-size: 1.6em;
 }

@@ -36,6 +36,7 @@ export default new Vuex.createStore({
       content: "",
     },
     bookImages: [],
+    seitenAnsicht: "single",
   },
   getters: {
     getBookImages: (state) => {
@@ -92,6 +93,9 @@ export default new Vuex.createStore({
       // console.log("SET_SUBUSERS");
       state.subusers = payload;
     },
+    SET_SEITENANSICHT: (state, payload) => {
+      state.seitenAnsicht = payload;
+    },
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
@@ -145,6 +149,9 @@ export default new Vuex.createStore({
     },
   },
   actions: {
+    setSeitenAnsicht: ({ commit }, payload) => {
+      commit("SET_SEITENANSICHT", payload);
+    },
     POPULATE_FROM_CACHE: async ({ state }) => {
       let [keyss, values] = await Promise.all([keys(), getAll()]);
       // eslint-disable-next-line

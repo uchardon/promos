@@ -21,8 +21,16 @@
         <img src="@/assets/images/icons/threebar.svg" />
       </div>
       <div class="BookAnsichten" :class="{ xyz: ShowDouble }">
-        <div class="baSingle baActive" @click="ShowDouble = false"></div>
-        <div class="baDouble" @click="ShowDouble = true"></div>
+        <div
+          class="baSingle"
+          :class="{ baActive: seitenAnsicht == 'single' }"
+          @click="setSeitenAnsicht('single')"
+        ></div>
+        <div
+          class="baDouble"
+          :class="{ baActive: seitenAnsicht == 'double' }"
+          @click="setSeitenAnsicht('double')"
+        ></div>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/lesezeichen.svg" />
@@ -70,10 +78,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["curPage"]),
+    ...mapState(["curPage", "seitenAnsicht"]),
   },
   methods: {
-    ...mapActions(["setModal", "setCurPage"]),
+    ...mapActions(["setModal", "setCurPage", "setSeitenAnsicht"]),
     showIndex() {
       console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
