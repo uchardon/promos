@@ -31,13 +31,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(["currentBook"]),
+    ...mapState(["currentBook", "curPage"]),
   },
   mounted() {
     this.contens = JSON.parse(this.currentBook.tableofcontens);
   },
   methods: {
-    ...mapActions(["setModal"]),
+    ...mapActions(["setModal", "setCurPage"]),
     getElement(no) {
       let arg = "[data-page=page-" + no + "]";
       // console.log("arg", arg);
@@ -46,6 +46,7 @@ export default {
     },
     chgPage(pageNo) {
       let pageBox = this.getElement(pageNo);
+      this.setCurPage(pageNo);
       pageBox.scrollIntoView();
     },
   },

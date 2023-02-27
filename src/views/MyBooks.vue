@@ -36,7 +36,7 @@
           class="bookCard"
         >
           <div
-            v-if="book.maxLicense >= 1"
+            v-if="book.maxLicense > 1"
             class="adminlicences license pointer"
             @click="showLicense(book)"
           >
@@ -55,7 +55,18 @@
             <p @click.prevent="showBook(book)">Mehr Informationen</p>
           </div>
           <div class="buttons">
-            <button class="adminlicences btn" @click="showLicense(book)">
+            <button
+              v-if="book.maxLicense <= 1"
+              class="adminlicences btn"
+              @click="showBuyLicense()"
+            >
+              Lizenzen kaufen
+            </button>
+            <button
+              v-if="book.maxLicense > 1"
+              class="adminlicences btn"
+              @click="showLicense(book)"
+            >
               Lizenzen verwalten
             </button>
             <DownloadButton />
@@ -140,6 +151,10 @@ export default {
     showLicense(book) {
       this.setCurrentBook(book);
       this.setModal({ state: true, content: "BookLicense" });
+      // this.$router.push({ name: "license" });
+    },
+    showBuyLicense() {
+      this.setModal({ state: true, content: "BuyLicense" });
       // this.$router.push({ name: "license" });
     },
   },

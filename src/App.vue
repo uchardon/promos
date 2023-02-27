@@ -22,7 +22,6 @@
       <router-link class="xyz" to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-
     <AppSymbols />
   </div>
 </template>
@@ -46,6 +45,7 @@ export default {
 
   data() {
     return {
+      url: "buch.pdf",
       state: {},
       user: {
         name: "Uwe",

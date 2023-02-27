@@ -6,24 +6,31 @@
       </div>
       <div class="BookPages">
         <input
+          v-model="currentPage"
           type="number"
           maxlength="3"
           placeholder="1"
           onclick="this.placeholder=''"
           onfocus="this.select()"
           onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
+          @change="newPage()"
         />
-        <span>/ 55</span>
+        <span>/ {{ maxpages }}</span>
       </div>
       <div class="inhalt inhaltPreview pointer" @click="showIndex()">
         <img src="@/assets/images/icons/threebar.svg" />
       </div>
       <div class="BookAnsichten" :class="{ xyz: ShowDouble }">
         <div
-          class="baSingle baActive"
-          @click="TriggerPageAnsicht = false"
+          class="baSingle"
+          :class="{ baActive: seitenAnsicht == 'single' }"
+          @click="setSeitenAnsicht('single')"
         ></div>
-        <div class="baDouble" @click="TriggerPageAnsicht = true"></div>
+        <div
+          class="baDouble"
+          :class="{ baActive: seitenAnsicht == 'double' }"
+          @click="setSeitenAnsicht('double')"
+        ></div>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/lesezeichen.svg" />
@@ -51,19 +58,48 @@
   </header>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "AppHeaderEbook",
+  props: {
+    pageInViewport: {
+      type: Number,
+      default: 1,
+    },
+    maxpages: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       ShowDouble: false,
+      currentPage: 1,
     };
   },
+  computed: {
+    ...mapState(["curPage", "seitenAnsicht"]),
+  },
   methods: {
-    ...mapActions(["setModal"]),
+    ...mapActions(["setModal", "setCurPage", "setSeitenAnsicht"]),
     showIndex() {
       console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
+    },
+    newPage() {
+      this.chgPage(this.currentPage);
+    },
+    chgPage(pageNo) {
+      console.log("chgPage");
+      let pageBox = this.getElement(pageNo);
+      this.setCurPage(pageNo);
+      pageBox.scrollIntoView();
+    },
+    getElement(no) {
+      let arg = "[data-page=page-" + no + "]";
+      // console.log("arg", arg);
+      this.target = document.querySelector(arg);
+      return this.target;
     },
   },
 };
@@ -81,7 +117,7 @@ header {
   margin: 0px;
   position: fixed;
   top: 0px;
-  z-index: 3;
+  z-index: 13;
   width: 100%;
 }
 .header__inner {

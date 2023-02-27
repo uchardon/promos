@@ -14,6 +14,7 @@
         <BriefDescription v-if="modal.content == 'BriefDescription'" />
         <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
         <MarkerEdit v-if="modal.content == 'MarkerEdit'" />
+        <BuyLicense v-if="modal.content == 'BuyLicense'" />
       </div>
     </div>
   </div>
@@ -27,6 +28,7 @@ import BriefDescription from "@/components/BriefDescription.vue";
 import ShowBookIndex from "@/components/ShowBookIndex.vue";
 import MarkerEdit from "@/components/MarkerEdit.vue";
 import ModalVerify from "@/components/ModalVerify.vue";
+import BuyLicense from "@/components/BuyLicense.vue";
 
 export default {
   name: "ModalBox",
@@ -37,6 +39,7 @@ export default {
     ShowBookIndex,
     MarkerEdit,
     ModalVerify,
+    BuyLicense,
   },
   data() {
     return {
