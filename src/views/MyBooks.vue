@@ -40,7 +40,7 @@
             class="adminlicences license pointer"
             @click="showLicense(book)"
           >
-            {{ book.maxLicense }}
+            {{ book.maxLicense - 1 }}
           </div>
           <div class="bookCard__image" @click.prevent="showBookJPGs(book)">
             <img
@@ -79,17 +79,21 @@
         </a>
       </div>
     </div>
+
+    <SaveLocal />
   </div>
 </template>
 
 <script>
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
+import SaveLocal from "@/components/SaveLocal.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     DownloadButton,
+    SaveLocal,
   },
   props: [],
   emits: [],

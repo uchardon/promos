@@ -38,11 +38,10 @@
           </h6>
           <div class="lmm-state">
             <div class="lmm-state-left">
-              <span
-                >{{ currentBook.usedLicense }}/{{
-                  currentBook.maxLicense
-                }}</span
-              >
+              <span>
+                {{ currentBook.usedLicense - 1 }}/
+                {{ currentBook.maxLicense - 1 }}
+              </span>
               Verfügbare Lizenzen
             </div>
             <div class="lmm-state-right">
@@ -180,13 +179,14 @@ export default {
     chgSubPage(page) {
       this.state.subPage = page;
     },
-    delSubuser(lid) {
+    delSubuser(sid) {
       // console.log("delSubuser", lid);
       let payload = {
-        subid: lid,
+        subid: sid,
         kbid: this.currentBook.kb_id,
       };
       this.deleteSubuser(payload);
+      this.currentBook.usedLicense--;
       // let currentindex = this.subusers.findIndex((s) => s.id == lid);
       // this.subusers.splice(currentindex, 1);
       // this.currentBook.usedLicense--;

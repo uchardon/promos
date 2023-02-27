@@ -38,10 +38,12 @@
           >
             Login
           </button>
-          <a class="passwort-vergessen-link">Passwort vergessen</a>
+          <a class="passwort-vergessen-link" @click="sendPW()"
+            >Passwort vergessen
+          </a>
+          <p v-if="msg">{{ msg }}</p>
         </div>
       </form>
-      <p v-if="msg">{{ msg }}</p>
     </div>
     <div v-if="pagestate == 'checkFail'" class="center">
       <h1>Bitte benutzen Sie ihren Link</h1>
@@ -53,7 +55,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AuthService from "@/services/AuthService.js";
+import Axios from "axios";
 
 export default {
   data() {
@@ -67,6 +71,9 @@ export default {
       pagestate: "checkOK",
       // checkWait, checkFail, checkOK
     };
+  },
+  computed: {
+    ...mapState(["url"]),
   },
   async created() {
     this.$store.dispatch("setOnlineMode", navigator.onLine);
@@ -122,6 +129,22 @@ export default {
         this.$router.push("/mybooks");
       } catch (error) {
         this.msg = error.response.data.msg;
+      }
+    },
+
+    async sendPW() {
+      console.log("sendPW");
+      if (this.email == "") {
+        const response = await Axios.post(this.url + "mailpw.php", {
+          email: this.email,
+        });
+        console.log("response", response);
+        this.msg =
+          "Ein neues Passwort wird an die Mailadresse " +
+          this.email +
+          " gesendet!";
+      } else {
+        this.msg = "Bitte tragen Sie eine E-Mailadresse ein!";
       }
     },
   },

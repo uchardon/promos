@@ -6,7 +6,6 @@
       <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p>
     </div>
     <div class="text-input">
-      <!-- {{ markerToEdit }} -->
       <textarea
         id="marker-text"
         ref="textinput"
@@ -82,7 +81,6 @@ export default {
       this.filteredMarkers.splice(this.markerToEdit.content.index, 1);
       this.setIndex();
       this.setModal(false, "");
-      // this.setModal({ state: true, content: "ModalVerify" });
     },
     saveMarker() {
       // console.log("met: saveMarker");
@@ -97,6 +95,7 @@ export default {
         // console.log("UPDATE MARKER");
         this.filteredMarkers[this.markerToEdit.content.index] =
           this.markerToEdit.content;
+        this.saveMarkersToDB();
       }
       this.setModal(false, "");
     },

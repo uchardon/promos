@@ -3,11 +3,6 @@
     <Transition name="fadeUp">
       <ModalBox v-if="modal.state"></ModalBox>
     </Transition>
-    <AppHeader v-if="$route.name != 'showBook'">
-      {{ $store.state.user.vorname }}
-      {{ $store.state.user.nachname }}
-    </AppHeader>
-
     <main
       :class="{
         wrapper: $route.name != 'useYourLink' && $route.name != 'gologin',
