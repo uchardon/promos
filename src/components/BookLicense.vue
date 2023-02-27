@@ -39,8 +39,8 @@
           <div class="lmm-state">
             <div class="lmm-state-left">
               <span>
-                {{ currentBook.usedLicense - 1 }}/
-                {{ currentBook.maxLicense - 1 }}
+                <!-- {{ currentBook.usedLicense - 1 }}/ -->
+                {{ currentBook.maxLicense - currentBook.usedLicense }}
               </span>
               Verfügbare Lizenzen
             </div>
