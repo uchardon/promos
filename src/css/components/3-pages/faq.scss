@@ -3,43 +3,51 @@
     background: #ffffff;
     border-radius: 10px;
     margin-bottom: 15px;
+
     &__header {
       padding: 28px 26px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
+
       img {
         pointer-events: none;
         @include transition;
       }
+
       &.active {
         img {
           transform: rotate(180deg);
         }
       }
     }
+
     &__body {
       max-height: 0;
       overflow: hidden;
       padding: 0 26px;
       @include transition;
+
       p {
         max-width: 580px;
       }
+
       &.active {
-        max-height: 500px;
+        max-height: 5000px;
         padding-bottom: 30px;
       }
     }
   }
 }
+
 @mixin faq-xxsm-xsm {
   .faq {
     &Item {
       &__header {
         padding: 24px 20px;
       }
+
       &__body {
         padding: 0 20px;
       }
