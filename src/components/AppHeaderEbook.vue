@@ -6,14 +6,16 @@
       </div>
       <div class="BookPages">
         <input
+          v-model="currentPage"
           type="number"
           maxlength="3"
           placeholder="1"
           onclick="this.placeholder=''"
           onfocus="this.select()"
           onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
+          @change="newPage()"
         />
-        <span>/ 55</span>
+        <span>/ {{ maxpages }}</span>
       </div>
       <div class="inhalt inhaltPreview pointer" @click="showIndex()">
         <img src="@/assets/images/icons/threebar.svg" />
@@ -48,19 +50,48 @@
   </header>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "AppHeaderEbook",
+  props: {
+    pageInViewport: {
+      type: Number,
+      default: 1,
+    },
+    maxpages: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       ShowDouble: false,
+      currentPage: 1,
     };
   },
+  computed: {
+    ...mapState(["curPage"]),
+  },
   methods: {
-    ...mapActions(["setModal"]),
+    ...mapActions(["setModal", "setCurPage"]),
     showIndex() {
       console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
+    },
+    newPage() {
+      this.chgPage(this.currentPage);
+    },
+    chgPage(pageNo) {
+      console.log("chgPage");
+      let pageBox = this.getElement(pageNo);
+      this.setCurPage(pageNo);
+      pageBox.scrollIntoView();
+    },
+    getElement(no) {
+      let arg = "[data-page=page-" + no + "]";
+      // console.log("arg", arg);
+      this.target = document.querySelector(arg);
+      return this.target;
     },
   },
 };
@@ -78,7 +109,7 @@ header {
   margin: 0px;
   position: fixed;
   top: 0px;
-  z-index: 3;
+  z-index: 13;
   width: 100%;
 }
 .header__inner {

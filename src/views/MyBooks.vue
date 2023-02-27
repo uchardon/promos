@@ -36,7 +36,7 @@
           class="bookCard"
         >
           <div
-            v-if="book.maxLicense >= 1"
+            v-if="book.maxLicense > 1"
             class="adminlicences license pointer"
             @click="showLicense(book)"
           >
@@ -55,7 +55,11 @@
             <p @click.prevent="showBook(book)">Mehr Informationen</p>
           </div>
           <div class="buttons">
-            <button class="adminlicences btn" @click="showLicense(book)">
+            <button
+              class="adminlicences btn"
+              :disabled="book.maxLicense <= 1"
+              @click="showLicense(book)"
+            >
               Lizenzen verwalten
             </button>
             <DownloadButton />

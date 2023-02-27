@@ -1,5 +1,6 @@
 import Axios from "axios";
 import Vuex from "vuex";
+import { set, keys, getAll } from "@/services/idb.js";
 
 export default new Vuex.createStore({
   state: {
@@ -14,6 +15,7 @@ export default new Vuex.createStore({
     user: {},
     books: [],
     currentBook: {},
+    curPage: 1,
     markers: [],
     markerToEdit: {
       todo: "",
@@ -33,8 +35,12 @@ export default new Vuex.createStore({
       state: false,
       content: "",
     },
+    bookImages: [],
   },
   getters: {
+    getBookImages: (state) => {
+      return state.bookImages;
+    },
     getModal: (state) => {
       return state.modal;
     },
@@ -54,17 +60,24 @@ export default new Vuex.createStore({
       return state.subusers;
     },
     getMarkersByBookpage: (state) => (payload) => {
-      const result = state.markers.find(
-        (m) => m.bookId == payload.bookId && m.page == payload.page
-      );
+      const result = state.markers.find((m) => m.page == payload.page);
       if (result !== undefined) {
+        // console.log("undef---");
         return result;
       } else {
+        // console.log("empt---");
+        state.markers.push({ page: payload.page, markers: [] });
         return [];
       }
     },
   },
   mutations: {
+    addBookImage: (state, bookImage) => {
+      if (!state.bookImage.find((e) => e.id === bookImage.id)) {
+        set(bookImage.id, bookImage.name);
+        state.bookImages.push(bookImage);
+      }
+    },
     RESET: (state) => {
       // Object.assign(state, getDefaultState());
       console.log("STATE ", state);
@@ -94,6 +107,9 @@ export default new Vuex.createStore({
     },
     setCurrentBook: (state, book) => {
       state.currentBook = book;
+    },
+    SET_CURPAGE: (state, pageNo) => {
+      state.curPage = pageNo;
     },
     setMainMenu: (state, payload) => {
       // ...
@@ -129,6 +145,11 @@ export default new Vuex.createStore({
     },
   },
   actions: {
+    POPULATE_FROM_CACHE: async ({ state }) => {
+      let [keyss, values] = await Promise.all([keys(), getAll()]);
+      // eslint-disable-next-line
+      state.bookImages = keyss.map((key, index) => ({ id: key, name: values[index] }));
+    },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {
         kid: userId,
@@ -233,6 +254,9 @@ export default new Vuex.createStore({
     setModal: ({ commit }, payload) => {
       console.log("setModal", payload);
       commit("setModal", payload);
+    },
+    setCurPage: ({ commit }, pageNo) => {
+      commit("SET_CURPAGE", pageNo);
     },
     sendNotificationToSubuser: async ({ state }, payload) => {
       const response = await Axios.post(state.url + "mail.php", {

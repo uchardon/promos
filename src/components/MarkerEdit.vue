@@ -1,6 +1,9 @@
 <template>
   <div class="edit-area inner">
     <div class="text-input">
+      <!-- MARKERS: {{ markers }}--- <br />
+      TO EDIT: {{ markerToEdit }}--- <br />
+      FILTERED: {{ filteredMarkers }} -->
       <textarea
         id="marker-text"
         ref="textinput"
@@ -21,7 +24,7 @@
           class="button denie modBtn"
           @click="deleteMarker()"
         >
-          LöschenXXX
+          Löschen
         </button>
       </span>
       <span class="right">
@@ -50,7 +53,6 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MarkerEdit",
-  emits: ["closeModal", "saveMarker"],
   data() {
     return {
       marker: {},
@@ -61,7 +63,7 @@ export default {
     ...mapGetters(["getMarkersByBookpage"]),
     filteredMarkers() {
       return this.getMarkersByBookpage({
-        bookId: this.markerToEdit.bookId,
+        // bookId: this.markerToEdit.bookId,
         page: this.markerToEdit.page,
       }).markers;
     },
@@ -82,8 +84,10 @@ export default {
 
       if (this.markerToEdit.content.index == -1) {
         // console.log("NEW MARKER");
+        console.log("xfilteredMarkersxx", this.filteredMarkers);
         if (this.markerToEdit.content.desc != "") {
           this.filteredMarkers.push(this.markerToEdit.content);
+          // console.log("----------filteredMarkersxx", this.filteredMarkers);
         }
         this.setIndex();
       } else {
@@ -95,6 +99,7 @@ export default {
       this.setModal(false, "");
     },
     setIndex() {
+      console.log("xfilteredMarkersxx", this.filteredMarkers);
       this.filteredMarkers.forEach((m, i) => {
         m.index = i;
       });

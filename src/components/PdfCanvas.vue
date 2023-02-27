@@ -1,5 +1,9 @@
 <template>
-  <div class="showPage" :style="'--zoom: calc(' + zoom + ' / 100)'">
+  <div
+    class="showPage"
+    :style="'--zoom: calc(' + zoom + ' / 100)'"
+    :data-no="no"
+  >
     <div
       xv-touch:drag="movingHandler()"
       :data-page="'page-' + no"
@@ -12,30 +16,45 @@
         v-for="(marker, index) in filteredMarkers"
         :key="index"
         :box="box"
-        :pos-x="(box.width / 100) * marker.x"
-        :pos-y="(box.height / 100) * marker.y"
+        :pos-x="(box.width / 100) * marker.x - 8"
+        :pos-y="(box.height / 100) * marker.y - 8"
         :color="marker.color"
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
-      <img :src="imgurl" :alt="book.title" @load="resizeEvent()" />
+      <pdf
+        :src="dataurl + 'buch.pdf'"
+        :page="no"
+        :resize="true"
+        @loading="resizeEvent($event)"
+      >
+        <template #loading> loading content here... </template>
+      </pdf>
     </div>
     <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
     <div v-else class="pageno">&nbsp;</div>
+    {{ box.width }} x {{ box.height }}
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
+import pdf from "pdfvuer";
+// import "pdfjs-dist/build/pdf.worker.entry";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
 
 export default {
   name: "ImageCanvas",
   components: {
     ImgMarkerSvg,
+    pdf,
   },
   props: {
-    imgurl: {
+    // eslint-disable-next-line
+    observer: {
+      type: Object,
+    },
+    dataurl: {
       type: String,
       required: true,
     },
@@ -77,16 +96,17 @@ export default {
     ...mapGetters(["getBooks", "getMarkersByBookpage"]),
     filteredMarkers() {
       return this.getMarkersByBookpage({
-        bookId: this.book.id,
         page: this.no,
-      });
+      }).markers;
     },
   },
   mounted() {
+    this.observer.observe(this.$el);
     let bookId = this.$store.state.currentBook.id;
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == bookId);
+    // this.getMarkersFromDb();
     this.getMarkersByPage();
     const target = this.getElement();
     this.getBox(target, "mo");
@@ -143,15 +163,15 @@ export default {
     },
     getMarkersByPage() {
       // console.log("getMarkersByPage", this.no);
-      let pm = this.getMarkersByBookpage({
-        bookId: this.book.id,
+      let pagema = this.getMarkersByBookpage({
+        // bookId: this.book.id,
         page: this.no,
       });
-      // console.log("pm", pm);
-      if (pm == -1) {
+      console.log("pagema", pagema);
+      if (pagema.lendth == 0) {
         this.pageMarkers = [];
       } else {
-        this.pageMarkers = pm.markers;
+        this.pageMarkers = pagema.markers;
       }
     },
     getBox(target) {
@@ -176,10 +196,9 @@ export default {
     setNewMarker(e) {
       console.log("setNewMarker", this.state.showMarkerEdit);
       if (this.curMarker != "" && !this.state.showMarkerEdit) {
-        let zoomFaktor = 100 / this.zoom;
         this.getBox(e.target);
-        var x = ((e.clientX - this.box.posX) / this.box.faktorX) * zoomFaktor; // x position within the element. <->
-        var y = ((e.clientY - this.box.posY) / this.box.faktorY) * zoomFaktor; // y position within the element.  |
+        var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
+        var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
         this.markerToEdit.content = {
           index: -1,
           desc: "",
@@ -200,14 +219,23 @@ export default {
         this.state.setNewMarker = false;
       }
     },
-    resizeEvent() {
-      // console.log("resizeEvent");
-      this.getBox(this.target);
+    resizeEvent(st) {
+      console.log("resizeEvent", st, this.target);
+      if (!st) {
+        this.getBox(this.target);
+      }
     },
   },
 };
 </script>
-
+<style>
+.textLayer > span {
+  pointer-events: none;
+}
+#viewerContainer {
+  overflow: hidden;
+}
+</style>
 <style lang="scss" scoped>
 .click {
   cursor: pointer;
@@ -247,7 +275,7 @@ nav.pageNav {
 .imgContent {
   position: relative;
   /*transform: scale(1);*/
-  overflow: auto;
+  overflow: hidden;
   /* transform: scale(var(--zoom, 1));*/
   img {
     width: 100%;
