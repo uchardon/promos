@@ -1,41 +1,47 @@
 <template>
-  <div class="showPage" :style="'--zoom: calc(' + zoom + ' / 100)'">
+  <div class="showPage" :data-no="no">
     <div
-      xv-touch:drag="movingHandler()"
       :data-page="'page-' + no"
       class="imgContent"
       :class="{ showMarkers: showMarkers }"
-      draggable="true"
       @click="setNewMarker($event)"
     >
       <ImgMarkerSvg
         v-for="(marker, index) in filteredMarkers"
         :key="index"
         :box="box"
-        :pos-x="(box.width / 100) * marker.x"
-        :pos-y="(box.height / 100) * marker.y"
+        :pos-x="(box.width / 100) * marker.x * zoomFaktor()"
+        :pos-y="(box.height / 100) * marker.y * zoomFaktor()"
         :color="marker.color"
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
-      <img :src="imgurl" :alt="book.title" @load="resizeEvent()" />
+      <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
+      <div v-else class="pageno">&nbsp;</div>
+      <img :src="imgurl()" :alt="book.title" @load="resizeEvent()" />
     </div>
-    <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
-    <div v-else class="pageno">&nbsp;</div>
+
+    <!-- {{ box.width }} x {{ box.height }} -->
   </div>
 </template>
 
 <script>
+// import { keys, get } from "@/services/idb.js";
 import { mapActions, mapState, mapGetters } from "vuex";
+// import "pdfjs-dist/build/pdf.worker.entry";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
 
 export default {
-  name: "ImageCanvas",
+  name: "PdfCanvas",
   components: {
     ImgMarkerSvg,
   },
   props: {
-    imgurl: {
+    // eslint-disable-next-line
+    observer: {
+      type: Object,
+    },
+    bookid: {
       type: String,
       required: true,
     },
@@ -70,23 +76,30 @@ export default {
       pageMarkers: [],
       showMarkers: true,
       currentMarker: {},
+      dbKeys: [],
     };
   },
   computed: {
-    ...mapState(["curMarker", "markers", "markerToEdit"]),
+    ...mapState([
+      "curMarker",
+      "markers",
+      "markerToEdit",
+      "localdata",
+      "dataUrl",
+    ]),
     ...mapGetters(["getBooks", "getMarkersByBookpage"]),
     filteredMarkers() {
       return this.getMarkersByBookpage({
-        bookId: this.book.id,
         page: this.no,
-      });
+      }).markers;
     },
   },
   mounted() {
-    let bookId = this.$store.state.currentBook.id;
+    this.observer.observe(this.$el);
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
-    this.book = this.books.find((b) => b.id == bookId);
+    this.book = this.books.find((b) => b.id == this.bookid);
+    // this.getMarkersFromDb();
     this.getMarkersByPage();
     const target = this.getElement();
     this.getBox(target, "mo");
@@ -99,18 +112,34 @@ export default {
   // },
   methods: {
     ...mapActions(["setModal", "setMarkersForBook", "saveMarkersToDB"]),
-    movingHandler() {
-      console.log("myTouchStartHandler");
+    zoomFaktor() {
+      return this.zoom / 100;
+    },
+    // async getKeys() {
+    //   this.dbKeys = await keys();
+    //   console.log("is KEY-yyy: ", this.dbKeys);
+    // },
+    imgurl() {
+      // let key = "buch_" + this.bookid;
+      // console.log("is KEY-: ", key, this.dbKeys);
+      let newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
+      // if (this.dbKeys.includes(key)) {
+      //   console.log("is in DB KEYS-: ", this.dbKeys);
+      //   const blob = get(key);
+      //   const url = URL.createObjectURL(blob);
+      //   console.log("is in DB URL-: ", url);
+      //   newurl = `${this.localdata}${this.bookid}/buch.pdf`;
+      // } else {
+      //   console.log("is notin DB URL-: ");
+      //   newurl = `${this.localdata}${this.bookid}/buch.pdf`;
+      // }
+      return newurl;
     },
     getElement() {
       let arg = "[data-page=page-" + this.no + "]";
       // console.log("arg", arg);
       this.target = document.querySelector(arg);
       return this.target;
-    },
-    debug(p) {
-      console.log(p);
-      this.resizeEvent();
     },
     // deleteMarker(marker,i) {
     //   console.log(marker.index);
@@ -143,15 +172,14 @@ export default {
     },
     getMarkersByPage() {
       // console.log("getMarkersByPage", this.no);
-      let pm = this.getMarkersByBookpage({
-        bookId: this.book.id,
+      let pagema = this.getMarkersByBookpage({
+        // bookId: this.book.id,
         page: this.no,
       });
-      // console.log("pm", pm);
-      if (pm == -1) {
+      if (pagema.lendth == 0) {
         this.pageMarkers = [];
       } else {
-        this.pageMarkers = pm.markers;
+        this.pageMarkers = pagema.markers;
       }
     },
     getBox(target) {
@@ -174,12 +202,11 @@ export default {
       });
     },
     setNewMarker(e) {
-      console.log("setNewMarker", this.state.showMarkerEdit);
+      // console.log("setNewMarker", this.state.showMarkerEdit);
       if (this.curMarker != "" && !this.state.showMarkerEdit) {
-        let zoomFaktor = 100 / this.zoom;
         this.getBox(e.target);
-        var x = ((e.clientX - this.box.posX) / this.box.faktorX) * zoomFaktor; // x position within the element. <->
-        var y = ((e.clientY - this.box.posY) / this.box.faktorY) * zoomFaktor; // y position within the element.  |
+        var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
+        var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
         this.markerToEdit.content = {
           index: -1,
           desc: "",
@@ -194,20 +221,31 @@ export default {
       }
     },
     showModal(state) {
-      console.log("showModal");
+      // console.log("showModal");
       this.state.showMarkerEdit = state;
       if (!state) {
         this.state.setNewMarker = false;
       }
     },
     resizeEvent() {
-      // console.log("resizeEvent");
-      this.getBox(this.target);
+      const ele = `[data-page="page-${this.no}"]`;
+      const target = document.querySelector(ele);
+      console.log("target", target);
+      if (target) {
+        this.getBox(target);
+      }
     },
   },
 };
 </script>
-
+<style>
+.textLayer > span {
+  pointer-events: none;
+}
+#viewerContainer {
+  overflow: hidden;
+}
+</style>
 <style lang="scss" scoped>
 .click {
   cursor: pointer;
@@ -218,11 +256,16 @@ export default {
 }
 .showPage {
   position: relative;
-  width: calc(var(--zoom) * 100%);
+  // width: calc(var(--zoom) * 100%);
   overflow: hidden;
   margin: 0px auto;
   .imgContent {
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  }
+  @media (max-width: 650px) {
+    margin-top: 50px;
+    width: 90%;
+    margin: 2.5% 5%;
   }
 }
 nav.pageNav {
@@ -247,12 +290,11 @@ nav.pageNav {
 .imgContent {
   position: relative;
   /*transform: scale(1);*/
-  overflow: auto;
+  overflow: hidden;
   /* transform: scale(var(--zoom, 1));*/
   img {
     width: 100%;
   }
-  outline: 2px solid red;
 }
 .big {
   font-size: 1.7em;
@@ -275,5 +317,12 @@ circle {
 }
 .active circle {
   stroke: #fff;
+}
+
+.pageno {
+  text-align: left;
+  font-size: 12px;
+  color: #999;
+  margin-top: 15px;
 }
 </style>

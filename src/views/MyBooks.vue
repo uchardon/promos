@@ -337,7 +337,7 @@ export default {
     -ms-flex-align: center;
     align-items: center;
     width: 100%;
-    margin: 0 0 16px 0;
+    margin: 0 0 30px 0;
   }
   .bookCard__row {
     margin: 0;

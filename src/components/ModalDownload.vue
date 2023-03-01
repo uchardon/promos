@@ -49,10 +49,15 @@ export default {
   flex-direction: row;
   gap: 10px;
   justify-content: center;
-  width: 50%;
+  width: 60%;
   margin: 0px auto;
   margin-bottom: 50px;
   margin-top: 50px;
+  @media (max-width: 650px) {
+    display: block;
+    width: 100%;
+    margin: 50px 0px 25px 0px;
+  }
 }
 .btn {
   min-width: 100px;
@@ -65,6 +70,16 @@ export default {
   font-family: roboto;
   font-size: 14px;
   cursor: pointer;
+  @media (max-width: 650px) {
+    margin-top: 10px;
+  }
+  &:first-child {
+    background: #2799fa;
+    color: #fff;
+    &:hover {
+      background: #217fcf;
+    }
+  }
 }
 .btn:hover {
   background: #2799fa;
