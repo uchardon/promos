@@ -21,7 +21,8 @@
       >
       </ImgMarkerSvg>
       <pdf
-        :src="dataurl + 'buch.pdf'"
+        v-if="pdfurl != ''"
+        :src="pdfurl"
         :page="no"
         :resize="true"
         @loading="resizeEvent($event)"
@@ -31,18 +32,19 @@
     </div>
     <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
     <div v-else class="pageno">&nbsp;</div>
-    {{ box.width }} x {{ box.height }}
+    {{ pdfurl }} -------
   </div>
 </template>
 
 <script>
+import { keys, get } from "@/services/idb.js";
 import { mapActions, mapState, mapGetters } from "vuex";
 import pdf from "pdfvuer";
 // import "pdfjs-dist/build/pdf.worker.entry";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
 
 export default {
-  name: "ImageCanvas",
+  name: "PdfCanvas",
   components: {
     ImgMarkerSvg,
     pdf,
@@ -51,6 +53,10 @@ export default {
     // eslint-disable-next-line
     observer: {
       type: Object,
+    },
+    bookid: {
+      type: String,
+      required: true,
     },
     dataurl: {
       type: String,
@@ -87,16 +93,22 @@ export default {
       pageMarkers: [],
       showMarkers: true,
       currentMarker: {},
+      dbKeys: [],
+      pdfurl: "",
     };
   },
   computed: {
-    ...mapState(["curMarker", "markers", "markerToEdit"]),
+    ...mapState(["curMarker", "markers", "markerToEdit", "localdata"]),
     ...mapGetters(["getBooks", "getMarkersByBookpage"]),
     filteredMarkers() {
       return this.getMarkersByBookpage({
         page: this.no,
       }).markers;
     },
+  },
+  async created() {
+    await this.getKeys;
+    this.generatePDFurl();
   },
   mounted() {
     this.observer.observe(this.$el);
@@ -117,18 +129,31 @@ export default {
   // },
   methods: {
     ...mapActions(["setModal", "setMarkersForBook", "saveMarkersToDB"]),
-    movingHandler() {
-      console.log("myTouchStartHandler");
+    async getKeys() {
+      this.dbKeys = await keys();
+      console.log("is KEY-yyy: ", this.dbKeys);
+    },
+    generatePDFurl() {
+      let key = "buch_" + this.bookid;
+      console.log("is KEY-: ", key, this.dbKeys);
+      let newurl = "";
+      if (this.dbKeys.includes(key)) {
+        console.log("is in DB KEYS-: ", this.dbKeys);
+        const blob = get(key);
+        const url = URL.createObjectURL(blob);
+        console.log("is in DB URL-: ", url);
+        newurl = `${this.localdata}${this.bookid}/buch.pdf`;
+      } else {
+        console.log("is notin DB URL-: ");
+        newurl = `${this.localdata}${this.bookid}/buch.pdf`;
+      }
+      this.pdfurl = newurl;
     },
     getElement() {
       let arg = "[data-page=page-" + this.no + "]";
       // console.log("arg", arg);
       this.target = document.querySelector(arg);
       return this.target;
-    },
-    debug(p) {
-      console.log(p);
-      this.resizeEvent();
     },
     // deleteMarker(marker,i) {
     //   console.log(marker.index);
@@ -165,7 +190,6 @@ export default {
         // bookId: this.book.id,
         page: this.no,
       });
-      console.log("pagema", pagema);
       if (pagema.lendth == 0) {
         this.pageMarkers = [];
       } else {
@@ -192,7 +216,7 @@ export default {
       });
     },
     setNewMarker(e) {
-      console.log("setNewMarker", this.state.showMarkerEdit);
+      // console.log("setNewMarker", this.state.showMarkerEdit);
       if (this.curMarker != "" && !this.state.showMarkerEdit) {
         this.getBox(e.target);
         var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
@@ -211,14 +235,14 @@ export default {
       }
     },
     showModal(state) {
-      console.log("showModal");
+      // console.log("showModal");
       this.state.showMarkerEdit = state;
       if (!state) {
         this.state.setNewMarker = false;
       }
     },
     resizeEvent(st) {
-      console.log("resizeEvent", st, this.target);
+      // console.log("resizeEvent", st, this.target);
       if (!st) {
         this.getBox(this.target);
       }

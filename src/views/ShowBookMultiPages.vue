@@ -4,7 +4,10 @@
     :class="{ hideMarkers: !showMarkers }"
     :pageInViewport="pageInViewport"
   >
-    <AppHeaderEbook v-if="$route.name == 'showBook'" :maxpages="book.pages">
+    <AppHeaderEbook
+      v-if="$route.name == 'showBook'"
+      :maxpages="parseInt(book.pages)"
+    >
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
     </AppHeaderEbook>
@@ -52,9 +55,10 @@
         v-for="(page, index) in pages"
         :key="index"
         :no="index + 1"
-        :dataurl="getDataUrl()"
+        dataurl="goo"
         :zoom="zoom"
         :showmarkers="showMarkers"
+        :bookid="currentBook.id"
         :observer="observer"
       />
     </div>
@@ -63,6 +67,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
+// import { keys } from "@/services/idb.js";
 import IconShow from "@/components/IconShow.vue";
 import PdfCanvas from "@/components/PdfCanvas.vue";
 import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
@@ -92,7 +97,7 @@ export default {
       },
       colors: ["#ff0000", "#ffff00", "#0000ff"],
       currentColor: "",
-      showMarkers: false,
+      showMarkers: true,
       currentMarker: {},
       pages: [],
       zoom: 75,
@@ -107,6 +112,7 @@ export default {
       "currentBook",
       "curPage",
       "seitenAnsicht",
+      "PDF_URLs",
     ]),
     ...mapGetters(["getBooks"]),
   },
@@ -222,9 +228,6 @@ export default {
     },
     getImgUrl(i) {
       return `${this.$store.state.dataUrl}${this.book.id}/page-${i}`;
-    },
-    getDataUrl() {
-      return `data/${this.book.id}/`;
     },
     setNewMarkerColor(color) {
       // console.log("setNewMarkerColor: ", color);

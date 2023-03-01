@@ -27,8 +27,20 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { set, fileToBlob } from "@/services/idb.js";
+
 export default {
   name: "DownloadButton",
+  props: {
+    url: {
+      type: String,
+      default: "",
+    },
+    no: {
+      type: String,
+      default: "0",
+    },
+  },
   data() {
     return {
       loadingNum: 0,
@@ -40,8 +52,15 @@ export default {
   },
   methods: {
     ...mapActions(["setModal"]),
+    async getBlob() {
+      let blob = await fileToBlob(this.url);
+      let key = "buch_" + this.no;
+      let ret = await set(key, blob);
+      console.log("Saved in DB ", ret);
+    },
     loadForOfflineUse() {
       this.setModal({ state: true, content: "ModalDownload" });
+      this.getBlob();
       this.loadingNum = 0;
       console.log("loadForOfflineUse");
       this.state.offlinedownload = "loading";

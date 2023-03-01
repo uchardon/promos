@@ -69,7 +69,10 @@
             >
               Lizenzen verwalten
             </button>
-            <DownloadButton />
+            <DownloadButton
+              :url="`${$store.state.localdata}/${book.id}/buch.pdf`"
+              :no="book.id"
+            />
           </div>
         </div>
       </div>
@@ -90,21 +93,17 @@
         </a>
       </div>
     </div>
-
-    <SaveLocal />
   </div>
 </template>
 
 <script>
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
-import SaveLocal from "@/components/SaveLocal.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     DownloadButton,
-    SaveLocal,
   },
   props: [],
   emits: [],
@@ -114,7 +113,6 @@ export default {
       books: [],
       secretMessage: "",
       loadingNum: 0,
-
       state: {
         confirm: false,
         online: true,
