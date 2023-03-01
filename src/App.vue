@@ -23,8 +23,8 @@
     </main>
 
     <nav>
-      <router-link class="xyz" to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <!-- <router-link class="xyz" to="/">Home</router-link> | -->
+      <router-link to="/about">Impressum &amp; Datenschutz</router-link>
     </nav>
     <AppSymbols />
   </div>

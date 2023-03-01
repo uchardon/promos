@@ -3,7 +3,7 @@
     <div class="comment-title">
       <img src="@/assets/images/icons/kommentar-active.svg" />
       <h2>Notiz hinzufügen</h2>
-      <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p>
+      <!-- <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p> -->
     </div>
     <div class="text-input">
       <!-- MARKERS: {{ markers }}--- <br />
@@ -22,33 +22,30 @@
     </div>
 
     <div class="mod__inner-footer uniq edit-footer">
-      <span class="leftnav">
-        <button
-          v-if="markerToEdit.todo == 'edit'"
-          type="button"
-          class="button denie modBtn"
-          @click="deleteMarker()"
-        >
-          Löschen
-        </button>
-      </span>
-      <span class="right">
-        <button
-          type="submit"
-          class="button save"
-          :disabled="!marker.desc != ''"
-          @click="saveMarker()"
-        >
-          Speichern
-        </button>
-        <button
-          type="reset"
-          class="button conc modClose"
-          @click="setModal(false, '')"
-        >
-          Schließen
-        </button>
-      </span>
+      <button
+        type="submit"
+        class="button save"
+        :disabled="!marker.desc != ''"
+        @click="saveMarker()"
+      >
+        Speichern
+      </button>
+      <button
+        type="reset"
+        class="button conc modClose"
+        @click="setModal(false, '')"
+      >
+        Schließen
+      </button>
+      <button
+        v-if="markerToEdit.todo == 'edit'"
+        type="button"
+        class="button denie modBtn"
+        @click="deleteMarker()"
+      >
+        Löschen
+      </button>
+      <div style="clear: both"></div>
     </div>
   </div>
 </template>
@@ -146,17 +143,56 @@ button:disabled {
     float: left;
     width: 4%;
     margin-top: 5px;
+    @media (max-width: 650px) {
+      width: 6.5%;
+    }
   }
   h2 {
     width: 93.5%;
     float: right;
     font-size: 20px;
     font-family: roboto;
+    padding-bottom: 20px;
+    @media (max-width: 650px) {
+      width: 89%;
+    }
   }
   p {
     width: 100%;
     float: right;
     font-size: 16px;
+  }
+}
+
+.edit-footer {
+  display: block;
+  button {
+    margin: 0px;
+    float: right;
+    &.denie {
+      float: left;
+      @media (max-width: 650px) {
+        width: 47.5%;
+        float: left;
+      }
+    }
+    &.save {
+      @media (max-width: 650px) {
+        width: 100%;
+        float: right;
+        margin-right: 0px;
+        margin-bottom: 10px;
+      }
+    }
+    &.conc {
+      margin-right: 15px;
+      @media (max-width: 650px) {
+        width: 47.5%;
+        float: right;
+        margin-right: 0px;
+        margin-bottom: 15px;
+      }
+    }
   }
 }
 </style>

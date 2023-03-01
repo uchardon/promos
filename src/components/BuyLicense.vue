@@ -2,21 +2,31 @@
   <div class="modalDownload" style="text-align: center">
     <br /><br />
     <img
-      src="@/assets/images/internet-wifi.svg"
-      style="width: 10%; text-align: center"
+      src="@/assets/images/add-user-image.jpeg"
+      style="width: 80%; text-align: center"
     />
     <br /><br />
-    <h2>So können Sie...</h2>
+    <h2>
+      Haben Sie gewusst?<br />Mit Nutzerlizenzen können Sie Ihr Ebook teilen.
+    </h2>
     <br />
     <p>
-      Zögern Sie nicht länger und erwerben Sie noch heute zusätzliche Lizenzen,
-      um das Potenzial Ihrer Schüler voll auszuschöpfen!.
+      Ganz einfach: In unserem Onlineshop weitere Benutzerlizenzen für Ihre
+      Schüler kaufen und anschließend in Ihrem Konto zuweisen. Ihre Schüler
+      werden automatisch mit persönlichen Zugangsdaten eingeladen.
     </p>
 
     <p v-if="!online">offline</p>
 
     <div class="buttons">
-      <button class="btn" @click="setModal(false, '')">Abbrechen</button>
+      <button
+        href="https://shop.strato.de/epages/244823.sf/"
+        class="btn"
+        target="_blank"
+      >
+        Onlineshop
+      </button>
+      <button class="btn" @click="setModal(false, '')">Ok</button>
     </div>
   </div>
 </template>
@@ -46,10 +56,15 @@ export default {
   flex-direction: row;
   gap: 10px;
   justify-content: center;
-  width: 50%;
+  width: 60%;
   margin: 0px auto;
   margin-bottom: 50px;
   margin-top: 50px;
+  @media (max-width: 650px) {
+    display: block;
+    width: 100%;
+    margin: 50px 0px 25px 0px;
+  }
 }
 .btn {
   min-width: 100px;
@@ -62,6 +77,16 @@ export default {
   font-family: roboto;
   font-size: 14px;
   cursor: pointer;
+  @media (max-width: 650px) {
+    margin-top: 10px;
+  }
+  &:first-child {
+    background: #2799fa;
+    color: #fff;
+    &:hover {
+      background: #217fcf;
+    }
+  }
 }
 .btn:hover {
   background: #2799fa;

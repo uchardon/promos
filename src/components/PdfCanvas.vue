@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="showPage"
-    :style="'--zoom: calc(' + zoom + ' / 100)'"
-    :data-no="no"
-  >
+  <div class="showPage" :data-no="no">
     <div
       :data-page="'page-' + no"
       class="imgContent"
@@ -20,6 +16,8 @@
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
+      <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
+      <div v-else class="pageno">&nbsp;</div>
       <pdf
         :src="dataurl + 'buch.pdf'"
         :page="no"
@@ -29,9 +27,8 @@
         <template #loading> loading content here... </template>
       </pdf>
     </div>
-    <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
-    <div v-else class="pageno">&nbsp;</div>
-    {{ box.width }} x {{ box.height }}
+
+    <!-- {{ box.width }} x {{ box.height }} -->
   </div>
 </template>
 
@@ -250,6 +247,11 @@ export default {
   .imgContent {
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   }
+  @media (max-width: 650px) {
+    margin-top: 50px;
+    width: 90%;
+    margin: 2.5% 5%;
+  }
 }
 nav.pageNav {
   display: flex;
@@ -278,7 +280,6 @@ nav.pageNav {
   img {
     width: 100%;
   }
-  outline: 2px solid red;
 }
 .big {
   font-size: 1.7em;
@@ -301,5 +302,12 @@ circle {
 }
 .active circle {
   stroke: #fff;
+}
+
+.pageno {
+  text-align: left;
+  font-size: 12px;
+  color: #999;
+  margin-top: 15px;
 }
 </style>

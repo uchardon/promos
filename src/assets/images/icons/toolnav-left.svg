@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19.218" height="16" viewBox="0 0 19.218 16">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_1609" data-name="Rechteck 1609" width="19.218" height="16" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Gruppe_761" data-name="Gruppe 761" transform="translate(19.218 16) rotate(180)">
+    <g id="Gruppe_548" data-name="Gruppe 548" clip-path="url(#clip-path)">
+      <path id="Pfad_415" data-name="Pfad 415" d="M0,7.33c.028-.068.053-.137.084-.2a1.018,1.018,0,0,1,.854-.616A2.506,2.506,0,0,1,1.22,6.5H13.894c-.07-.074-.112-.121-.158-.166Q11.828,4.424,9.919,2.511A1.008,1.008,0,0,1,9.7,1.171a5.365,5.365,0,0,1,1-1,.96.96,0,0,1,1.2.095c.048.04.094.083.138.127q3.4,3.4,6.794,6.794a1.061,1.061,0,0,1,.228,1.361,1.484,1.484,0,0,1-.225.274q-3.4,3.4-6.793,6.795a1.065,1.065,0,0,1-1.635,0q-.247-.244-.492-.49a1.048,1.048,0,0,1,0-1.6Q11.841,11.6,13.77,9.683c.047-.047.091-.1.167-.176H1.354c-.832,0-1.046-.143-1.354-.9V7.33" transform="translate(0 0)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

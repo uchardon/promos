@@ -90,21 +90,17 @@
         </a>
       </div>
     </div>
-
-    <SaveLocal />
   </div>
 </template>
 
 <script>
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
-import SaveLocal from "@/components/SaveLocal.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     DownloadButton,
-    SaveLocal,
   },
   props: [],
   emits: [],
@@ -339,7 +335,7 @@ export default {
     -ms-flex-align: center;
     align-items: center;
     width: 100%;
-    margin: 0 0 16px 0;
+    margin: 0 0 30px 0;
   }
   .bookCard__row {
     margin: 0;

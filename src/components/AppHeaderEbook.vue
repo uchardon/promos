@@ -32,9 +32,9 @@
           @click="setSeitenAnsicht('double')"
         ></div>
       </div>
-      <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
+      <!-- <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/lesezeichen.svg" />
-      </div>
+      </div> -->
     </div>
     <div id="headerMobile">
       <div class="Mob1" @click="$router.push({ name: 'mybooks' })">
@@ -52,7 +52,7 @@
         <span>/ 55</span>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
-        <img src="@/assets/images/icons/lesezeichen.svg" />
+        <img src="@/assets/images/icons/threebar.svg" />
       </div>
     </div>
   </header>
@@ -251,8 +251,8 @@ header {
     height: 50px;
     padding: 0px 20px;
     img {
-      height: 22px;
-      margin-top: 13px;
+      height: 17px;
+      margin-top: 16px;
     }
   }
 }
