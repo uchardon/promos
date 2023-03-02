@@ -1,7 +1,9 @@
 <template>
   <div>
     <button
-      v-if="state.offlinedownload == 'onlyOnline' && state.online"
+      v-if="
+        state.offlinedownload == 'onlyOnline' && state.online && offline == 0
+      "
       class="download btn startdownload"
       @click="loadForOfflineUse()"
     >
@@ -14,10 +16,7 @@
     >
       {{ loadingNum }} %
     </button>
-    <button
-      v-if="state.offlinedownload == 'offline' && state.online"
-      class="download btn offline"
-    >
+    <button v-if="offline == 1 && state.online" class="download btn offline">
       Offline verfügbar
     </button>
     <button v-if="!state.online" class="download btn disabled">
@@ -26,41 +25,63 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
-import { set, fileToBlob } from "@/services/idb.js";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "DownloadButton",
   props: {
-    url: {
+    maxpages: {
       type: String,
-      default: "",
+      default: "0",
     },
-    no: {
+    bookid: {
       type: String,
       default: "0",
     },
   },
+
   data() {
     return {
       loadingNum: 0,
+      offline: 0,
       state: {
         online: true,
         offlinedownload: "onlyOnline",
       },
     };
   },
+  computed: {
+    ...mapState(["dataUrl", "localdata"]),
+  },
+  async created() {
+    const res = await this.checkIDBForKey(this.bookid);
+    console.log("buch--verfügbar", res);
+    if (res) {
+      // offline verfügbar
+      this.offline = 1;
+    } else {
+      this.offline = 0;
+    }
+  },
+  mounted() {
+    console.log("mounted");
+  },
   methods: {
-    ...mapActions(["setModal"]),
-    async getBlob() {
-      let blob = await fileToBlob(this.url);
-      let key = "buch_" + this.no;
-      let ret = await set(key, blob);
-      console.log("Saved in DB ", ret);
+    ...mapActions(["setModal", "saveImageIDB", "checkIDBForKey"]),
+    async saveImages() {
+      for (let i = 0; this.maxpages > i; i++) {
+        let key = `b${this.bookid}p${i}`;
+        let url = `${this.localdata}${this.bookid}/page-${i}.jpg`;
+        let payload = {
+          key: key,
+          url: url,
+        };
+        await this.saveImageIDB(payload);
+      }
     },
     loadForOfflineUse() {
       this.setModal({ state: true, content: "ModalDownload" });
-      this.getBlob();
+      this.saveImages();
       this.loadingNum = 0;
       console.log("loadForOfflineUse");
       this.state.offlinedownload = "loading";
@@ -69,6 +90,7 @@ export default {
         if (this.loadingNum >= 100) {
           clearInterval(myInterval);
           this.state.offlinedownload = "offline";
+          this.offline = 1;
         }
       }, 200);
     },

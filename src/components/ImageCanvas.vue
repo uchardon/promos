@@ -8,20 +8,20 @@
     >
       <ImgMarkerSvg
         v-for="(marker, index) in filteredMarkers"
-        :key="index"
+        :key="zoom + index"
         :box="box"
-        :pos-x="(box.width / 100) * marker.x * zoomFaktor()"
-        :pos-y="(box.height / 100) * marker.y * zoomFaktor()"
+        :pos-x="(box.width / 100) * marker.x"
+        :pos-y="(box.height / 100) * marker.y"
         :color="marker.color"
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
       <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
       <div v-else class="pageno">&nbsp;</div>
-      <img :src="imgurl()" :alt="book.title" @load="resizeEvent()" />
+      <img :alt="book.title" :data-imgno="no" @load="resizeEvent()" />
     </div>
 
-    <!-- {{ box.width }} x {{ box.height }} -->
+    {{ box.width }} x {{ box.height }}
   </div>
 </template>
 
@@ -32,15 +32,11 @@ import { mapActions, mapState, mapGetters } from "vuex";
 import ImgMarkerSvg from "@/components/ImgMarkerSvg.vue";
 
 export default {
-  name: "PdfCanvas",
+  name: "ImageCanvas",
   components: {
     ImgMarkerSvg,
   },
   props: {
-    // eslint-disable-next-line
-    observer: {
-      type: Object,
-    },
     bookid: {
       type: String,
       required: true,
@@ -51,6 +47,11 @@ export default {
     },
     zoom: {
       type: Number,
+      required: true,
+    },
+    offline: {
+      type: Number,
+      default: 0,
       required: true,
     },
   },
@@ -77,8 +78,10 @@ export default {
       showMarkers: true,
       currentMarker: {},
       dbKeys: [],
+      zoomOld: 100,
     };
   },
+
   computed: {
     ...mapState([
       "curMarker",
@@ -94,24 +97,43 @@ export default {
       }).markers;
     },
   },
+  watch: {
+    // whenever question changes, this function will run
+    zoom(oldzoom, newzoom) {
+      // this.resizeEvent("watch");
+      console.log("Zoom wurde geändert", oldzoom, newzoom);
+      this.showMarkers = false;
+      setTimeout(() => {
+        this.getBox("timeout");
+        this.showMarkers = true;
+      }, 500);
+      // let counter = 1;
+      // this.interval = setInterval(() => {
+      //   counter++;
+      //   this.getBox("int" + counter);
+      // }, 2000);
+      // clearInterval(interval);
+    },
+  },
   mounted() {
-    this.observer.observe(this.$el);
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == this.bookid);
     // this.getMarkersFromDb();
     this.getMarkersByPage();
-    const target = this.getElement();
-    this.getBox(target, "mo");
+    this.getBox("mo");
+    console.log("get offline from ... ", this.offline);
+    this.imgurl(this.offline);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
-    window.addEventListener("resize", this.resizeEvent);
   },
-  // unmounted() {
-  //   window.removeEventListener("resize", this.resizeEvent);
-  // },
   methods: {
-    ...mapActions(["setModal", "setMarkersForBook", "saveMarkersToDB"]),
+    ...mapActions([
+      "setModal",
+      "setMarkersForBook",
+      "saveMarkersToDB",
+      "getImageURL",
+    ]),
     zoomFaktor() {
       return this.zoom / 100;
     },
@@ -119,21 +141,23 @@ export default {
     //   this.dbKeys = await keys();
     //   console.log("is KEY-yyy: ", this.dbKeys);
     // },
-    imgurl() {
+    async imgurl(offline) {
       // let key = "buch_" + this.bookid;
-      // console.log("is KEY-: ", key, this.dbKeys);
-      let newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
-      // if (this.dbKeys.includes(key)) {
-      //   console.log("is in DB KEYS-: ", this.dbKeys);
-      //   const blob = get(key);
-      //   const url = URL.createObjectURL(blob);
-      //   console.log("is in DB URL-: ", url);
-      //   newurl = `${this.localdata}${this.bookid}/buch.pdf`;
-      // } else {
-      //   console.log("is notin DB URL-: ");
-      //   newurl = `${this.localdata}${this.bookid}/buch.pdf`;
-      // }
-      return newurl;
+      console.log("imgurl", offline);
+      let newurl = "";
+      if (offline != 1) {
+        // nicht offline verfügbar
+        newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
+        console.log("imgurl not offline");
+      } else {
+        // offline verfügbar
+        console.log("imgurl is offline");
+        let key = `b${this.bookid}p${this.no - 1}`;
+        newurl = await this.getImageURL(key);
+      }
+      let img = document.querySelector(`[data-imgno="${this.no}"]`);
+      // console.log("IMG: ", img);
+      img.src = newurl;
     },
     getElement() {
       let arg = "[data-page=page-" + this.no + "]";
@@ -182,8 +206,10 @@ export default {
         this.pageMarkers = pagema.markers;
       }
     },
-    getBox(target) {
-      // console.log("getBox", target);
+    async getBox(from = "") {
+      const ele = `[data-page="page-${this.no}"]`;
+      const target = document.querySelector(ele);
+      console.log("getBox", target, from);
       let rect = target.getBoundingClientRect();
       let width = target.offsetWidth;
       let height = target.offsetHeight;
@@ -204,7 +230,7 @@ export default {
     setNewMarker(e) {
       // console.log("setNewMarker", this.state.showMarkerEdit);
       if (this.curMarker != "" && !this.state.showMarkerEdit) {
-        this.getBox(e.target);
+        this.getBox();
         var x = (e.clientX - this.box.posX) / this.box.faktorX; // x position within the element. <->
         var y = (e.clientY - this.box.posY) / this.box.faktorY; // y position within the element.  |
         this.markerToEdit.content = {
@@ -214,6 +240,13 @@ export default {
           y: Math.round(y),
           color: this.curMarker,
         };
+        console.log(
+          "Marker: X Y color",
+          Math.round(x),
+          Math.round(y),
+          this.curMarker
+        ),
+          this.curMarker;
         this.markerToEdit.todo = "new";
         this.markerToEdit.bookId = this.book.id;
         this.markerToEdit.page = this.no;
@@ -227,13 +260,9 @@ export default {
         this.state.setNewMarker = false;
       }
     },
-    resizeEvent() {
-      const ele = `[data-page="page-${this.no}"]`;
-      const target = document.querySelector(ele);
-      console.log("target", target);
-      if (target) {
-        this.getBox(target);
-      }
+    resizeEvent(from = "") {
+      console.log("resize from ", from);
+      this.getBox("resi");
     },
   },
 };

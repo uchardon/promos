@@ -8,8 +8,6 @@
       v-if="$route.name == 'showBook'"
       :maxpages="parseInt(book.pages)"
     >
-      {{ $store.state.user.vorname }}
-      {{ $store.state.user.nachname }}
     </AppHeaderEbook>
     <nav class="pageNav">
       <div class="centerNav">
@@ -111,6 +109,7 @@
     </nav>
     <h1>{{ currentBook.title }}</h1>
     <div
+      v-if="offline != -1"
       class="showAllPages"
       :class="seitenAnsicht"
       :style="'--zoom: calc(' + zoom + ' / 100)'"
@@ -118,11 +117,11 @@
       <ImageCanvas
         v-for="(page, index) in pages"
         :key="index"
+        :offline="offline"
         :no="index + 1"
         :zoom="zoom"
         :showmarkers="showMarkers"
         :bookid="currentBook.id"
-        :observer="observer"
       />
     </div>
     <div style="clear: both"></div>
@@ -148,6 +147,7 @@ export default {
       state: {
         showMarkerEdit: false,
         setNewMarker: true,
+        showImages: 0,
       },
       books: [],
       book: {},
@@ -164,9 +164,9 @@ export default {
       showMarkers: true,
       currentMarker: {},
       pages: [],
-      zoom: 100,
-      observer: null,
+      zoom: 75,
       pageInViewport: 1,
+      offline: -1, // nicht offline verfügbar
     };
   },
   computed: {
@@ -180,21 +180,22 @@ export default {
     ]),
     ...mapGetters(["getBooks"]),
   },
-  created() {
-    this.observer = new IntersectionObserver(this.onElementObserved, {
-      root: this.$el,
-      threshold: 1.0,
-    });
-  },
-  beforeUnmount() {
-    this.observer.disconnect();
+  async created() {
+    const res = await this.checkIDBForKey(this.currentBook.id);
+    console.log("offline verfügbar", this.currentBook.id, res);
+    if (res) {
+      this.offline = 1;
+      // offline verfügbar
+      console.log("offline verfügbar", this.currentBook.id);
+    } else {
+      this.offline = 0;
+    }
   },
   mounted() {
-    let bookId = this.currentBook.id;
     this.setCurPage(1);
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
-    this.book = this.books.find((b) => b.id == bookId);
+    this.book = this.books.find((b) => b.id == this.currentBook.id);
     // console.log("book-----", this.book);
     this.setPagesArray();
     this.getMarkersFromDb();
@@ -210,21 +211,8 @@ export default {
       "setCurrentMarker",
       "getMarkersFromDb",
       "setCurPage",
+      "checkIDBForKey",
     ]),
-    onElementObserved(entries) {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) {
-          return;
-        }
-
-        this.observer.unobserve(target);
-
-        setTimeout(() => {
-          const i = target.getAttribute("data-no");
-          this.pageInViewport = i;
-        }, 1000);
-      });
-    },
     toggleShowMarkers() {
       this.showMarkers = !this.showMarkers;
       if (!this.showMarkers) {

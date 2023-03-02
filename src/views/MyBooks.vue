@@ -69,10 +69,7 @@
             >
               Lizenzen verwalten
             </button>
-            <DownloadButton
-              :url="`${$store.state.localdata}/${book.id}/buch.pdf`"
-              :no="book.id"
-            />
+            <DownloadButton :maxpages="book.pages" :bookid="book.id" />
           </div>
         </div>
       </div>
