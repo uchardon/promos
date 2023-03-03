@@ -94,7 +94,7 @@
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -118,11 +118,18 @@ export default {
       checkCount: 0,
     };
   },
+  computed: {
+    ...mapState(["token"]),
+  },
   async created() {
-    if (!this.$store.getters.isLoggedIn) {
+    if (this.token != "202cb963ac59075b964b07152d234b70") {
+      console.log(
+        "======================= NOT LOGEDIN ==========202cb963ac59075b964b07152d234b70======"
+      );
       this.$router.push("/login");
     }
   },
+
   async mounted() {
     this.user = await this.$store.getters.getUser;
     this.books = await this.$store.getters.getBooks;
@@ -130,6 +137,7 @@ export default {
     this.secretMessage = await AuthService.getSecretContent();
     this.$store.commit("setMainMenu", "book");
   },
+
   methods: {
     ...mapActions(["setModal", "setCurrentBook"]),
     checkForBooks() {
@@ -143,7 +151,7 @@ export default {
           }, 700);
         }
       }
-      console.log("->", this.books.length);
+      console.log("->", this.books.length, this.checkCount);
     },
     showBook(book) {
       // console.log("book->", book);

@@ -43,20 +43,11 @@ export default new Vuex.createStore({
       state: false,
       content: "",
     },
-    idbBook: null,
     seitenAnsicht: "single",
     bookDownload: {
       bookid: -1,
       maxpages: 0,
       state: "start", // start - loading - end - error
-    },
-    idb: {
-      db: null, // The database object will eventually be stored here.
-      name: "BookStorage", // The name of the database.
-      version: 1, // Must be >= 1. Be aware that a database of a given name may only have one version at a time, on the client machine.
-      storeName: "fileObjects", // The name of the database's object store. Each object in the object store is a file object.
-      message: "",
-      empty: true, // Indicates whether or not there's one or more records in the database object store. The object store is initially empty, so set this to true.
     },
   },
   getters: {
@@ -97,6 +88,9 @@ export default new Vuex.createStore({
     RESET: (state) => {
       // Object.assign(state, getDefaultState());
       console.log("STATE ", state);
+    },
+    SET_BOOKSINSTORE: (state, books) => {
+      state.books = books;
     },
     SET_CURMARKER: (state, color) => {
       state.curMarker = color;
@@ -368,6 +362,9 @@ export default new Vuex.createStore({
     SET_ONLINE: ({ commit }, onlinestate) => {
       commit("SET_ONLINE", onlinestate);
     },
+    SET_BOOKSINSTORE: ({ commit }, books) => {
+      commit("SET_BOOKSINSTORE", books);
+    },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {
         kid: userId,
@@ -376,6 +373,7 @@ export default new Vuex.createStore({
       if (!response.error) {
         commit("setBooks", response.data.books);
       }
+      return response.data.books;
     },
     getMarkersFromDb: async ({ state, commit }) => {
       state.markers = [];
@@ -443,12 +441,12 @@ export default new Vuex.createStore({
       }
     },
     // eslint-disable-next-line
-    login: ({ commit, dispatch }, payload) => {
+    SET_USERDATA: ({ commit, dispatch }, payload) => {
       // console.log('login', payload)
       commit("SET_TOKEN", payload.token);
       commit("SET_USER", payload.user);
       commit("SET_SECRET", payload.secret);
-      dispatch("getBooks", payload.user.id);
+
       // set auth header
       Axios.defaults.headers.common[
         "Authorization"
