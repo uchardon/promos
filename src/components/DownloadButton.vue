@@ -9,13 +9,7 @@
     >
       Herunterladen
     </button>
-    <button
-      v-if="state.offlinedownload == 'loading' && state.online"
-      class="download btn loading"
-      :style="'--current:' + loadingNum"
-    >
-      {{ loadingNum }} %
-    </button>
+
     <button v-if="offline == 1 && state.online" class="download btn offline">
       Offline verfügbar
     </button>
@@ -42,8 +36,7 @@ export default {
 
   data() {
     return {
-      loadingNum: 0,
-      offline: 0,
+      offline: 0, // offline verfügbar = 1
       state: {
         online: true,
         offlinedownload: "onlyOnline",
@@ -51,11 +44,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["dataUrl", "localdata"]),
+    ...mapState(["dataUrl", "localdata", "bookDownload"]),
   },
   async created() {
     const res = await this.checkIDBForKey(this.bookid);
-    console.log("buch--verfügbar", res);
+    // console.log("buch--verfügbar", res);
     if (res) {
       // offline verfügbar
       this.offline = 1;
@@ -63,36 +56,20 @@ export default {
       this.offline = 0;
     }
   },
-  mounted() {
-    console.log("mounted");
-  },
+  mounted() {},
   methods: {
-    ...mapActions(["setModal", "saveImageIDB", "checkIDBForKey"]),
-    async saveImages() {
-      for (let i = 0; this.maxpages > i; i++) {
-        let key = `b${this.bookid}p${i}`;
-        let url = `${this.localdata}${this.bookid}/page-${i}.jpg`;
-        let payload = {
-          key: key,
-          url: url,
-        };
-        await this.saveImageIDB(payload);
-      }
-    },
+    ...mapActions(["setModal", "checkIDBForKey", "SET_BOOKDOWNLOAD"]),
+
     loadForOfflineUse() {
+      console.log("bookid", this.bookid);
+      console.log("maxpages", this.maxpages);
+      console.log("state start");
+      this.SET_BOOKDOWNLOAD({ key: "bookid", value: this.bookid });
+      this.SET_BOOKDOWNLOAD({ key: "maxpages", value: this.maxpages });
+      this.SET_BOOKDOWNLOAD({ key: "state", value: "start" });
       this.setModal({ state: true, content: "ModalDownload" });
-      this.saveImages();
-      this.loadingNum = 0;
-      console.log("loadForOfflineUse");
-      this.state.offlinedownload = "loading";
-      let myInterval = setInterval(() => {
-        this.loadingNum++;
-        if (this.loadingNum >= 100) {
-          clearInterval(myInterval);
-          this.state.offlinedownload = "offline";
-          this.offline = 1;
-        }
-      }, 200);
+      this.offline = 1;
+      // this.saveImages();
     },
   },
 };

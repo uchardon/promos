@@ -104,7 +104,7 @@ export default {
       console.log("Zoom wurde geändert", oldzoom, newzoom);
       this.showMarkers = false;
       setTimeout(() => {
-        this.getBox("timeout");
+        this.getBox();
         this.showMarkers = true;
       }, 500);
       // let counter = 1;
@@ -121,7 +121,7 @@ export default {
     this.book = this.books.find((b) => b.id == this.bookid);
     // this.getMarkersFromDb();
     this.getMarkersByPage();
-    this.getBox("mo");
+    this.getBox();
     console.log("get offline from ... ", this.offline);
     this.imgurl(this.offline);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
@@ -144,11 +144,21 @@ export default {
     async imgurl(offline) {
       // let key = "buch_" + this.bookid;
       console.log("imgurl", offline);
-      let newurl = "";
+      let newurl = "111";
       if (offline != 1) {
         // nicht offline verfügbar
-        newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
-        console.log("imgurl not offline");
+        // newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
+        let imageURL = `${this.localdata}${this.bookid}/page-${
+          this.no - 1
+        }.jpg`;
+        // console.log("imgurl not offline");
+        await fetch(imageURL)
+          .then((response) => {
+            return response.blob();
+          })
+          .then((blob) => {
+            newurl = URL.createObjectURL(blob);
+          });
       } else {
         // offline verfügbar
         console.log("imgurl is offline");
@@ -206,10 +216,10 @@ export default {
         this.pageMarkers = pagema.markers;
       }
     },
-    async getBox(from = "") {
+    async getBox() {
       const ele = `[data-page="page-${this.no}"]`;
       const target = document.querySelector(ele);
-      console.log("getBox", target, from);
+      // console.log("getBox", target, from);
       let rect = target.getBoundingClientRect();
       let width = target.offsetWidth;
       let height = target.offsetHeight;
@@ -260,9 +270,9 @@ export default {
         this.state.setNewMarker = false;
       }
     },
-    resizeEvent(from = "") {
-      console.log("resize from ", from);
-      this.getBox("resi");
+    resizeEvent() {
+      // console.log("resize from ", from);
+      this.getBox();
     },
   },
 };
@@ -284,10 +294,14 @@ export default {
   position: relative;
 }
 .showPage {
+  overflow: visible;
   position: relative;
   // width: calc(var(--zoom) * 100%);
-  overflow: hidden;
+  // overflow: hidden;
   margin: 0px auto;
+  div {
+    overflow: visible;
+  }
   .imgContent {
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   }

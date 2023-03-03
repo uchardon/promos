@@ -45,6 +45,11 @@ export default new Vuex.createStore({
     },
     idbBook: null,
     seitenAnsicht: "single",
+    bookDownload: {
+      bookid: -1,
+      maxpages: 0,
+      state: "start", // start - loading - end - error
+    },
     idb: {
       db: null, // The database object will eventually be stored here.
       name: "BookStorage", // The name of the database.
@@ -111,6 +116,23 @@ export default new Vuex.createStore({
     },
     SET_USER: (state, user) => {
       state.user = user;
+    },
+    UPDATE_BOOKDOWNLOAD: (state, payload) => {
+      console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+      switch (payload.key) {
+        case "bookid":
+          state.bookDownload.bookid = payload.value;
+          break;
+        case "maxpages":
+          state.bookDownload.maxpages = payload.value;
+          break;
+        case "state":
+          state.bookDownload.state = payload.value;
+          break;
+
+        default:
+          console.log(`Sorry, we are out of ${payload.key}.`);
+      }
     },
     onlineMode: (state, payload) => {
       state.online = payload;
@@ -339,6 +361,10 @@ export default new Vuex.createStore({
     },
     setSeitenAnsicht: ({ commit }, payload) => {
       commit("SET_SEITENANSICHT", payload);
+    },
+    SET_BOOKDOWNLOAD: ({ commit }, payload) => {
+      console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+      commit("UPDATE_BOOKDOWNLOAD", payload);
     },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {
