@@ -1,23 +1,16 @@
 <template>
   <div>
     <button
-      v-if="state.offlinedownload == 'onlyOnline' && state.online"
+      v-if="
+        state.offlinedownload == 'onlyOnline' && state.online && offline == 0
+      "
       class="download btn startdownload"
       @click="loadForOfflineUse()"
     >
       Herunterladen
     </button>
-    <button
-      v-if="state.offlinedownload == 'loading' && state.online"
-      class="download btn loading"
-      :style="'--current:' + loadingNum"
-    >
-      {{ loadingNum }} %
-    </button>
-    <button
-      v-if="state.offlinedownload == 'offline' && state.online"
-      class="download btn offline"
-    >
+
+    <button v-if="offline == 1 && state.online" class="download btn offline">
       Offline verfügbar
     </button>
     <button v-if="!state.online" class="download btn disabled">
@@ -26,51 +19,57 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
-import { set, fileToBlob } from "@/services/idb.js";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "DownloadButton",
   props: {
-    url: {
+    maxpages: {
       type: String,
-      default: "",
+      default: "0",
     },
-    no: {
+    bookid: {
       type: String,
       default: "0",
     },
   },
+
   data() {
     return {
-      loadingNum: 0,
+      offline: 0, // offline verfügbar = 1
       state: {
         online: true,
         offlinedownload: "onlyOnline",
       },
     };
   },
+  computed: {
+    ...mapState(["dataUrl", "localdata", "bookDownload"]),
+  },
+  async created() {
+    const res = await this.checkIDBForKey(this.bookid);
+    // console.log("buch--verfügbar", res);
+    if (res) {
+      // offline verfügbar
+      this.offline = 1;
+    } else {
+      this.offline = 0;
+    }
+  },
+  mounted() {},
   methods: {
-    ...mapActions(["setModal"]),
-    async getBlob() {
-      let blob = await fileToBlob(this.url);
-      let key = "buch_" + this.no;
-      let ret = await set(key, blob);
-      console.log("Saved in DB ", ret);
-    },
+    ...mapActions(["setModal", "checkIDBForKey", "SET_BOOKDOWNLOAD"]),
+
     loadForOfflineUse() {
+      console.log("bookid", this.bookid);
+      console.log("maxpages", this.maxpages);
+      console.log("state start");
+      this.SET_BOOKDOWNLOAD({ key: "bookid", value: this.bookid });
+      this.SET_BOOKDOWNLOAD({ key: "maxpages", value: this.maxpages });
+      this.SET_BOOKDOWNLOAD({ key: "state", value: "start" });
       this.setModal({ state: true, content: "ModalDownload" });
-      this.getBlob();
-      this.loadingNum = 0;
-      console.log("loadForOfflineUse");
-      this.state.offlinedownload = "loading";
-      let myInterval = setInterval(() => {
-        this.loadingNum++;
-        if (this.loadingNum >= 100) {
-          clearInterval(myInterval);
-          this.state.offlinedownload = "offline";
-        }
-      }, 200);
+      this.offline = 1;
+      // this.saveImages();
     },
   },
 };

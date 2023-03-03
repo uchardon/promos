@@ -21,9 +21,9 @@ if (process.env.NODE_ENV === "production") {
       console.log("New content is available; please refresh.");
       // registration.update();
       // window.location.reload(true);
-      caches.keys().then(function (names) {
-        for (let name of names) caches.delete(name);
-      });
+      // caches.keys().then(function (names) {
+      //   for (let name of names) caches.delete(name);
+      // });
     },
     offline() {
       console.log(

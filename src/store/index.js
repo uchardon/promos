@@ -1,5 +1,12 @@
 import Axios from "axios";
 import Vuex from "vuex";
+import {
+  idb_set,
+  idb_get,
+  idb_fileToBlob,
+  idb_blobToArrayBuffer,
+  idb_arrayBufferToBlob,
+} from "@/services/idb.js";
 
 export default new Vuex.createStore({
   state: {
@@ -7,6 +14,7 @@ export default new Vuex.createStore({
     // dataUrl: "https://front.promosverlag.de/data/",
     url: "https://bib.promosverlag.de/api/",
     dataUrl: "https://bib.promosverlag.de/data/",
+    // localdata: "data/",
     localdata: "data/",
     online: true,
     mainMenu: "book",
@@ -37,6 +45,11 @@ export default new Vuex.createStore({
     },
     idbBook: null,
     seitenAnsicht: "single",
+    bookDownload: {
+      bookid: -1,
+      maxpages: 0,
+      state: "start", // start - loading - end - error
+    },
     idb: {
       db: null, // The database object will eventually be stored here.
       name: "BookStorage", // The name of the database.
@@ -103,6 +116,23 @@ export default new Vuex.createStore({
     },
     SET_USER: (state, user) => {
       state.user = user;
+    },
+    UPDATE_BOOKDOWNLOAD: (state, payload) => {
+      console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+      switch (payload.key) {
+        case "bookid":
+          state.bookDownload.bookid = payload.value;
+          break;
+        case "maxpages":
+          state.bookDownload.maxpages = payload.value;
+          break;
+        case "state":
+          state.bookDownload.state = payload.value;
+          break;
+
+        default:
+          console.log(`Sorry, we are out of ${payload.key}.`);
+      }
     },
     onlineMode: (state, payload) => {
       state.online = payload;
@@ -293,8 +323,48 @@ export default new Vuex.createStore({
 
     //   // displayMessage (message);
     // },
+    saveImageIDB: async ({ state }, payload) => {
+      // payload [key: 'b'bokkId'p'pageid, url:url]
+      console.log("saveImageIDB", payload, state.online);
+      const blob = await idb_fileToBlob(payload.url);
+      const ab = await idb_blobToArrayBuffer(blob);
+      await idb_set(payload.key, ab);
+    },
+    getImageIDB: async ({ state }, key) => {
+      console.log("getImageIDB", key, state.online);
+      const ab = await idb_get(key);
+      return ab;
+    },
+    getImageURL: async ({ state }, key) => {
+      console.log("getImageURL", key, state.online);
+      const ab = await idb_get(key);
+      const blob = await idb_arrayBufferToBlob(ab);
+      const uri = URL.createObjectURL(blob);
+      // console.log("getImageURL==========", uri, key);
+      return uri;
+    },
+    checkIDBForKey: async ({ state }, bookid) => {
+      console.log("checkIDBForKey x", bookid, state.online);
+      let key = `b${bookid}p0`;
+      let res = await await idb_get(key);
+      // console.log("checkIDBForKey res", res);
+      // console.log("checkIDBForKey typeof res", typeof res);
+      if (typeof res == "object") {
+        // console.log("checkIDBForKey offline verfügbar", bookid);
+        // offline verfügbar
+        return true;
+      } else {
+        // console.log("checkIDBForKey online", bookid);
+        // nicht offline verfügbar
+        return false;
+      }
+    },
     setSeitenAnsicht: ({ commit }, payload) => {
       commit("SET_SEITENANSICHT", payload);
+    },
+    SET_BOOKDOWNLOAD: ({ commit }, payload) => {
+      console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+      commit("UPDATE_BOOKDOWNLOAD", payload);
     },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {

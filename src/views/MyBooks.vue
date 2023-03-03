@@ -27,7 +27,7 @@
     <div class="main__header">
       <h2 class="solo">Meine Bücher</h2>
     </div>
-    <div v-if="books.length > 0" class="main__body">
+    <div v-if="state.showBooks" class="main__body">
       <div class="bookCard__row">
         <div
           v-for="book in books"
@@ -69,16 +69,13 @@
             >
               Lizenzen verwalten
             </button>
-            <DownloadButton
-              :url="`${$store.state.localdata}/${book.id}/buch.pdf`"
-              :no="book.id"
-            />
+            <DownloadButton :maxpages="book.pages" :bookid="book.id" />
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="books.length <= 0" id="info-buecher" class="info active">
+    <div v-if="!state.showBooks" id="info-buecher" class="info active">
       <div class="info__icon">
         <img src="@/assets/images/icons/cancel.svg" alt="" />
       </div>
@@ -117,7 +114,9 @@ export default {
         confirm: false,
         online: true,
         offlinedownload: "onlyOnline",
+        showBooks: false,
       },
+      checkCount: 0,
     };
   },
   async created() {
@@ -128,14 +127,24 @@ export default {
   async mounted() {
     this.user = await this.$store.getters.getUser;
     this.books = await this.$store.getters.getBooks;
+    this.checkForBooks();
     this.secretMessage = await AuthService.getSecretContent();
     this.$store.commit("setMainMenu", "book");
   },
   methods: {
     ...mapActions(["setModal", "setCurrentBook"]),
-    chgPage(page) {
-      // this.currentMenu = page
-      console.log("->", page);
+    checkForBooks() {
+      if (this.books.length > 0) {
+        this.state.showBooks = true;
+      } else {
+        if (this.checkCount < 10) {
+          this.checkCount++;
+          setTimeout(() => {
+            this.checkForBooks();
+          }, 700);
+        }
+      }
+      console.log("->", this.books.length);
     },
     showBook(book) {
       // console.log("book->", book);
