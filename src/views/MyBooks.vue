@@ -43,10 +43,7 @@
             {{ book.maxLicense - 1 }}
           </div>
           <div class="bookCard__image" @click.prevent="showBookJPGs(book)">
-            <img
-              :src="`${$store.state.dataUrl}${book.id}/thumb.jpg`"
-              :alt="book.title"
-            />
+            <ThumbNail :book="book" />
           </div>
           <div class="bookCard__content">
             <h6 @click.prevent="showBookJPGs(book)">
@@ -96,11 +93,13 @@
 <script>
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
+import ThumbNail from "@/components/ThumbNail.vue";
 import { mapActions } from "vuex";
 
 export default {
   components: {
     DownloadButton,
+    ThumbNail,
   },
   props: [],
   emits: [],

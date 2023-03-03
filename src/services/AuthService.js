@@ -8,7 +8,7 @@ const url = "https://front.promosverlag.de/api/";
 export default {
   async login(payload) {
     const response = await axios.post(url + "login.php", payload);
-    console.log("RESPONSE: ", response);
+    // console.log("RESPONSE: ", response);
     return response.data;
   },
   // signUp (payload) {

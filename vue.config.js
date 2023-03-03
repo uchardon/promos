@@ -11,9 +11,9 @@ module.exports = {
   },
 
   pwa: {
-    // workboxOptions: {
-    //   skipWaiting: true
-    // },
+    workboxOptions: {
+      skipWaiting: true,
+    },
     name: "Promos Web App",
     theme_color: "#000",
     msTileColor: "#000000",

@@ -38,7 +38,7 @@
           >
             Login
           </button>
-          <a class="passwort-vergessen-link" @click="sendPW()"
+          <a v-if="online" class="passwort-vergessen-link" @click="sendPW()"
             >Passwort vergessen
           </a>
           <p v-if="msg">{{ msg }}</p>
@@ -73,10 +73,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["url"]),
+    ...mapState(["url", "online"]),
   },
   async created() {
-    this.$store.dispatch("setOnlineMode", navigator.onLine);
     // TODO check secret;
     // console.log("secret: ", this.$route.params.secret);
     // if (this.$route.params.secret) {
@@ -116,17 +115,17 @@ export default {
         };
         const response = await AuthService.login(payload_);
 
-        this.msg = response.msg;
-
-        const payload = {
-          token: response.token,
-          user: response.user,
-          secret: this.$route.params.secret,
-        };
-
-        this.$store.dispatch("login", payload);
-
-        this.$router.push("/mybooks");
+        if (response.error) {
+          this.msg = "Falsche Logindaten";
+        } else {
+          const payload = {
+            token: response.token,
+            user: response.user,
+            secret: this.$route.params.secret,
+          };
+          this.$store.dispatch("login", payload); // userdaten in store schreiben Bücher einlesen
+          this.$router.push("/mybooks"); // Nächste Seite
+        }
       } catch (error) {
         this.msg = error.response.data.msg;
       }
@@ -134,7 +133,7 @@ export default {
 
     async sendPW() {
       console.log("sendPW");
-      if (this.email == "") {
+      if (this.email != "") {
         const response = await Axios.post(this.url + "mailpw.php", {
           email: this.email,
         });

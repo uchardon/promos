@@ -134,10 +134,6 @@ export default new Vuex.createStore({
           console.log(`Sorry, we are out of ${payload.key}.`);
       }
     },
-    onlineMode: (state, payload) => {
-      state.online = payload;
-      /*state.online = false;*/
-    },
     setBooks: (state, payload) => {
       state.books = payload;
     },
@@ -146,6 +142,9 @@ export default new Vuex.createStore({
     },
     SET_CURPAGE: (state, pageNo) => {
       state.curPage = pageNo;
+    },
+    SET_ONLINE: (state, onlinestate) => {
+      state.online = onlinestate;
     },
     setMainMenu: (state, payload) => {
       // ...
@@ -363,8 +362,11 @@ export default new Vuex.createStore({
       commit("SET_SEITENANSICHT", payload);
     },
     SET_BOOKDOWNLOAD: ({ commit }, payload) => {
-      console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+      // console.log(`KEY ${payload.key} VAL ${payload.value}.`);
       commit("UPDATE_BOOKDOWNLOAD", payload);
+    },
+    SET_ONLINE: ({ commit }, onlinestate) => {
+      commit("SET_ONLINE", onlinestate);
     },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {
@@ -437,7 +439,7 @@ export default new Vuex.createStore({
       console.log("RESPONSE: ", response);
       if (!response.error) {
         dispatch("getSubusers");
-        console.log("x-x-x");
+        // console.log("x-x-x");
       }
     },
     // eslint-disable-next-line
@@ -460,9 +462,6 @@ export default new Vuex.createStore({
     },
     setCurrentMarker: ({ commit }, color) => {
       commit("SET_CURMARKER", color);
-    },
-    setOnlineMode: ({ commit }, payload) => {
-      commit("onlineMode", payload);
     },
     setMarkersForBook: ({ commit }, payload) => {
       commit("setMarkersForBook", payload);
