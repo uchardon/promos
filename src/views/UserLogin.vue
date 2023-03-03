@@ -7,7 +7,11 @@
       <form action="#" class="login__form" @submit.prevent="login">
         <div class="login__form-inner">
           <div class="login__form-logo" style="width: 100%">
-            <h2>Hallo {{ vorname }} {{ nachname }}</h2>
+            <!-- <<h2>Hallo {{ vorname }} {{ nachname }}</h2>> -->
+            <img
+              style="width: 40%"
+              src="@/assets/images/promos-icon-startseite.svg"
+            />
           </div>
           <div class="input">
             <input

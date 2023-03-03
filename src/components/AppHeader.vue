@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <div id="headerDesktop" class="header__inner">
-      <div class="header__inner-logo">promos verlag</div>
+      <div class="header__inner-logo">
+        <img src="@/assets/images/promos-logo-header.svg" />
+      </div>
       <div
         v-if="
           $route.name != 'login' &&
@@ -112,6 +114,10 @@ header {
   line-height: 70px;
   padding: 0 25px 0 0;
   font-size: 20px;
+  img {
+    height: 35px;
+    margin-top: 18px;
+  }
 }
 .header__inner .link {
   float: left;
