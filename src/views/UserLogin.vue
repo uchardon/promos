@@ -67,7 +67,6 @@
 import { mapState, mapActions } from "vuex";
 import AuthService from "@/services/AuthService.js";
 import { idb_get, idb_set } from "@/services/idb.js";
-import Axios from "axios";
 
 export default {
   data() {
@@ -172,22 +171,6 @@ export default {
         } else {
           this.msg = "Falsche Logindaten";
         }
-      }
-    },
-
-    async sendPW() {
-      console.log("sendPW");
-      if (this.email != "") {
-        const response = await Axios.post(this.url + "mailpw.php", {
-          email: this.email,
-        });
-        console.log("response", response);
-        this.msg =
-          "Ein neues Passwort wird an die Mailadresse " +
-          this.email +
-          " gesendet!";
-      } else {
-        this.msg = "Bitte tragen Sie eine E-Mailadresse ein!";
       }
     },
   },

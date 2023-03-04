@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      myobserver: null,
       state: {
         showMarkerEdit: false,
         setNewMarker: true,
@@ -108,10 +109,13 @@ export default {
     this.imgurl(this.offline);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
-    const myobserver = new ResizeObserver(() => {
+    this.myobserver = new ResizeObserver(() => {
       this.getBox();
     });
-    myobserver.observe(document.querySelector(`[data-no="${this.no}"]`));
+    this.myobserver.observe(document.querySelector(`[data-no="${this.no}"]`));
+  },
+  unmounted() {
+    this.myobserver.disconnect();
   },
   methods: {
     ...mapActions([

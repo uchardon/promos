@@ -1,35 +1,41 @@
 <template>
   <div class="modalDownload" style="text-align: center">
-    <div v-if="true">
-      <!-- // Der download wird angeboten -->
-      <div v-if="bookDownload.state == 'start'">
-        <br /><br />
-        <img
-          src="@/assets/images/icons/padlock.svg"
-          style="width: 10%; text-align: center"
-        />
-        <br /><br />
-        <h2>Passwort zusenden</h2>
-        <br />
-        <p>
-          Geben Sie Ihre E-Mail Adresse ein und klicken Sie auf jetzt zusenden.
-          Anschließend wird Ihnen Ihr Passwort per Mail zugesendet.
-        </p>
-        <div class="input">
-          <input
-            v-model="email"
-            type="email"
-            onclick="this.placeholder=''"
-            onfocus="this.select()"
-            onblur="this.placeholder=!this.placeholder?'E-Mail':this.placeholder;"
-            placeholder="E-Mail"
-            required
+    <div v-if="pwstate == 'start' && online">
+      <form @submit.prevent="sendPW()">
+        <div>
+          <br /><br />
+          <img
+            src="@/assets/images/icons/padlock.svg"
+            style="width: 10%; text-align: center"
           />
+          <br /><br />
+          <h2>Passwort zusenden</h2>
+          <br />
+          <p>
+            Geben Sie Ihre E-Mail Adresse ein und klicken Sie auf jetzt
+            zusenden. Anschließend wird Ihnen Ihr Passwort per Mail zugesendet.
+          </p>
+          <div class="input">
+            <input
+              v-model="email"
+              type="email"
+              onclick="this.placeholder=''"
+              onfocus="this.select()"
+              onblur="this.placeholder=!this.placeholder?'E-Mail':this.placeholder;"
+              placeholder="E-Mail"
+              required
+            />
+          </div>
         </div>
-      </div>
+        <div class="buttons">
+          <button type="submit" class="btn">Zusenden</button>
+        </div>
+      </form>
+    </div>
 
-      <!-- // Der download ist beendet -->
-      <div v-if="bookDownload.state == 'end'">
+    <!-- // Der download ist beendet -->
+    <div v-if="pwstate == 'send'">
+      <div>
         <br /><br />
         <img
           src="@/assets/images/icons/tick.svg"
@@ -39,55 +45,39 @@
         <h2>Erfolgreich versendet</h2>
         <p>Das Passwort wurde Ihnen erfolgreich versendet.</p>
       </div>
-      <div v-if="bookDownload.state != 'loading'" class="buttons">
-        <button
-          v-if="bookDownload.state == 'start'"
-          class="btn"
-          @click="saveImages()"
-        >
-          Zusenden
-        </button>
-        <button
-          v-if="bookDownload.state == 'start'"
-          class="btn"
-          @click="setModal(false, '')"
-        >
-          Abbrechen
-        </button>
-        <button
-          v-if="bookDownload.state == 'end'"
-          class="btn"
-          style="width: 50%"
-          @click="setModal(false, '')"
-        >
-          Ok
-        </button>
-      </div>
-    </div>
-
-    <div v-if="false">
-      <br /><br />
-      <img
-        src="@/assets/images/no-wifi.svg"
-        style="width: 10%; text-align: center"
-      />
-      <br /><br />
-      <h2>Kein Internet</h2>
-      <br />
-      <p>
-        Um das Passwort beantragen zu können, benötigen Sie eine
-        Internetverbindung.
-      </p>
       <div class="buttons">
         <button class="btn" style="width: 50%" @click="setModal(false, '')">
           Ok
         </button>
       </div>
     </div>
+
+    <div v-if="!online">
+      <div>
+        <br /><br />
+        <img
+          src="@/assets/images/no-wifi.svg"
+          style="width: 10%; text-align: center"
+        />
+        <br /><br />
+        <h2>Kein Internet</h2>
+        <br />
+        <p>
+          Um ein neues Passwort beantragen zu können, benötigen Sie eine
+          Internetverbindung.
+        </p>
+        <div class="buttons">
+          <button class="btn" style="width: 50%" @click="setModal(false, '')">
+            Ok
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Axios from "axios";
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -95,25 +85,27 @@ export default {
   data() {
     return {
       loadingNum: 0,
+      email: "",
+      pwstate: "start",
+      error: "",
     };
   },
   computed: {
-    ...mapState(["modal", "online", "bookDownload", "localdata"]),
+    ...mapState(["url", "modal", "online"]),
   },
   methods: {
-    ...mapActions(["setModal", "saveImageIDB", "SET_BOOKDOWNLOAD"]),
-    async saveImages() {
-      this.SET_BOOKDOWNLOAD({ key: "state", value: "loading" });
-      for (let i = 0; this.bookDownload.maxpages > i; i++) {
-        let key = `b${this.bookDownload.bookid}p${i}`;
-        let url = `${this.localdata}${this.bookDownload.bookid}/page-${i}.jpg`;
-        let payload = {
-          key: key,
-          url: url,
-        };
-        await this.saveImageIDB(payload);
+    ...mapActions(["setModal"]),
+    async sendPW() {
+      console.log("sendPW");
+      if (this.email != "") {
+        const response = await Axios.post(this.url + "mailpw.php", {
+          email: this.email,
+        });
+        console.log("response", response);
+        this.pwstate = "send";
+      } else {
+        this.error = "Bitte tragen Sie eine E-Mailadresse ein!";
       }
-      this.SET_BOOKDOWNLOAD({ key: "state", value: "end" });
     },
   },
 };

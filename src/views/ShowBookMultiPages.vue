@@ -18,6 +18,7 @@
           :curMarker="curMarker"
           :class="{ active: curMarker == color }"
           viewBox="0 0 38.57 36.004"
+          title="Notizen hinzufügen"
           xmlns="http://www.w3.org/2000/svg"
           style="width: 30px; height: 30px"
           @click="setNewMarkerColor(color)"
@@ -75,7 +76,7 @@
         <!-- <img src="@/assets/images/icons/kommentar-private.svg" />
         <img src="@/assets/images/icons/kommentar-private-active.svg" /> -->
 
-        <div @click="toggleShowMarkers()">
+        <div title="Notizen ein- / ausblenden" @click="toggleShowMarkers()">
           <IconShow size="35px" fill="#fff" :on="showMarkers" />
         </div>
       </div>

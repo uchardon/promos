@@ -3,7 +3,7 @@
     class="marker"
     viewBox="0 0 38.569 35.994"
     xmlns="http://www.w3.org/2000/svg"
-    :style="`top: ${posY}px; left:  ${posX}px;`"
+    :style="`top: ${posY - 23}px; left:  ${posX}px;`"
     @click.stop="$emit('editMarker')"
   >
     <g

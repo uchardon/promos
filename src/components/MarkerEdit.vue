@@ -88,12 +88,19 @@ export default {
         // console.log("NEW MARKER");
         console.log("xfilteredMarkersxx", this.filteredMarkers);
         if (this.markerToEdit.content.desc != "") {
+          // Zeilenumbrüche sind in json nicht erlaubt
+          this.markerToEdit.content.desc =
+            this.markerToEdit.content.desc.replace(/\n/g, "\\n");
           this.filteredMarkers.push(this.markerToEdit.content);
           // console.log("----------filteredMarkersxx", this.filteredMarkers);
         }
         this.setIndex();
       } else {
         // console.log("UPDATE MARKER");
+        this.markerToEdit.content.desc = this.markerToEdit.content.desc.replace(
+          /\n/g,
+          "\\n"
+        );
         this.filteredMarkers[this.markerToEdit.content.index] =
           this.markerToEdit.content;
         this.saveMarkersToDB();
