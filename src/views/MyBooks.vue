@@ -55,19 +55,22 @@
             <p @click.prevent="showBook(book)">Mehr Informationen</p>
           </div>
           <div class="buttons">
+            <button class="bopen btn" @click="showBookJPGs(book)">
+              Buch öffnen
+            </button>
             <button
               v-if="book.maxLicense <= 1"
               class="adminlicences btn"
               @click="showBuyLicense()"
             >
-              Lizenzen kaufen
+              Lizenzen
             </button>
             <button
               v-if="book.maxLicense > 1"
               class="adminlicences btn"
               @click="showLicense(book)"
             >
-              Lizenzen verwalten
+              Lizenzen
             </button>
             <DownloadButton :maxpages="book.pages" :bookid="book.id" />
           </div>
@@ -168,7 +171,7 @@ export default {
   template: "#my-book",
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .main__header {
   margin-bottom: 15px;
   margin-top: 50px;
@@ -220,6 +223,18 @@ export default {
   font-family: roboto;
   font-size: 14px;
   cursor: pointer;
+  &.adminlicences {
+    width: 47.5%;
+    float: right;
+    margin-top: 12px;
+  }
+  &.bopen {
+    background: #2799fa;
+    color: #fff;
+    &:hover {
+      background: #217fcf;
+    }
+  }
 }
 .btn:hover {
   background: #2799fa;
@@ -341,7 +356,7 @@ export default {
 @media (max-width: 540px) {
   .bookCard {
     display: block;
-    padding: 28px 25px;
+    padding: 50px 25px 35px;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;

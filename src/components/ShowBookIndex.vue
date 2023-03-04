@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h2>Inhaltsverzeichniss</h2>
+    <h2>Inhaltsverzeichnis</h2>
     <!-- eslint-disable vue/no-v-html -->
     <ul>
       <li

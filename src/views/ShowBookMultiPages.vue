@@ -164,7 +164,7 @@ export default {
       showMarkers: true,
       currentMarker: {},
       pages: [],
-      zoom: 75,
+      zoom: 50,
       pageInViewport: 1,
       offline: -1, // nicht offline verfügbar
     };
@@ -221,7 +221,7 @@ export default {
     },
     zoomin(inout) {
       const max = 150;
-      const min = 50;
+      const min = 25;
       if (inout == "in") {
         this.zoom = this.zoom + 25;
       }
@@ -320,7 +320,7 @@ h1 {
   padding: 50px;
   text-align: left;
   @media (max-width: 650px) {
-    padding: 0px 25px 25px 25px;
+    padding: 10px 25px 15px 25px;
   }
 }
 
