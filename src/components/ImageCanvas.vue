@@ -144,7 +144,7 @@ export default {
     async imgurl(offline) {
       // let key = "buch_" + this.bookid;
       console.log("imgurl", offline);
-      let newurl = "111";
+      let newurl = "";
       if (offline != 1) {
         // nicht offline verfügbar
         // newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;

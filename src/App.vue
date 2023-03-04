@@ -31,8 +31,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 // @ is an alias to /src
+import { isOnline } from "@/services/helper.js";
 import AppHeader from "@/components/AppHeader.vue";
 import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
 import AppSymbols from "@/components/AppSymbols.vue";
@@ -58,6 +59,13 @@ export default {
   },
   computed: {
     ...mapState(["modal", "mainMenu"]),
+  },
+  mounted() {
+    let tmp = isOnline();
+    this.SET_ONLINE(tmp);
+  },
+  methods: {
+    ...mapActions(["SET_ONLINE"]),
   },
 };
 </script>

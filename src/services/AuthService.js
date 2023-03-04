@@ -3,12 +3,12 @@ import axios from "axios";
 
 // const url = 'http://localhost:3000/api/';
 // const url = "http://promos-verlag.de/v2/api/";
-const url = "https://front.promosverlag.de/api/";
+const url = "https://bib.promosverlag.de/api/";
 
 export default {
   async login(payload) {
     const response = await axios.post(url + "login.php", payload);
-    console.log("RESPONSE: ", response);
+    // console.log("RESPONSE: ", response);
     return response.data;
   },
   // signUp (payload) {
@@ -18,7 +18,7 @@ export default {
   // },
   getSecretContent() {
     // return axios.get(url + 'secret-route/').then(response => response.data);
-    return "123";
+    return "202cb963ac59075b964b07152d234b70";
   },
   async checkSecret(secret) {
     const response = await axios.post(url + "checkSecret.php", {

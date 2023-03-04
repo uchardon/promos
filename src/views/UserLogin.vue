@@ -4,6 +4,7 @@
       <div class="login__image">
         <img src="@/assets/images/sample.png" alt="" />
       </div>
+
       <form action="#" class="login__form" @submit.prevent="login">
         <div class="login__form-inner">
           <div class="login__form-logo" style="width: 100%">
@@ -13,6 +14,7 @@
               src="@/assets/images/promos-icon-startseite.svg"
             />
           </div>
+          <h3 v-if="msg != ''" class="error">{{ msg }}</h3>
           <div class="input">
             <input
               v-model="email"
@@ -42,7 +44,7 @@
           >
             Login
           </button>
-          <a class="passwort-vergessen-link" @click="sendPW()"
+          <a v-if="online" class="passwort-vergessen-link" @click="sendPW()"
             >Passwort vergessen
           </a>
           <p v-if="msg">{{ msg }}</p>
@@ -59,8 +61,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import AuthService from "@/services/AuthService.js";
+import { idb_get, idb_set } from "@/services/idb.js";
 import Axios from "axios";
 
 export default {
@@ -77,10 +80,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["url"]),
+    ...mapState(["url", "online", "books"]),
   },
   async created() {
-    this.$store.dispatch("setOnlineMode", navigator.onLine);
     // TODO check secret;
     // console.log("secret: ", this.$route.params.secret);
     // if (this.$route.params.secret) {
@@ -109,36 +111,66 @@ export default {
     // }
   },
   methods: {
+    ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE"]),
     async login() {
-      console.log(" methods login ");
-      try {
-        // console.log(" methods login try ");
-        const payload_ = {
-          email: this.email,
-          password: this.password,
-          // secret: this.$route.params.secret,
-        };
-        const response = await AuthService.login(payload_);
+      console.log(" methode LOGIN ");
+      let books = [];
+      // console.log(" methods login try ");
+      if (this.online) {
+        try {
+          const payload_ = {
+            email: this.email,
+            password: this.password,
+            // secret: this.$route.params.secret,
+          };
+          const response = await AuthService.login(payload_);
 
-        this.msg = response.msg;
+          if (response.error) {
+            this.msg = "Falsche Logindaten";
+          } else {
+            // set userdata in db
+            const payload = {
+              token: response.token,
+              user: response.user,
+              secret: "",
+            };
+            console.log("uid", response.user.id);
+            this.SET_USERDATA(payload); // userdaten in store schreiben Bücher einlesen
+            books = await this.getBooks(response.user.id);
 
-        const payload = {
-          token: response.token,
-          user: response.user,
-          secret: this.$route.params.secret,
-        };
-
-        this.$store.dispatch("login", payload);
-
-        this.$router.push("/mybooks");
-      } catch (error) {
-        this.msg = error.response.data.msg;
+            await idb_set(this.password, payload);
+            // console.log("BOOKS", books);
+            await idb_set("books", books);
+            this.$router.push("/mybooks"); // Nächste Seite
+          }
+        } catch (error) {
+          this.msg = "Ein unerwarteter Fehler ist aufgetreten";
+        }
+      } else {
+        let data = await idb_get(this.password);
+        if (
+          this.password == data.user.password &&
+          this.email == data.user.email
+        ) {
+          // console.log("DB_DATA", data.user); // offline Login erfolgreich
+          const payload = {
+            token: data.token,
+            user: data.user,
+            secret: "",
+          };
+          this.login(payload); // userdaten in store schreiben Bücher einlesen
+          books = await idb_get("books");
+          await this.SET_BOOKSINSTORE(books);
+          this.$router.push("/mybooks"); // Nächste Seite
+        } else {
+          this.msg = "Falsche Logindaten";
+        }
       }
     },
 
     async sendPW() {
       console.log("sendPW");
-      if (this.email == "") {
+      if (this.email != "") {
         const response = await Axios.post(this.url + "mailpw.php", {
           email: this.email,
         });
