@@ -44,7 +44,10 @@
           >
             Login
           </button>
-          <a v-if="online" class="passwort-vergessen-link" @click="sendPW()"
+          <a
+            v-if="online"
+            class="passwort-vergessen-link"
+            @click="showModalPassword()"
             >Passwort vergessen
           </a>
           <p v-if="msg">{{ msg }}</p>
@@ -111,7 +114,11 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE"]),
+    ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE", "setModal"]),
+    showModalPassword() {
+      // console.log("showIndex");
+      this.setModal({ state: true, content: "ModalPassword" });
+    },
     async login() {
       console.log(" methode LOGIN ");
       let books = [];

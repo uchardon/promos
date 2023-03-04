@@ -97,24 +97,24 @@ export default {
       }).markers;
     },
   },
-  watch: {
-    // whenever question changes, this function will run
-    zoom(oldzoom, newzoom) {
-      // this.resizeEvent("watch");
-      console.log("Zoom wurde geändert", oldzoom, newzoom);
-      this.showMarkers = false;
-      setTimeout(() => {
-        this.getBox();
-        this.showMarkers = true;
-      }, 500);
-      // let counter = 1;
-      // this.interval = setInterval(() => {
-      //   counter++;
-      //   this.getBox("int" + counter);
-      // }, 2000);
-      // clearInterval(interval);
-    },
-  },
+  // watch: {
+  //   // whenever question changes, this function will run
+  //   zoom(oldzoom, newzoom) {
+  //     // this.resizeEvent("watch");
+  //     console.log("Zoom wurde geändert", oldzoom, newzoom);
+  //     this.showMarkers = false;
+  //     setTimeout(() => {
+  //       this.getBox();
+  //       this.showMarkers = true;
+  //     }, 500);
+  //     // let counter = 1;
+  //     // this.interval = setInterval(() => {
+  //     //   counter++;
+  //     //   this.getBox("int" + counter);
+  //     // }, 2000);
+  //     // clearInterval(interval);
+  //   },
+  // },
   mounted() {
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
@@ -126,6 +126,9 @@ export default {
     this.imgurl(this.offline);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
+    new ResizeObserver(this.getBox()).observe(
+      document.querySelector(`[data-no=${this.no}]`)
+    );
   },
   methods: {
     ...mapActions([
