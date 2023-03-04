@@ -21,7 +21,7 @@
       <img :alt="book.title" :data-imgno="no" @load="resizeEvent()" />
     </div>
 
-    {{ box.width }} x {{ box.height }}
+    <!-- {{ box.width }} x {{ box.height }} -->
   </div>
 </template>
 
@@ -306,7 +306,9 @@ export default {
     overflow: visible;
   }
   .imgContent {
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    img {
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    }
   }
   @media (max-width: 650px) {
     margin-top: 50px;

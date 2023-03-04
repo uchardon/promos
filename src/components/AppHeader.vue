@@ -115,8 +115,8 @@ header {
   padding: 0 25px 0 0;
   font-size: 20px;
   img {
-    height: 35px;
-    margin-top: 18px;
+    height: 27px;
+    margin-top: 22px;
   }
 }
 .header__inner .link {

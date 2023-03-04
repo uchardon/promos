@@ -7,7 +7,7 @@
       class="download btn startdownload"
       @click="loadForOfflineUse()"
     >
-      Herunterladen
+      Download
     </button>
 
     <button v-if="offline == 1 && state.online" class="download btn offline">
@@ -82,7 +82,7 @@ export default {
   justify-content: center;
   align-items: center;
   min-width: 100px;
-  width: 100%;
+  width: 47.5%;
   padding: 15px 0px;
   margin: 12px 0 0;
   border-radius: 10px;
@@ -106,6 +106,9 @@ export default {
 }
 
 .btn.offline {
-  --current: 100;
+  background: #fff;
+  border: 1px solid #00e4cc;
+  color: #00e4cc;
+  font-size: 13px;
 }
 </style>
