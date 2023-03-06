@@ -126,9 +126,6 @@ export default {
   },
   async created() {
     if (this.token != "202cb963ac59075b964b07152d234b70") {
-      console.log(
-        "======================= NOT LOGEDIN ==========202cb963ac59075b964b07152d234b70======"
-      );
       this.$router.push("/login");
     }
   },

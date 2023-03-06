@@ -1,6 +1,7 @@
 {
   "name": "bib.promos",
   "short_name": "bib.promos",
+  "description":"App vom Promos Verlag",
   "theme_color": "#000000",
   "icons": [
     {

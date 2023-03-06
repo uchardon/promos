@@ -16,6 +16,7 @@ export default new Vuex.createStore({
     dataUrl: "https://bib.promosverlag.de/data/",
     // localdata: "data/",
     localdata: "data/",
+    deferredPrompt: null,
     online: true,
     mainMenu: "book",
     token: "",

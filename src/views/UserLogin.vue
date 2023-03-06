@@ -60,6 +60,9 @@
     <div v-if="pagestate == 'checkWait'" class="center">
       <h1>Loading...</h1>
     </div>
+    <div class="installBtn">
+      <button @click="appInstall()">App installieren</button>
+    </div>
   </section>
 </template>
 
@@ -82,7 +85,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["url", "online", "books"]),
+    ...mapState(["url", "online", "books", "deferredPrompt"]),
   },
   async created() {
     // TODO check secret;
@@ -111,9 +114,26 @@ export default {
     // } else {
     //   this.pagestate = "checkFail";
     // }
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      console.log("deferredPrompt event was fired", this.deferredPrompt);
+      // showInstallPromotion();
+    });
   },
   methods: {
     ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE", "setModal"]),
+    async appInstall() {
+      this.hideInstallPromotion();
+      this.deferredPrompt.prompt();
+      const { outcome } = await this.deferredPrompt.userChoice;
+      console.log(`User response to the install prompt: ${outcome}`);
+      this.deferredPrompt = null;
+    },
+    hideInstallPromotion() {
+      console.log("hideInstallPromotion");
+    },
     showModalPassword() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ModalPassword" });
@@ -196,6 +216,14 @@ a.passwort-vergessen-link:hover {
   }
   .login__form-logo {
     margin-bottom: 50px;
+  }
+}
+.installBtn {
+  display: none;
+}
+@media all and (display-mode: browser) {
+  .installBtn {
+    display: block;
   }
 }
 </style>
