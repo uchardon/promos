@@ -81,11 +81,12 @@ export default {
       nachname: "",
       msg: "",
       pagestate: "checkOK",
+      deferredPrompt: null,
       // checkWait, checkFail, checkOK
     };
   },
   computed: {
-    ...mapState(["url", "online", "books", "deferredPrompt"]),
+    ...mapState(["url", "online", "books"]),
   },
   async created() {
     // TODO check secret;
@@ -117,6 +118,7 @@ export default {
 
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
+      console.log("deferredPrompt event was fired eee", e);
       this.deferredPrompt = e;
       console.log("deferredPrompt event was fired", this.deferredPrompt);
       // showInstallPromotion();
