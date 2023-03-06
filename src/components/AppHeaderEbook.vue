@@ -24,11 +24,13 @@
         <div
           class="baSingle"
           :class="{ baActive: seitenAnsicht == 'single' }"
+          title="Einzelseite"
           @click="setSeitenAnsicht('single')"
         ></div>
         <div
           class="baDouble"
           :class="{ baActive: seitenAnsicht == 'double' }"
+          title="Doppelseite"
           @click="setSeitenAnsicht('double')"
         ></div>
       </div>

@@ -18,6 +18,7 @@
           :curMarker="curMarker"
           :class="{ active: curMarker == color }"
           viewBox="0 0 38.57 36.004"
+          title="Notizen hinzufügen"
           xmlns="http://www.w3.org/2000/svg"
           style="width: 30px; height: 30px"
           @click="setNewMarkerColor(color)"
@@ -75,7 +76,7 @@
         <!-- <img src="@/assets/images/icons/kommentar-private.svg" />
         <img src="@/assets/images/icons/kommentar-private-active.svg" /> -->
 
-        <div @click="toggleShowMarkers()">
+        <div title="Notizen ein- / ausblenden" @click="toggleShowMarkers()">
           <IconShow size="35px" fill="#fff" :on="showMarkers" />
         </div>
       </div>
@@ -108,8 +109,11 @@
       </div>
     </nav>
     <h1>{{ currentBook.title }}</h1>
+    <div v-if="offline && inIndexdDB != 1" class="notAvaible">
+      <h3>Buch offline nicht verfügbar!</h3>
+    </div>
     <div
-      v-if="offline != -1"
+      v-if="inIndexdDB != -1"
       class="showAllPages"
       :class="seitenAnsicht"
       :style="'--zoom: calc(' + zoom + ' / 100)'"
@@ -117,7 +121,7 @@
       <ImageCanvas
         v-for="(page, index) in pages"
         :key="index"
-        :offline="offline"
+        :offline="inIndexdDB"
         :no="index + 1"
         :zoom="zoom"
         :showmarkers="showMarkers"
@@ -166,7 +170,7 @@ export default {
       pages: [],
       zoom: 50,
       pageInViewport: 1,
-      offline: -1, // nicht offline verfügbar
+      inIndexdDB: -1, // nicht offline verfügbar
     };
   },
   computed: {
@@ -177,18 +181,23 @@ export default {
       "curPage",
       "seitenAnsicht",
       "PDF_URLs",
+      "token",
+      "offline",
     ]),
     ...mapGetters(["getBooks"]),
   },
   async created() {
     const res = await this.checkIDBForKey(this.currentBook.id);
-    console.log("offline verfügbar", this.currentBook.id, res);
+    console.log("inIndexdDB verfügbar", this.currentBook.id, res);
     if (res) {
-      this.offline = 1;
-      // offline verfügbar
-      console.log("offline verfügbar", this.currentBook.id);
+      this.inIndexdDB = 1;
+      // inIndexdDB verfügbar
+      console.log("inIndexdDB verfügbar", this.currentBook.id);
     } else {
-      this.offline = 0;
+      this.inIndexdDB = 0;
+    }
+    if (this.token != "202cb963ac59075b964b07152d234b70") {
+      this.$router.push("/login");
     }
   },
   mounted() {

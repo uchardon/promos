@@ -49,7 +49,7 @@ export default {
       type: Number,
       required: true,
     },
-    offline: {
+    inIndexdDB: {
       type: Number,
       default: 0,
       required: true,
@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      myobserver: null,
       state: {
         showMarkerEdit: false,
         setNewMarker: true,
@@ -89,6 +90,7 @@ export default {
       "markerToEdit",
       "localdata",
       "dataUrl",
+      "offline",
     ]),
     ...mapGetters(["getBooks", "getMarkersByBookpage"]),
     filteredMarkers() {
@@ -97,24 +99,6 @@ export default {
       }).markers;
     },
   },
-  // watch: {
-  //   // whenever question changes, this function will run
-  //   zoom(oldzoom, newzoom) {
-  //     // this.resizeEvent("watch");
-  //     console.log("Zoom wurde geändert", oldzoom, newzoom);
-  //     this.showMarkers = false;
-  //     setTimeout(() => {
-  //       this.getBox();
-  //       this.showMarkers = true;
-  //     }, 500);
-  //     // let counter = 1;
-  //     // this.interval = setInterval(() => {
-  //     //   counter++;
-  //     //   this.getBox("int" + counter);
-  //     // }, 2000);
-  //     // clearInterval(interval);
-  //   },
-  // },
   mounted() {
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
@@ -122,13 +106,17 @@ export default {
     // this.getMarkersFromDb();
     this.getMarkersByPage();
     this.getBox();
-    console.log("get offline from ... ", this.offline);
-    this.imgurl(this.offline);
+    // console.log("get inIndexdDB from ... ", this.inIndexdDB);
+    this.imgurl(this.inIndexdDB);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
-    new ResizeObserver(this.getBox()).observe(
-      document.querySelector(`[data-no=${this.no}]`)
-    );
+    this.myobserver = new ResizeObserver(() => {
+      this.getBox();
+    });
+    this.myobserver.observe(document.querySelector(`[data-no="${this.no}"]`));
+  },
+  unmounted() {
+    this.myobserver.disconnect();
   },
   methods: {
     ...mapActions([
@@ -144,17 +132,17 @@ export default {
     //   this.dbKeys = await keys();
     //   console.log("is KEY-yyy: ", this.dbKeys);
     // },
-    async imgurl(offline) {
+    async imgurl(inIndexdDB) {
       // let key = "buch_" + this.bookid;
-      console.log("imgurl", offline);
+      console.log("imgurl", inIndexdDB);
       let newurl = "";
-      if (offline != 1) {
-        // nicht offline verfügbar
+      if (inIndexdDB != 1) {
+        // nicht inIndexdDB verfügbar
         // newurl = `${this.dataUrl}${this.bookid}/page-${this.no - 1}.jpg`;
         let imageURL = `${this.localdata}${this.bookid}/page-${
           this.no - 1
         }.jpg`;
-        // console.log("imgurl not offline");
+        // console.log("imgurl not inIndexdDB");
         await fetch(imageURL)
           .then((response) => {
             return response.blob();
@@ -163,8 +151,8 @@ export default {
             newurl = URL.createObjectURL(blob);
           });
       } else {
-        // offline verfügbar
-        console.log("imgurl is offline");
+        // inIndexdDB verfügbar
+        console.log("imgurl is inIndexdDB");
         let key = `b${this.bookid}p${this.no - 1}`;
         newurl = await this.getImageURL(key);
       }

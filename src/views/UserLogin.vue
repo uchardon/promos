@@ -60,6 +60,9 @@
     <div v-if="pagestate == 'checkWait'" class="center">
       <h1>Loading...</h1>
     </div>
+    <div class="installBtn">
+      <button @click="appInstall()">App installieren</button>
+    </div>
   </section>
 </template>
 
@@ -67,7 +70,6 @@
 import { mapState, mapActions } from "vuex";
 import AuthService from "@/services/AuthService.js";
 import { idb_get, idb_set } from "@/services/idb.js";
-import Axios from "axios";
 
 export default {
   data() {
@@ -79,6 +81,7 @@ export default {
       nachname: "",
       msg: "",
       pagestate: "checkOK",
+      deferredPrompt: null,
       // checkWait, checkFail, checkOK
     };
   },
@@ -112,9 +115,27 @@ export default {
     // } else {
     //   this.pagestate = "checkFail";
     // }
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      console.log("deferredPrompt event was fired eee", e);
+      this.deferredPrompt = e;
+      console.log("deferredPrompt event was fired", this.deferredPrompt);
+      // showInstallPromotion();
+    });
   },
   methods: {
     ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE", "setModal"]),
+    async appInstall() {
+      this.hideInstallPromotion();
+      this.deferredPrompt.prompt();
+      const { outcome } = await this.deferredPrompt.userChoice;
+      console.log(`User response to the install prompt: ${outcome}`);
+      this.deferredPrompt = null;
+    },
+    hideInstallPromotion() {
+      console.log("hideInstallPromotion");
+    },
     showModalPassword() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ModalPassword" });
@@ -174,22 +195,6 @@ export default {
         }
       }
     },
-
-    async sendPW() {
-      console.log("sendPW");
-      if (this.email != "") {
-        const response = await Axios.post(this.url + "mailpw.php", {
-          email: this.email,
-        });
-        console.log("response", response);
-        this.msg =
-          "Ein neues Passwort wird an die Mailadresse " +
-          this.email +
-          " gesendet!";
-      } else {
-        this.msg = "Bitte tragen Sie eine E-Mailadresse ein!";
-      }
-    },
   },
 };
 </script>
@@ -213,6 +218,14 @@ a.passwort-vergessen-link:hover {
   }
   .login__form-logo {
     margin-bottom: 50px;
+  }
+}
+.installBtn {
+  display: none;
+}
+@media all and (display-mode: browser) {
+  .installBtn {
+    display: block;
   }
 }
 </style>
