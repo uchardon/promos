@@ -50,7 +50,7 @@
         "
         class="header__inner-account"
       >
-        <span class="online"></span>
+        <span v-if="userstate != 'subuser'" class="online"></span>
         <slot></slot>
       </div>
     </div>
@@ -82,8 +82,13 @@
   </header>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "AppHeader",
+  methods: {
+    ...mapState(["userstate"]),
+  },
 };
 </script>
 

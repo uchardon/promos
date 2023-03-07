@@ -381,7 +381,7 @@ export default new Vuex.createStore({
       const response = await Axios.post(state.url + "getBooksSub.php", {
         email: email,
       });
-      // console.log("RESPONSE: ", response);
+      console.log("RESPONSE: ", response);
       if (!response.error) {
         commit("setBooks", response.data.books);
       }

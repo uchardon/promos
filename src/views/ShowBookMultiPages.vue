@@ -10,7 +10,7 @@
     >
     </AppHeaderEbook>
     <nav class="pageNav">
-      <div class="centerNav">
+      <div v-if="userstate == 'customer'" class="centerNav">
         <svg
           v-for="(color, index) in colors"
           :key="index"
@@ -183,6 +183,7 @@ export default {
       "PDF_URLs",
       "token",
       "offline",
+      "userstate",
     ]),
     ...mapGetters(["getBooks"]),
   },
