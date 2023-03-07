@@ -212,28 +212,7 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
-export default {
-  name: "AboutView",
-  data() {
-    return {
-      state: {
-        currentTab: 0,
-      },
-    };
-  },
-  computed: {
-    ...mapState(["token"]),
-  },
-  mounted() {
-    this.$store.commit("setMainMenu", "support");
-    if (this.token != "202cb963ac59075b964b07152d234b70") {
-      this.$router.push("/login");
-    }
-  },
-};
-</script>
+<script></script>
 
 <style lang="scss" scoped>
 .impressum-datenschutz {
