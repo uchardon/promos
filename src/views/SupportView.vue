@@ -212,6 +212,173 @@
       </div>
       <div class="main__header">
         <div class="main__header-content long">
+          <h2>Smartphone und WebApp</h2>
+          <p>App Download und Fragen zur Funktion</p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(10)">
+          <h6>
+            1. Was ist der Unterschied zwischen der App zum Download und der
+            Webversion?
+          </h6>
+
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-10"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 10 }"
+        >
+          <p>
+            Es gibt von den Funktionen her keinen Unterschied. Die App
+            ermöglicht Ihnen lediglich einen schnellen Zugriff zur Bibliothek,
+            da Sie auf Ihrem Smartphone auf dem Homebildschirm abgespeichert
+            wird. So können Sie ohne die Eingabe im Browser direkt zur
+            Bibliothek reinklicken – so wie Sie es auch von Ihren anderes Apps
+            gewohnt sind.
+          </p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(11)">
+          <h6>
+            2. Kann ich die Online Bilbiothek auch ohne App Download verwenden?
+          </h6>
+
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-11"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 11 }"
+        >
+          <p>
+            Ja, Sie können die Bibliothek auch weiterhin ganz normal über Ihren
+            Browser auf dem Smartphone verwenden. Dazu nutzen Sie die bekannte
+            Webadresse: bib.promosverlag.de
+          </p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(12)">
+          <h6>3. Wie kann ich die App auf mein Smartphone herunterladen?</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-12"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 12 }"
+        >
+          <p>
+            Nutzen Sie dazu den Downloadbutton in Ihrem Dashboard. Bitte
+            beachten Sie dabei, dass Sie beim Download auch das gewünschte Gerät
+            verwenden. Wenn Sie den Download auf dem Laptop vornehmen, ist die
+            App nicht auf Ihrem Smartphone und umgekehrt.
+          </p>
+        </div>
+      </div>
+      <div class="main__header">
+        <div class="main__header-content long">
+          <h2>Offline-Nutzung</h2>
+          <p>Lokal abgespeicherte Daten und Offline-Nutzung</p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(13)">
+          <h6>
+            1. Werden meine Bücher auch ohne App lokal für die Offline-Nutzung
+            gespeichert?
+          </h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-13"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 13 }"
+        >
+          <p>
+            Ja, sofern Sie den Browsercache nicht leeren sind alle
+            heruntergeladenen Bücher lokal auf Ihrem Gerät zur Offline-Nutzung
+            verfügbar.
+          </p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(14)">
+          <h6>2. Wie kann ich die Bücher wieder von meinem Gerät löschen?</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-14"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 14 }"
+        >
+          <p>
+            Sie können alle heruntergeladenen Bücher von Ihrem Smartphone oder
+            Ihrem Desktop löschen, indem Sie alle Browserdaten und den
+            Browsercache leeren. Je nach genutzten Gerät und Browser sind hier
+            die genauen Wege unterschiedlich.
+            <br /><br />
+            <a
+              href="https://support.google.com/chrome/answer/2392709?hl=de&co=GENIE.Platform%3DDesktop"
+              target="_blank"
+              >&rarr; &nbsp; Chrome</a
+            ><br />
+            <a
+              href="https://support.mozilla.org/de/kb/cookies-und-website-daten-in-firefox-loschen"
+              target="_blank"
+              >&rarr; &nbsp; Firefox</a
+            ><br />
+            <a
+              href="https://support.apple.com/de-de/guide/safari/sfri47acf5d6/mac"
+              target="_blank"
+              >&rarr; &nbsp; Safari</a
+            ><br />
+            <a
+              href="https://support.google.com/chrome/answer/2392709?hl=de&co=GENIE.Platform%3DAndroid"
+              target="_blank"
+              >&rarr; &nbsp; Android</a
+            ><br />
+            <a href="https://support.apple.com/de-de/HT201265" target="_blank"
+              >&rarr; &nbsp; Iphone, Ipad</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(15)">
+          <h6>3. Heruntergeladene Bücher werden nicht angezeigt.</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-15"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 15 }"
+        >
+          <p>
+            Stellen Sie sicher, dass Sie die Bücher auch auf dem entsprechenden
+            Gerät heruntergeladen haben. So können z.B. Bücher offline nicht
+            angezeigt werden, wenn Sie den Download auf Ihrem Laptop vorgenommen
+            haben und die Bücher auf dem Handy aufrufen. <br /><br />
+            Weiterhin muss für den Download eine Internetverbindung vorhanden
+            sein, damit die Daten für die spätere Offline-Nutzung überhaupt
+            heruntergeladen werden können.
+            <br /><br />
+            Wenn diese Kriterien erfüllt sind, können Sie das Buch auch ohne
+            Internetverbindung jederzeit wie gewohnt über den Button „Buch
+            öffnen“ offline nutzen.
+            <br /><br />
+            Falls Sie weiterhin Probleme mit der Offline-Nutzung haben,
+            schildern Sie uns bitte Ihre Problematik via Mail an die
+            <a href="mailto:support@promosverlag.de">support@promosverlag.de</a
+            >.
+          </p>
+        </div>
+      </div>
+
+      <div class="main__header">
+        <div class="main__header-content long">
           <h2>Weitere Fragen</h2>
           <p>
             Sie haben weitere Fragen und Ihre Frage ist nicht aufgeführt? Dann
