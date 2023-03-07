@@ -22,7 +22,7 @@ export default new Vuex.createStore({
     mainMenu: "book",
     token: "",
     secret: "",
-    userstate: "customer", // customer or subuser
+    userstate: "subuser", // customer or subuser
     user: {},
     books: [],
     currentBook: {},

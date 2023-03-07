@@ -50,7 +50,7 @@
         "
         class="header__inner-account"
       >
-        <span v-if="userstate != 'subuser'" class="online"></span>
+        <span v-if="userstate == 'customer'" class="online"></span>
         <slot></slot>
       </div>
     </div>
