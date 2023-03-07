@@ -156,7 +156,7 @@ export default {
   // book_kunde_id	int(11)
 
   computed: {
-    ...mapState(["subusers", "online"]),
+    ...mapState(["subusers", "online", "user"]),
   },
   mounted() {
     this.$store.commit("setMainMenu", "book");
@@ -219,6 +219,7 @@ export default {
       };
       this.saveNewSubuser(newSubuser);
       let payload = {
+        username: this.user.vorname + " " + this.user.nachname,
         email: this.subuser.email,
         book: this.currentBook.title,
         password: pw,
