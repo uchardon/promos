@@ -60,9 +60,6 @@
     <div v-if="pagestate == 'checkWait'" class="center">
       <h1>Loading...</h1>
     </div>
-    <div class="installBtn">
-      <button @click="appInstall()">App installieren</button>
-    </div>
   </section>
 </template>
 
@@ -115,27 +112,9 @@ export default {
     // } else {
     //   this.pagestate = "checkFail";
     // }
-
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      console.log("deferredPrompt event was fired eee", e);
-      this.deferredPrompt = e;
-      console.log("deferredPrompt event was fired", this.deferredPrompt);
-      // showInstallPromotion();
-    });
   },
   methods: {
     ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE", "setModal"]),
-    async appInstall() {
-      this.hideInstallPromotion();
-      this.deferredPrompt.prompt();
-      const { outcome } = await this.deferredPrompt.userChoice;
-      console.log(`User response to the install prompt: ${outcome}`);
-      this.deferredPrompt = null;
-    },
-    hideInstallPromotion() {
-      console.log("hideInstallPromotion");
-    },
     showModalPassword() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ModalPassword" });
@@ -161,10 +140,15 @@ export default {
               token: response.token,
               user: response.user,
               secret: "",
+              userstate: response.userstate,
             };
-            console.log("uid", response.user.id);
+            // console.log("uid", response.user.id);
             this.SET_USERDATA(payload); // userdaten in store schreiben Bücher einlesen
-            books = await this.getBooks(response.user.id);
+            if (response.userstate == "subuser") {
+              books = await this.GET_BOOKSSUBUSER(response.user.email);
+            } else {
+              books = await this.getBooks(response.user.id);
+            }
 
             await idb_set(this.password, payload);
             // console.log("BOOKS", books);
@@ -185,8 +169,9 @@ export default {
             token: data.token,
             user: data.user,
             secret: "",
+            userstate: data.userstate,
           };
-          this.login(payload); // userdaten in store schreiben Bücher einlesen
+          this.SET_USERDATA(payload); // userdaten in store schreiben Bücher einlesen
           books = await idb_get("books");
           await this.SET_BOOKSINSTORE(books);
           this.$router.push("/mybooks"); // Nächste Seite
