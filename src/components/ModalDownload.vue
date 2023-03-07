@@ -12,6 +12,11 @@
         <h2>Download</h2>
         <br />
         <p>
+          Sie können das Ebook zur lokalen Offline-Nutzung herunterladen.<br />Damit
+          können Sie anschließend auch ohne Internetverbindung die Bibliothek
+          und das jeweilige Ebook nutzen.
+        </p>
+        <p style="font-size: 12px; line-height: 18px; color: #ccc">
           Der Download kann je nach Geschwindigkeit der Internetverbindung
           einige Zeit in Anspruch nehmen. Bitte vergewissern Sie sich, dass eine
           <strong>schnelle Internetverbindung</strong>

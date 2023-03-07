@@ -262,7 +262,7 @@
       </div>
       <div class="faqItem wow fadeInLeft">
         <div class="faqItem__header tabBtn" @click="chgCurrentTab(12)">
-          <h6>3. Wie kann ich die App auf mein Smartphone herunterladen?</h6>
+          <h6>3. WebApp Installation mit Windows Chrome</h6>
           <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
         </div>
         <div
@@ -270,12 +270,69 @@
           class="faqItem__body tabEvent"
           :class="{ active: state.currentTab == 12 }"
         >
-          <p>
-            Nutzen Sie dazu den Downloadbutton in Ihrem Dashboard. Bitte
-            beachten Sie dabei, dass Sie beim Download auch das gewünschte Gerät
-            verwenden. Wenn Sie den Download auf dem Laptop vornehmen, ist die
-            App nicht auf Ihrem Smartphone und umgekehrt.
-          </p>
+          <div class="ios-tut">
+            <div class="tut-wrapper">
+              <p>
+                Im <span>Dashboard</span> zum Banner runterscrollen und auf
+                <span>WebApp Download</span> klicken.
+              </p>
+              <img src="@/assets/chrome-appdownload.png" style="width: 100%" />
+              <div style="clear: both"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(20)">
+          <h6>4. WebApp Installation mit Android Smartphone</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-20"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 20 }"
+        >
+          <div class="ios-tut">
+            <div class="tut-wrapper">
+              <p>
+                Im <span>Dashboard</span> zum Banner runterscrollen und auf
+                <span>WebApp Download</span> klicken.
+              </p>
+              <img src="@/assets/android-appdownload.png" style="width: 50%" />
+              <div style="clear: both"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(21)">
+          <h6>5. WebApp Installation mit IPhone / IPad</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-21"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 21 }"
+        >
+          <div class="ios-tut">
+            <div class="tut-wrapper">
+              <p>
+                In der Safari Navigation auf &nbsp;
+                <img
+                  src="@/assets/ios-a2hs.svg"
+                  style="width: 15px; display: inline-block"
+                />
+                &nbsp; klicken,<br />runterscrollen,
+                <span>Zum Home-Bildschirm</span> auswählen und
+                <span>hinzufügen</span>.
+              </p>
+              <img src="@/assets/1.png" class="ios-tut-img" />
+              <img src="@/assets/3.png" class="ios-tut-img" />
+              <img src="@/assets/4.png" class="ios-tut-img" />
+              <img src="@/assets/5.jpg" class="ios-tut-img" />
+              <div style="clear: both"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="main__header">
@@ -304,7 +361,7 @@
           </p>
         </div>
       </div>
-      <div class="faqItem wow fadeInLeft">
+      <!-- <div class="faqItem wow fadeInLeft">
         <div class="faqItem__header tabBtn" @click="chgCurrentTab(14)">
           <h6>2. Wie kann ich die Bücher wieder von meinem Gerät löschen?</h6>
           <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
@@ -345,10 +402,10 @@
             >
           </p>
         </div>
-      </div>
+      </div> -->
       <div class="faqItem wow fadeInLeft">
         <div class="faqItem__header tabBtn" @click="chgCurrentTab(15)">
-          <h6>3. Heruntergeladene Bücher werden nicht angezeigt.</h6>
+          <h6>2. Heruntergeladene Bücher werden nicht angezeigt.</h6>
           <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
         </div>
         <div
@@ -372,7 +429,32 @@
             Falls Sie weiterhin Probleme mit der Offline-Nutzung haben,
             schildern Sie uns bitte Ihre Problematik via Mail an die
             <a href="mailto:support@promosverlag.de">support@promosverlag.de</a
-            >.
+            >.<br /><br />Hinweis: Mit dem Download werden keine offenen
+            PDF-Daten o.ä. bereitgestellt. Der Download dient alleinig dazu das
+            System für die Offline-Nutzung bereitzustellen. Die
+            heruntergeladenen Bücher werden dabei lokal auf Ihrem Gerät für Ihre
+            persönliche Nutzung bereitgestellt.
+          </p>
+        </div>
+      </div>
+      <div class="faqItem wow fadeInLeft">
+        <div class="faqItem__header tabBtn" @click="chgCurrentTab(16)">
+          <h6>3. Kann ich offline die Notiz-Kommentare weiterhin verweden?</h6>
+          <img src="@/assets/images/icons/chevron-bottom.svg" alt="" />
+        </div>
+        <div
+          id="faq-16"
+          class="faqItem__body tabEvent"
+          :class="{ active: state.currentTab == 16 }"
+        >
+          <p>
+            Die Notizfunktion im Offlinemodus lässt sich weiterhin nutzen.
+            Jedoch müssen Sie beachten, dass das Hochladen und die weitere
+            Übertragung auf ein anderes Gerät aus sicherheitstechnischen Gründen
+            nicht möglich ist.<br /><br />
+            Daher wird empfohlen entweder dauerhaft nur ein Gerät im
+            Offlinemodus zu verwenden oder die Notizfunktion weiterhin online zu
+            verwenden.
           </p>
         </div>
       </div>
@@ -418,7 +500,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .main {
   max-width: 1024px;
   margin: 0px auto;
@@ -446,5 +528,36 @@ h2 {
 }
 h6 {
   text-align: left;
+}
+
+p {
+  max-width: 100%;
+}
+
+.ios-tut {
+  .tut-wrapper {
+    background: #fff;
+    padding: 5%;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 35px;
+  }
+  .ios-tut-img {
+    width: 45%;
+    float: left;
+    margin: 2.5%;
+    border-radius: 10px;
+  }
+  span {
+    color: #2799fa;
+  }
+  p {
+    margin-bottom: 25px;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
 }
 </style>

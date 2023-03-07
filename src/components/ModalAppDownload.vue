@@ -12,23 +12,17 @@
 
         <div class="tut-wrapper">
           <p>
-            In der Safari Navigation auf den Button
+            In der Safari Navigation auf &nbsp;
             <img
               src="@/assets/ios-a2hs.svg"
               style="width: 15px; display: inline-block"
             />
-            klicken,<br />runterscrollen und
-            <span>Zum Home-Bildschirm</span> auswählen.
+            &nbsp; klicken,<br />runterscrollen,
+            <span>Zum Home-Bildschirm</span> auswählen und
+            <span>hinzufügen</span>.
           </p>
           <img src="@/assets/1.png" class="ios-tut-img" />
           <img src="@/assets/3.png" class="ios-tut-img" />
-          <div style="clear: both"></div>
-        </div>
-        <div class="tut-wrapper">
-          <p>
-            <span>Hinzufügen</span><br />Damit ist die WebApp auf Ihrem
-            Iphone/Ipad installiert.
-          </p>
           <img src="@/assets/4.png" class="ios-tut-img" />
           <img src="@/assets/5.jpg" class="ios-tut-img" />
           <div style="clear: both"></div>
