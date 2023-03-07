@@ -33,7 +33,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 // @ is an alias to /src
-import { isOnline } from "@/services/helper.js";
+import { isOnline, isChrome } from "@/services/helper.js";
 import AppHeader from "@/components/AppHeader.vue";
 import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
 import AppSymbols from "@/components/AppSymbols.vue";
@@ -63,9 +63,11 @@ export default {
   mounted() {
     let tmp = isOnline();
     this.SET_ONLINE(tmp);
+    let is_chrome = isChrome();
+    this.SET_ISCHROME(is_chrome);
   },
   methods: {
-    ...mapActions(["SET_ONLINE"]),
+    ...mapActions(["SET_ONLINE", "SET_ISCHROME"]),
   },
 };
 </script>

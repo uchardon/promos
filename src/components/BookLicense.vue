@@ -40,12 +40,15 @@
             <div class="lmm-state-left">
               <span>
                 <!-- {{ currentBook.usedLicense - 1 }}/ -->
-                {{ currentBook.maxLicense - currentBook.usedLicense }}
+                {{
+                  parseInt(currentBook.maxLicense, 10) -
+                  parseInt(currentBook.usedLicense, 10)
+                }}
               </span>
               Verfügbare Lizenzen
             </div>
             <div class="lmm-state-right">
-              <span>{{ currentBook.usedLicense - 1 }}</span>
+              <span>{{ parseInt(currentBook.usedLicense, 10) - 1 }}</span>
               Lizenzen in Verwendung
             </div>
             <div class="lmm-clear"></div>
@@ -73,7 +76,10 @@
         </ul>
       </div>
       <div
-        v-if="currentBook.usedLicense < currentBook.maxLicense"
+        v-if="
+          parseInt(currentBook.usedLicense, 10) <
+          parseInt(currentBook.maxLicense, 10)
+        "
         class="new_license"
       >
         <h6>Neue Lizenz für diese Buch vergeben</h6>
@@ -194,7 +200,7 @@ export default {
     generatePassword(length = 8) {
       let password = "";
       let possibleCharacters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()_+=";
 
       for (let i = 0; i < length; i++) {
         password += possibleCharacters.charAt(

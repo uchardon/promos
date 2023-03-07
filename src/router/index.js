@@ -26,12 +26,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/UserLogin.vue"),
   },
-  // {
-  //   path: "/license",
-  //   name: "license",
-  //   component: () =>
-  //     import(/* webpackChunkName: "license" */ "../components/BookLicense.vue"),
-  // },
   {
     path: "/support",
     name: "support",
@@ -47,12 +41,6 @@ const routes = [
       ),
   },
   {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: () =>
-      import(/* webpackChunkName: "notFound" */ "../views/NotFound.vue"),
-  },
-  {
     path: "/about",
     name: "about",
     // route level code-splitting
@@ -60,6 +48,12 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () =>
+      import(/* webpackChunkName: "notFound" */ "../views/NotFound.vue"),
   },
 ];
 

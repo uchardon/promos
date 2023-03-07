@@ -99,8 +99,14 @@
         <h6>bib.promos als App herunterladen</h6>
         <p>Laden Sie die digitale Bibliothek als App herunter.</p>
       </div>
-      <button class="btn appdlbutton">WebApp Download</button>
-      <button class="btn appdlbutton" @click="modalAppDownload()">
+      <button v-if="isChrome" class="btn appdlbutton" @click="appInstall()">
+        WebApp Download
+      </button>
+      <button
+        v-if="!isChrome"
+        class="btn appdlbutton"
+        @click="modalAppDownload()"
+      >
         WebApp Download
       </button>
       <div style="clear: both"></div>
@@ -134,12 +140,21 @@ export default {
         showBooks: false,
       },
       checkCount: 0,
+      deferredPrompt: null,
     };
   },
+
   computed: {
-    ...mapState(["token"]),
+    ...mapState(["token", "isChrome"]),
   },
   async created() {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      console.log("deferredPrompt event was fired eee", e);
+      this.deferredPrompt = e;
+      console.log("deferredPrompt event was fired", this.deferredPrompt);
+      // showInstallPromotion();
+    });
     if (this.token != "202cb963ac59075b964b07152d234b70") {
       this.$router.push("/login");
     }
@@ -155,6 +170,16 @@ export default {
 
   methods: {
     ...mapActions(["setModal", "setCurrentBook"]),
+    async appInstall() {
+      this.hideInstallPromotion();
+      this.deferredPrompt.prompt();
+      const { outcome } = await this.deferredPrompt.userChoice;
+      console.log(`User response to the install prompt: ${outcome}`);
+      this.deferredPrompt = null;
+    },
+    hideInstallPromotion() {
+      console.log("hideInstallPromotion");
+    },
     modalAppDownload() {
       this.setModal({ state: true, content: "ModalAppDownload" });
     },

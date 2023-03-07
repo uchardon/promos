@@ -18,9 +18,11 @@ export default new Vuex.createStore({
     localdata: "data/",
     deferredPrompt: null,
     online: true,
+    isChrome: false,
     mainMenu: "book",
     token: "",
     secret: "",
+    userstate: "customer", // customer or subuser
     user: {},
     books: [],
     currentBook: {},
@@ -99,6 +101,9 @@ export default new Vuex.createStore({
     SET_SECRET: (state, secret) => {
       state.secret = secret;
     },
+    SET_USERSTATE: (state, userstate) => {
+      state.userstate = userstate;
+    },
     SET_SUBUSERS: (state, payload) => {
       // console.log("SET_SUBUSERS");
       state.subusers = payload;
@@ -140,6 +145,9 @@ export default new Vuex.createStore({
     },
     SET_ONLINE: (state, onlinestate) => {
       state.online = onlinestate;
+    },
+    SET_ISCHROME: (state, isChrome) => {
+      state.isChrome = isChrome;
     },
     setMainMenu: (state, payload) => {
       // ...
@@ -363,8 +371,21 @@ export default new Vuex.createStore({
     SET_ONLINE: ({ commit }, onlinestate) => {
       commit("SET_ONLINE", onlinestate);
     },
+    SET_ISCHROME: ({ commit }, isChrome) => {
+      commit("SET_ISCHROME", isChrome);
+    },
     SET_BOOKSINSTORE: ({ commit }, books) => {
       commit("SET_BOOKSINSTORE", books);
+    },
+    GET_BOOKSSUBUSER: async ({ state, commit }, email) => {
+      const response = await Axios.post(state.url + "getBooksSub.php", {
+        email: email,
+      });
+      // console.log("RESPONSE: ", response);
+      if (!response.error) {
+        commit("setBooks", response.data.books);
+      }
+      return response.data.books;
     },
     getBooks: async ({ state, commit }, userId) => {
       const response = await Axios.post(state.url + "getBooks.php", {
@@ -447,7 +468,7 @@ export default new Vuex.createStore({
       commit("SET_TOKEN", payload.token);
       commit("SET_USER", payload.user);
       commit("SET_SECRET", payload.secret);
-
+      commit("SET_USERSTATE", payload.userstate);
       // set auth header
       Axios.defaults.headers.common[
         "Authorization"
@@ -477,6 +498,7 @@ export default new Vuex.createStore({
         email: payload.email,
         book: payload.book,
         password: payload.password,
+        username: payload.username,
       });
       console.log("RESPONSE: ", response);
     },
