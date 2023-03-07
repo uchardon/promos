@@ -11,6 +11,7 @@
         <BookLicense v-if="modal.content == 'BookLicense'" />
         <ModalVerify v-if="modal.content == 'ModalVerify'" />
         <ModalDownload v-if="modal.content == 'ModalDownload'" />
+        <ModalAppDownload v-if="modal.content == 'ModalAppDownload'" />
         <ModalPassword v-if="modal.content == 'ModalPassword'" />
         <BriefDescription v-if="modal.content == 'BriefDescription'" />
         <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
@@ -25,6 +26,7 @@
 import { mapState, mapActions } from "vuex";
 import BookLicense from "@/components/BookLicense.vue";
 import ModalDownload from "@/components/ModalDownload.vue";
+import ModalAppDownload from "@/components/ModalAppDownload.vue";
 import ModalPassword from "@/components/ModalPassword.vue";
 import BriefDescription from "@/components/BriefDescription.vue";
 import ShowBookIndex from "@/components/ShowBookIndex.vue";
@@ -37,6 +39,7 @@ export default {
   components: {
     BookLicense,
     ModalDownload,
+    ModalAppDownload,
     ModalPassword,
     BriefDescription,
     ShowBookIndex,

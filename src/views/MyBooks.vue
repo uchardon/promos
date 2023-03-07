@@ -90,6 +90,21 @@
         </a>
       </div>
     </div>
+
+    <div class="info-appdownload">
+      <div class="icon-appdownload">
+        <img src="@/assets/AppLogo-white.svg" />
+      </div>
+      <div class="content-appdownload">
+        <h6>bib.promos als App herunterladen</h6>
+        <p>Laden Sie die digitale Bibliothek als App herunter.</p>
+      </div>
+      <button class="btn appdlbutton">WebApp Download</button>
+      <button class="btn appdlbutton" @click="modalAppDownload()">
+        WebApp Download
+      </button>
+      <div style="clear: both"></div>
+    </div>
   </div>
 </template>
 
@@ -140,6 +155,9 @@ export default {
 
   methods: {
     ...mapActions(["setModal", "setCurrentBook"]),
+    modalAppDownload() {
+      this.setModal({ state: true, content: "ModalAppDownload" });
+    },
     checkForBooks() {
       if (this.books.length > 0) {
         this.state.showBooks = true;
@@ -351,13 +369,13 @@ export default {
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 650px) {
   .main {
     padding: 35px 20px;
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 650px) {
   .bookCard {
     display: block;
     padding: 50px 25px 35px;
@@ -396,6 +414,57 @@ export default {
   }
   .main {
     padding: 35px 20px;
+  }
+}
+
+.info-appdownload {
+  display: block;
+  background: #101820;
+  width: 95%;
+  border-radius: 10px;
+  padding: 2.5%;
+  margin-top: 25px;
+  @media (max-width: 650px) {
+    padding: 5%;
+    width: 90%;
+    margin-top: 0px;
+  }
+  .icon-appdownload {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    top: 0px;
+    display: block;
+    float: left;
+  }
+  .content-appdownload {
+    float: left;
+    margin-left: 35px;
+    text-align: left;
+    color: #666;
+    h6 {
+      color: #fff;
+    }
+  }
+  .appdlbutton {
+    min-width: 50px;
+    max-width: 200px;
+    display: block;
+    float: right;
+    background: #101820;
+    border: 1px solid #fff;
+    color: #fff;
+    &:hover {
+      background: #217fcf;
+      border: 1px solid #217fcf;
+      border: 0px;
+    }
+    @media (max-width: 650px) {
+      clear: both;
+      margin-top: 20px;
+      width: 100%;
+      min-width: 100%;
+    }
   }
 }
 </style>
