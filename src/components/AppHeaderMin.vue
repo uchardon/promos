@@ -4,93 +4,11 @@
       <div class="header__inner-logo">
         <img src="@/assets/images/promos-logo-header.svg" />
       </div>
-      <div
-        v-if="
-          $route.name != 'login' &&
-          $route.name != 'useYourLink' &&
-          $route.name != 'gologin'
-        "
-        class="dashboard link"
-        :class="{ active: $route.name != 'support' }"
-      >
-        <router-link class="" :to="{ name: 'mybooks' }">
-          Dashboard
-        </router-link>
-      </div>
-      <div
-        v-if="
-          $route.name != 'login' &&
-          $route.name != 'useYourLink' &&
-          $route.name != 'gologin'
-        "
-        class="support link"
-        :class="{ active: $route.name == 'support' }"
-      >
-        <router-link class="" :to="{ name: 'support' }">
-          Hilfe / Support
-        </router-link>
-      </div>
-      <div
-        v-if="
-          $route.name != 'login' &&
-          $route.name != 'useYourLink' &&
-          $route.name != 'gologin'
-        "
-        class="logout"
-      >
-        <router-link class="" :to="{ name: 'gologin' }">
-          <img src="@/assets/logout.svg" alt="" />
-        </router-link>
-      </div>
-      <div
-        v-if="
-          $route.name != 'login' &&
-          $route.name != 'useYourLink' &&
-          $route.name != 'gologin'
-        "
-        class="header__inner-account"
-      >
-        <span v-if="userstate == 'customer'" class="online"></span>
-        <slot></slot>
-      </div>
-    </div>
-    <div id="headerMobile">
-      <div class="Mob1 mobIcons"></div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob2 mobIcons active dashboard link"
-        :class="{ active: $route.name != 'support' }"
-      >
-        <router-link class="" :to="{ name: 'mybooks' }"> </router-link>
-      </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob3 mobIcons support link"
-        :class="{ active: $route.name == 'support' }"
-      >
-        <router-link class="" :to="{ name: 'support' }"> </router-link>
-      </div>
-      <div
-        v-if="$route.name != 'login' && $route.name != 'useYourLink'"
-        class="Mob4 mobIcons logout"
-      >
-        <router-link class="" :to="{ name: 'gologin' }">
-          <!-- <img src="@/assets/logout.svg" alt="" /> -->
-        </router-link>
-      </div>
     </div>
   </header>
 </template>
-<script>
-import { mapState } from "vuex";
 
-export default {
-  name: "AppHeader",
-  methods: {
-    ...mapState(["userstate"]),
-  },
-};
-</script>
+<script></script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

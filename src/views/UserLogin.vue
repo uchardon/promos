@@ -72,8 +72,8 @@ export default {
   data() {
     return {
       // TODO datenvorbelegung entfernen
-      email: "kutschuk@schwarzkupfer.de",
-      password: "cs42ufkj",
+      email: "",
+      password: "",
       vorname: "",
       nachname: "",
       msg: "",
@@ -114,7 +114,13 @@ export default {
     // }
   },
   methods: {
-    ...mapActions(["SET_USERDATA", "getBooks", "SET_BOOKSINSTORE", "setModal"]),
+    ...mapActions([
+      "SET_USERDATA",
+      "getBooks",
+      "SET_BOOKSINSTORE",
+      "setModal",
+      "GET_BOOKSSUBUSER",
+    ]),
     showModalPassword() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ModalPassword" });
@@ -142,10 +148,15 @@ export default {
               secret: "",
               userstate: response.userstate,
             };
-            // console.log("uid", response.user.id);
+            // console.log("uid", response.user, response.userstate);
             this.SET_USERDATA(payload); // userdaten in store schreiben Bücher einlesen
+
             if (response.userstate == "subuser") {
               books = await this.GET_BOOKSSUBUSER(response.user.email);
+              console.log(
+                "userdaten in store schreiben Bücher einlesen",
+                books
+              );
             } else {
               books = await this.getBooks(response.user.id);
             }

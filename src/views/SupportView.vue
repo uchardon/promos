@@ -476,6 +476,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "SupportView",
   data() {
@@ -485,8 +486,14 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState(["token"]),
+  },
   mounted() {
     this.$store.commit("setMainMenu", "support");
+    if (this.token != "202cb963ac59075b964b07152d234b70") {
+      this.$router.push("/login");
+    }
   },
   methods: {
     chgCurrentTab(p) {

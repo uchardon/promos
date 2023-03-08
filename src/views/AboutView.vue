@@ -212,6 +212,8 @@
   </div>
 </template>
 
+<script></script>
+
 <style lang="scss" scoped>
 .impressum-datenschutz {
   text-align: left;

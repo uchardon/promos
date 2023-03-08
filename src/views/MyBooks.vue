@@ -56,14 +56,14 @@
               Buch öffnen
             </button>
             <button
-              v-if="book.maxLicense <= 1"
+              v-if="book.maxLicense <= 1 && userstate == 'customer'"
               class="adminlicences btn"
               @click="showBuyLicense()"
             >
               Lizenzen
             </button>
             <button
-              v-if="book.maxLicense > 1"
+              v-if="book.maxLicense > 1 && userstate == 'customer'"
               class="adminlicences btn"
               @click="showLicense(book)"
             >
@@ -145,7 +145,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["token", "isChrome"]),
+    ...mapState(["token", "isChrome", "userstate"]),
   },
   async created() {
     window.addEventListener("beforeinstallprompt", (e) => {

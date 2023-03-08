@@ -3,10 +3,11 @@
     <Transition name="fadeUp">
       <ModalBox v-if="modal.state"></ModalBox>
     </Transition>
-    <AppHeader v-if="$route.name != 'showBook'">
+    <AppHeader v-if="$route.name != 'showBook' && token != ''">
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
     </AppHeader>
+    <AppHeaderMin v-else />
     <main
       :class="{
         wrapper: $route.name != 'useYourLink' && $route.name != 'gologin',
@@ -36,6 +37,7 @@ import { mapActions, mapState } from "vuex";
 import { isOnline, isChrome } from "@/services/helper.js";
 import AppHeader from "@/components/AppHeader.vue";
 import AppHeaderEbook from "@/components/AppHeaderEbook.vue";
+import AppHeaderMin from "@/components/AppHeaderMin.vue";
 import AppSymbols from "@/components/AppSymbols.vue";
 import ModalBox from "@/components/ModalBox.vue";
 
@@ -46,6 +48,7 @@ export default {
     AppHeaderEbook,
     AppSymbols,
     ModalBox,
+    AppHeaderMin,
   },
 
   data() {
@@ -58,7 +61,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["modal", "mainMenu"]),
+    ...mapState(["modal", "mainMenu", "token"]),
   },
   mounted() {
     let tmp = isOnline();
