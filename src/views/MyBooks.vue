@@ -226,7 +226,7 @@ export default {
 }
 .buttons {
   clear: both;
-  padding-top: 30px;
+  padding-top: 0px;
 }
 .license {
   --size: 25px;
@@ -300,6 +300,9 @@ export default {
   transition: all 0.2s ease-in-out 0s;
   -moz-transition: all 0.2s ease-in-out 0s;
   position: relative;
+  display: grid;
+  grid-template-rows: 1fr 0.2fr 0.2fr;
+  gap: 25px;
 }
 .bookCard:hover {
   -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -463,6 +466,7 @@ export default {
     float: left;
   }
   .content-appdownload {
+    width: 66%;
     float: left;
     margin-left: 35px;
     text-align: left;
