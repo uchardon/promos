@@ -83,7 +83,7 @@
           title="Hilfe"
           @click="setModal({ state: true, content: 'ModalBookHelper' })"
         >
-          <IconShow size="35px" fill="#fff" :on="showMarkers" />
+          <img src="@/assets/help.svg" />
         </div>
       </div>
       <div class="rightNav">
