@@ -78,12 +78,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.btn {
+button.bopen.btn {
+  background: #2799fa;
+  background: var(--blue, #2799fa);
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 100px;
-  width: 47.5%;
   padding: 15px 0px;
   margin: 12px 0 0;
   border-radius: 10px;
@@ -92,17 +94,9 @@ export default {
   font-size: 14px;
   cursor: pointer;
   --current: 0;
-  background: #00e4cb;
-  background: linear-gradient(
-    90deg,
-    #00e4cb 0%,
-    #00e4cb calc(var(--current) * 1%),
-    #efefef calc(var(--current) * 1%),
-    #efefef 100%
-  );
 }
-.btn:hover {
-  background: #2799fa;
+button.bopen.btn:hover {
+  background: #217fcf;
   color: #fff;
 }
 

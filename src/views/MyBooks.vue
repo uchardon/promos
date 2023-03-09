@@ -209,17 +209,18 @@ export default {
         console.log("buch--verfügbar", res);
         if (res) {
           // offline verfügbar
-          this.offline = true;
+          return true;
         } else {
-          this.offline = false;
+          return false;
         }
       } else {
         // App ist online Buch ist ferfügbar
-        this.offline = true;
+        return true;
       }
     },
     async showBookJPGs(book) {
       let bookIsAvailable = await this.checkBookOfflinestatus(book.id);
+      console.log("bookIsAvailable", bookIsAvailable);
       if (bookIsAvailable) {
         this.setCurrentBook(book);
         this.$router.push({ name: "showBook" });
@@ -299,13 +300,6 @@ button.btn.bopen:disabled {
     width: 47.5%;
     float: right;
     margin-top: 12px;
-  }
-  &.bopen {
-    background: #2799fa;
-    color: #fff;
-    &:hover {
-      background: #217fcf;
-    }
   }
 }
 .btn:hover {
