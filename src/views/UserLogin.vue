@@ -112,6 +112,12 @@ export default {
     // } else {
     //   this.pagestate = "checkFail";
     // }
+    if (window.location.href.indexOf("localhost") >= 0) {
+      // Development mode
+      console.log("Development mode");
+      this.password = "krbb8jhg";
+      this.email = "kutschuk@schwarzkupfer.de";
+    }
   },
   methods: {
     ...mapActions([
