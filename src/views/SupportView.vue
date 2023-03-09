@@ -25,7 +25,7 @@
             verloren haben, können Sie sich dieses per Mail erneut zusenden
             lassen. Für ein komplett neues Passwort, schreiben Sie uns bitte
             eine Mail an
-            <a href="mailto:support@promosverlag">support@promosverlag.de</a>.
+            <a href="mailto:info@promosverlag">info@promosverlag.de</a>.
           </p>
         </div>
       </div>
