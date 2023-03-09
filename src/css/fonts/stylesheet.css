@@ -1,9 +1,7 @@
 @font-face {
   font-family: "Arial";
-  src: url("fonts/Arial-BoldMT.woff2") format("woff2"),
-    url("fonts/Arial-BoldMT.woff") format("woff");
+  src: url("@/css/fonts/Arial-BoldMT.woff2") format("woff2"), url("@/css/fonts/Arial-BoldMT.woff") format("woff");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
-}
-/*# sourceMappingURL=stylesheet.css.map */
+}/*# sourceMappingURL=stylesheet.css.map */

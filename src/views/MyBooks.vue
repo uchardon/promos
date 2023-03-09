@@ -52,9 +52,7 @@
             <p @click.prevent="showBook(book)">Mehr Informationen</p>
           </div>
           <div class="buttons">
-            <button class="bopen btn" @click="showBookJPGs(book)">
-              Buch öffnen
-            </button>
+            <ShowBookButton :book="book" @show-book-jpgs="showBookJPGs" />
             <button
               v-if="book.maxLicense <= 1 && userstate == 'customer'"
               class="adminlicences btn"
@@ -117,6 +115,7 @@
 <script>
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
+import ShowBookButton from "@/components/ShowBookButton.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
 import { mapActions, mapState } from "vuex";
 
@@ -124,6 +123,7 @@ export default {
   components: {
     DownloadButton,
     ThumbNail,
+    ShowBookButton,
   },
   props: [],
   emits: [],
@@ -141,16 +141,17 @@ export default {
       },
       checkCount: 0,
       deferredPrompt: null,
+      bookonline: [],
     };
   },
 
   computed: {
-    ...mapState(["token", "isChrome", "userstate"]),
+    ...mapState(["token", "isChrome", "userstate", "online"]),
   },
   async created() {
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
-      console.log("deferredPrompt event was fired eee", e);
+      // console.log("deferredPrompt event was fired eee", e);
       this.deferredPrompt = e;
       console.log("deferredPrompt event was fired", this.deferredPrompt);
       // showInstallPromotion();
@@ -169,8 +170,9 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setModal", "setCurrentBook"]),
+    ...mapActions(["setModal", "setCurrentBook", "checkIDBForKey"]),
     async appInstall() {
+      console.log("this.deferredPrompt", this.deferredPrompt);
       this.hideInstallPromotion();
       this.deferredPrompt.prompt();
       const { outcome } = await this.deferredPrompt.userChoice;
@@ -201,9 +203,29 @@ export default {
       this.setCurrentBook(book);
       this.setModal({ state: true, content: "BriefDescription" });
     },
-    showBookJPGs(book) {
-      this.setCurrentBook(book);
-      this.$router.push({ name: "showBook" });
+    async checkBookOfflinestatus(bookid) {
+      if (!this.online) {
+        const res = await this.checkIDBForKey(bookid);
+        console.log("buch--verfügbar", res);
+        if (res) {
+          // offline verfügbar
+          this.offline = true;
+        } else {
+          this.offline = false;
+        }
+      } else {
+        // App ist online Buch ist ferfügbar
+        this.offline = true;
+      }
+    },
+    async showBookJPGs(book) {
+      let bookIsAvailable = await this.checkBookOfflinestatus(book.id);
+      if (bookIsAvailable) {
+        this.setCurrentBook(book);
+        this.$router.push({ name: "showBook" });
+      } else {
+        this.setModal({ state: true, content: "ModalBookNotAvailable" });
+      }
     },
     showLicense(book) {
       this.setCurrentBook(book);
@@ -219,6 +241,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+button.btn.bopen:disabled {
+  background-color: #eee;
+}
 .main__header {
   margin-bottom: 15px;
   margin-top: 50px;

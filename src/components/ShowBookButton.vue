@@ -1,50 +1,33 @@
 <template>
-  <div>
-    <button
-      v-if="
-        state.offlinedownload == 'onlyOnline' && state.online && offline == 0
-      "
-      class="download btn startdownload"
-      @click="loadForOfflineUse()"
-    >
-      Download
-    </button>
-
-    <button v-if="offline == 1 && state.online" class="download btn offline">
-      Offline verfügbar
-    </button>
-    <button v-if="!state.online" class="download btn disabled">
-      Download nicht möglich
-    </button>
-  </div>
+  <button
+    class="bopen btn"
+    :disabled="!offline"
+    @click="$emit('showBookJpgs', book)"
+  >
+    <span v-if="offline">Buch öffnen</span>
+    <span v-else>nicht verfügbar</span>
+  </button>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "DownloadButton",
+  name: "ShowBookButton",
   props: {
-    maxpages: {
-      type: String,
-      default: "0",
-    },
-    bookid: {
-      type: String,
-      default: "0",
+    // eslint-disable-next-line
+    book: {
+      type: Object,
     },
   },
+  emits: ["showBookJpgs"],
 
   data() {
     return {
-      offline: 0, // offline verfügbar = 1
-      state: {
-        online: true,
-        offlinedownload: "onlyOnline",
-      },
+      offline: false, // offline/online verfügbar = 1
     };
   },
   computed: {
-    ...mapState(["dataUrl", "localdata", "bookDownload"]),
+    ...mapState(["online"]),
   },
   async created() {
     // const res = await this.checkIDBForKey(this.bookid);
@@ -59,15 +42,20 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["setModal", "checkIDBForKey", "SET_BOOKDOWNLOAD"]),
+    ...mapActions(["checkIDBForKey"]),
     async checkBookOfflinestatus() {
-      const res = await this.checkIDBForKey(this.bookid);
-      // console.log("buch--verfügbar", res);
-      if (res) {
-        // offline verfügbar
-        this.offline = 1;
+      if (!this.online) {
+        const res = await this.checkIDBForKey(this.book.id);
+        console.log("buch--verfügbar", res);
+        if (res) {
+          // offline verfügbar
+          this.offline = true;
+        } else {
+          this.offline = false;
+        }
       } else {
-        this.offline = 0;
+        // App ist online Buch ist ferfügbar
+        this.offline = true;
       }
     },
     checkLoop() {

@@ -12,6 +12,10 @@
         <ModalVerify v-if="modal.content == 'ModalVerify'" />
         <ModalDownload v-if="modal.content == 'ModalDownload'" />
         <ModalAppDownload v-if="modal.content == 'ModalAppDownload'" />
+        <ModalBookNotAvailable
+          v-if="modal.content == 'ModalBookNotAvailable'"
+        />
+
         <ModalPassword v-if="modal.content == 'ModalPassword'" />
         <BriefDescription v-if="modal.content == 'BriefDescription'" />
         <ShowBookIndex v-if="modal.content == 'ShowBookIndex'" />
@@ -33,6 +37,7 @@ import ShowBookIndex from "@/components/ShowBookIndex.vue";
 import MarkerEdit from "@/components/MarkerEdit.vue";
 import ModalVerify from "@/components/ModalVerify.vue";
 import BuyLicense from "@/components/BuyLicense.vue";
+import ModalBookNotAvailable from "@/components/ModalBookNotAvailable.vue";
 
 export default {
   name: "ModalBox",
@@ -46,6 +51,7 @@ export default {
     MarkerEdit,
     ModalVerify,
     BuyLicense,
+    ModalBookNotAvailable,
   },
   data() {
     return {
