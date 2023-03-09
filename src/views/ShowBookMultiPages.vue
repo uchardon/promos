@@ -333,16 +333,31 @@ body {
   overflow: hidden;
 }
 #watchScroll {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 120px);
+  // height: 100vh;
   overflow: scroll;
-  background: #ccc;
+  background: #efefef;
+  position: relative;
+  margin-top: 70px;
+  @media (max-width: 650px) {
+    height: calc(100vh - 80px);
+    margin-top: 50px;
+  }
+}
+
+header {
+  display: none;
+}
+main header {
+  display: block;
+  position: absolute;
 }
 
 h1 {
   padding: 50px;
   text-align: left;
   @media (max-width: 650px) {
-    padding: 10px 25px 15px 25px;
+    padding: 35px 25px 5px 25px;
   }
 }
 
