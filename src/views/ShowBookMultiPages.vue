@@ -114,22 +114,24 @@
         <!-- span> Seite {{ curPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
-    <h1>{{ currentBook.title }}</h1>
-    <div
-      v-if="inIndexdDB != -1"
-      class="showAllPages"
-      :class="seitenAnsicht"
-      :style="'--zoom: calc(' + zoom + ' / 100)'"
-    >
-      <ImageCanvas
-        v-for="(page, index) in pages"
-        :key="index"
-        :in-indexd-d-b="inIndexdDB"
-        :no="index + 1"
-        :zoom="zoom"
-        :showmarkers="showMarkers"
-        :bookid="currentBook.id"
-      />
+    <div id="watchScroll">
+      <h1>{{ currentBook.title }}</h1>
+      <div
+        v-if="inIndexdDB != -1"
+        class="showAllPages"
+        :class="seitenAnsicht"
+        :style="'--zoom: calc(' + zoom + ' / 100)'"
+      >
+        <ImageCanvas
+          v-for="(page, index) in pages"
+          :key="index"
+          :in-indexd-d-b="inIndexdDB"
+          :no="index + 1"
+          :zoom="zoom"
+          :showmarkers="showMarkers"
+          :bookid="currentBook.id"
+        />
+      </div>
     </div>
     <div style="clear: both"></div>
   </div>
@@ -328,7 +330,14 @@ export default {
 <style scroped lang="scss">
 body {
   background: #efefef;
+  overflow: hidden;
 }
+#watchScroll {
+  height: calc(100vh - 70px);
+  overflow: scroll;
+  background: #ccc;
+}
+
 h1 {
   padding: 50px;
   text-align: left;
@@ -406,7 +415,7 @@ circle {
 }
 .showPages {
   position: relative;
-  margin-top: 70px;
+  // margin-top: 70px;
 }
 
 .wrapper {
