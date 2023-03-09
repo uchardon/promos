@@ -115,9 +115,6 @@
       </div>
     </nav>
     <h1>{{ currentBook.title }}</h1>
-    <div v-if="offline && inIndexdDB != 1" class="notAvaible">
-      <h3>Buch offline nicht verfügbar!</h3>
-    </div>
     <div
       v-if="inIndexdDB != -1"
       class="showAllPages"
@@ -127,7 +124,7 @@
       <ImageCanvas
         v-for="(page, index) in pages"
         :key="index"
-        :offline="inIndexdDB"
+        :in-indexd-d-b="inIndexdDB"
         :no="index + 1"
         :zoom="zoom"
         :showmarkers="showMarkers"
@@ -188,7 +185,7 @@ export default {
       "seitenAnsicht",
       "PDF_URLs",
       "token",
-      "offline",
+      "online",
       "userstate",
     ]),
     ...mapGetters(["getBooks"]),

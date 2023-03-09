@@ -48,6 +48,7 @@ export default {
       let pageBox = this.getElement(pageNo);
       this.setCurPage(pageNo);
       pageBox.scrollIntoView();
+      this.setModal(false);
     },
   },
 };
