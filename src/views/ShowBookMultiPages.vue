@@ -338,10 +338,10 @@ body {
   overflow: scroll;
   background: #efefef;
   position: relative;
-  margin-top: 70px;
+  padding-top: 70px;
   @media (max-width: 650px) {
     height: calc(100vh - 80px);
-    margin-top: 50px;
+    padding-top: 50px;
   }
 }
 
