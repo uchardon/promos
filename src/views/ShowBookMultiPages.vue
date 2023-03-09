@@ -406,7 +406,8 @@ circle {
 }
 .showPages {
   position: relative;
-  margin-top: 70px;
+  padding-top: 70px;
+  box-sizing: border-box;
 }
 
 .wrapper {
