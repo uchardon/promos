@@ -86,6 +86,9 @@ export default {
 
 nav {
   padding: 30px;
+  @media (max-width: 650px) {
+    padding-bottom: 120px;
+  }
 
   a {
     font-weight: bold;

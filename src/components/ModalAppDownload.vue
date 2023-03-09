@@ -21,10 +21,22 @@
             <span>Zum Home-Bildschirm</span> auswählen und
             <span>hinzufügen</span>.
           </p>
-          <img src="@/assets/1.png" class="ios-tut-img" />
-          <img src="@/assets/3.png" class="ios-tut-img" />
-          <img src="@/assets/4.png" class="ios-tut-img" />
-          <img src="@/assets/5.jpg" class="ios-tut-img" />
+          <div class="ios-tut-img">
+            <p>Schritt 1</p>
+            <img src="@/assets/1.png" />
+          </div>
+          <div class="ios-tut-img">
+            <p>Schritt 2</p>
+            <img src="@/assets/3.png" />
+          </div>
+          <div class="ios-tut-img">
+            <p>Schritt 3</p>
+            <img src="@/assets/4.png" />
+          </div>
+          <div class="ios-tut-img">
+            <p>Fertig</p>
+            <img src="@/assets/5.jpg" />
+          </div>
           <div style="clear: both"></div>
         </div>
       </div>
@@ -127,7 +139,15 @@ export default {
     width: 45%;
     float: left;
     margin: 2.5%;
-    border-radius: 10px;
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    p {
+      font-weight: bold;
+      text-align: left;
+      margin-bottom: 5px;
+    }
   }
   span {
     color: #2799fa;

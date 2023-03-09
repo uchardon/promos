@@ -79,6 +79,12 @@
         <div title="Notizen ein- / ausblenden" @click="toggleShowMarkers()">
           <IconShow size="35px" fill="#fff" :on="showMarkers" />
         </div>
+        <div
+          title="Hilfe"
+          @click="setModal({ state: true, content: 'ModalBookHelper' })"
+        >
+          <IconShow size="35px" fill="#fff" :on="showMarkers" />
+        </div>
       </div>
       <div class="rightNav">
         <span class="addbtn click" @click="zoomin('out')"

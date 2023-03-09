@@ -9,7 +9,7 @@
           style="width: 10%; text-align: center"
         />
         <br /><br />
-        <h2>Buch nicht verfügbar</h2>
+        <h2>Hilfe</h2>
         <br />
         <p>
           Im Offlinemodus kann das Ebook nur geöffnet werden, wenn Sie es vorab
@@ -27,7 +27,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  name: "ModalBookNotAvailable",
+  name: "ModalBookHelper",
   data() {
     return {
       loadingNum: 0,
