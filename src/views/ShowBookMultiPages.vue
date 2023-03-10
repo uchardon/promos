@@ -20,7 +20,7 @@
           viewBox="0 0 38.57 36.004"
           title="Notizen hinzufügen"
           xmlns="http://www.w3.org/2000/svg"
-          style="width: 30px; height: 30px"
+          style="width: 25px; height: 25px"
           @click="setNewMarkerColor(color)"
         >
           <g v-if="curMarker != color">
@@ -83,7 +83,7 @@
           title="Hilfe"
           @click="setModal({ state: true, content: 'ModalBookHelper' })"
         >
-          <img src="@/assets/help.svg" />
+          <img src="@/assets/help.svg" style="height: 25px" />
         </div>
       </div>
       <div class="rightNav">
