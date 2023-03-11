@@ -83,7 +83,7 @@
           title="Hilfe"
           @click="setModal({ state: true, content: 'ModalBookHelper' })"
         >
-          <IconShow size="35px" fill="#fff" :on="showMarkers" />
+          <img src="@/assets/help.svg" />
         </div>
       </div>
       <div class="rightNav">
@@ -114,22 +114,24 @@
         <!-- span> Seite {{ curPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
-    <h1>{{ currentBook.title }}</h1>
-    <div
-      v-if="inIndexdDB != -1"
-      class="showAllPages"
-      :class="seitenAnsicht"
-      :style="'--zoom: calc(' + zoom + ' / 100)'"
-    >
-      <ImageCanvas
-        v-for="(page, index) in pages"
-        :key="index"
-        :in-indexd-d-b="inIndexdDB"
-        :no="index + 1"
-        :zoom="zoom"
-        :showmarkers="showMarkers"
-        :bookid="currentBook.id"
-      />
+    <div id="watchScroll">
+      <h1>{{ currentBook.title }}</h1>
+      <div
+        v-if="inIndexdDB != -1"
+        class="showAllPages"
+        :class="seitenAnsicht"
+        :style="'--zoom: calc(' + zoom + ' / 100)'"
+      >
+        <ImageCanvas
+          v-for="(page, index) in pages"
+          :key="index"
+          :in-indexd-d-b="inIndexdDB"
+          :no="index + 1"
+          :zoom="zoom"
+          :showmarkers="showMarkers"
+          :bookid="currentBook.id"
+        />
+      </div>
     </div>
     <div style="clear: both"></div>
   </div>
@@ -328,12 +330,34 @@ export default {
 <style scroped lang="scss">
 body {
   background: #efefef;
+  overflow: hidden;
 }
+#watchScroll {
+  height: calc(100vh - 120px);
+  // height: 100vh;
+  overflow: scroll;
+  background: #efefef;
+  position: relative;
+  margin-top: 70px;
+  @media (max-width: 650px) {
+    height: calc(100vh - 80px);
+    margin-top: 50px;
+  }
+}
+
+header {
+  display: none;
+}
+main header {
+  display: block;
+  position: absolute;
+}
+
 h1 {
   padding: 50px;
   text-align: left;
   @media (max-width: 650px) {
-    padding: 10px 25px 15px 25px;
+    padding: 35px 25px 5px 25px;
   }
 }
 
@@ -406,6 +430,7 @@ circle {
 }
 .showPages {
   position: relative;
+  // margin-top: 70px;
   padding-top: 70px;
   box-sizing: border-box;
 }
