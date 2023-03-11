@@ -4,17 +4,25 @@
       <!-- // Der download wird angeboten -->
       <div>
         <br /><br />
-        <img
-          src="@/assets/images/no-wifi.svg"
-          style="width: 10%; text-align: center"
-        />
-        <br /><br />
         <h2>Hilfe</h2>
-        <br />
-        <p>
-          Im Offlinemodus kann das Ebook nur geöffnet werden, wenn Sie es vorab
-          mit vorhandener Internetverbindung heruntergeladen haben.
-        </p>
+        <p>Was bewirkt die Sprechblase und das Auge?</p>
+        <img class="tutGif" src="@/assets/MarkerToolsTutorial.gif" />
+        <!-- <video width="320" height="240" controls>
+          <source src="@/assets/MarkerToolsTutorial.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video> -->
+        <!-- <video
+          src="@/assets/MarkerToolsTutorial.mp4"
+          style="max-width: 360px"
+          controls="false"
+        >
+          No video support in this browser.
+        </video> -->
+        <!-- <iframe
+          src="@/assets/MarkerToolsTutorial.mp4"
+          frameborder="0"
+          scrolling="no"
+        ></iframe> -->
       </div>
       <div class="buttons">
         <button class="btn" @click="setModal(false, '')">Ok</button>
@@ -80,5 +88,13 @@ export default {
 .btn:hover {
   background: #2799fa;
   color: #fff;
+}
+
+img.tutGif {
+  width: 50%;
+  @media (max-width: 650px) {
+    width: 80%;
+    margin-top: 15px;
+  }
 }
 </style>
