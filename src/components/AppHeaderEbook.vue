@@ -5,7 +5,11 @@
         <img src="@/assets/images/icons/back.svg" />
       </div>
       <div class="BookPages">
+        <div v-if="!focusInput" class="inputpage" @click="focusInput = true">
+          <div class="pagenumber">{{ pageinview }}</div>
+        </div>
         <input
+          v-if="focusInput"
           v-model="currentPage"
           type="number"
           maxlength="3"
@@ -13,7 +17,7 @@
           onclick="this.placeholder=''"
           onfocus="this.select()"
           onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
-          @change="newPage()"
+          @change="chgPage()"
         />
         <span>/ {{ maxpages }}</span>
       </div>
@@ -72,11 +76,17 @@ export default {
       type: Number,
       default: 0,
     },
+    pageinview: {
+      type: Number,
+      default: 1,
+    },
   },
+  emits: ["chgpageto"],
   data() {
     return {
       ShowDouble: false,
       currentPage: 1,
+      focusInput: false,
     };
   },
   computed: {
@@ -88,20 +98,13 @@ export default {
       console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
     },
-    newPage() {
-      this.chgPage(this.currentPage);
-    },
-    chgPage(pageNo) {
+    chgPage() {
       console.log("chgPage");
-      let pageBox = this.getElement(pageNo);
-      this.setCurPage(pageNo);
-      pageBox.scrollIntoView();
-    },
-    getElement(no) {
-      let arg = "[data-page=page-" + no + "]";
-      // console.log("arg", arg);
-      this.target = document.querySelector(arg);
-      return this.target;
+      // let pageBox = this.getElement(pageNo);
+      // this.setCurPage(pageNo);
+      // pageBox.scrollIntoView();
+      this.$emit("chgpageto", this.currentPage);
+      this.focusInput = false;
     },
   },
 };
@@ -109,6 +112,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.inputpage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > div {
+    background-color: #fff;
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
+    padding: 0 7px;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 700;
+  }
+}
 main {
   overflow-x: hidden;
 }
@@ -201,6 +221,9 @@ header {
   height: 70px;
   line-height: 70px;
   padding: 0px 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   span {
     margin-left: 10px;
     color: #fff;

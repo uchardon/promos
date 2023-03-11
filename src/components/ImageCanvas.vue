@@ -54,6 +54,10 @@ export default {
       default: 0,
       required: true,
     },
+    // eslint-disable-next-line
+    scrollobserver: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -100,6 +104,7 @@ export default {
     },
   },
   mounted() {
+    console.log("ImageCanvas mounted");
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == this.bookid);
@@ -114,6 +119,7 @@ export default {
       this.getBox();
     });
     this.myobserver.observe(document.querySelector(`[data-no="${this.no}"]`));
+    this.scrollobserver.observe(this.$el);
   },
   unmounted() {
     this.myobserver.disconnect();

@@ -7,10 +7,13 @@
     <AppHeaderEbook
       v-if="$route.name == 'showBook'"
       :maxpages="parseInt(book.pages)"
+      :pageinview="curPage"
+      @chgpageto="chgToPage"
     >
     </AppHeaderEbook>
     <nav class="pageNav">
       <div v-if="userstate == 'customer'" class="centerNav">
+        {{ curPage }}
         <svg
           v-for="(color, index) in colors"
           :key="index"
@@ -114,25 +117,26 @@
         <!-- span> Seite {{ curPage + 1 }} / {{ book.pages }} </span -->
       </div>
     </nav>
-    <div id="watchScroll">
-      <h1>{{ currentBook.title }}</h1>
-      <div
-        v-if="inIndexdDB != -1"
-        class="showAllPages"
-        :class="seitenAnsicht"
-        :style="'--zoom: calc(' + zoom + ' / 100)'"
-      >
-        <ImageCanvas
-          v-for="(page, index) in pages"
-          :key="index"
-          :in-indexd-d-b="inIndexdDB"
-          :no="index + 1"
-          :zoom="zoom"
-          :showmarkers="showMarkers"
-          :bookid="currentBook.id"
-        />
-      </div>
+    <!-- <div id="watchScroll"> -->
+    <h1>{{ currentBook.title }}</h1>
+    <div
+      v-if="inIndexdDB != -1"
+      class="showAllPages"
+      :class="seitenAnsicht"
+      :style="'--zoom: calc(' + zoom + ' / 100)'"
+    >
+      <ImageCanvas
+        v-for="(page, index) in pages"
+        :key="index"
+        :in-indexd-d-b="inIndexdDB"
+        :no="index + 1"
+        :zoom="zoom"
+        :showmarkers="showMarkers"
+        :bookid="currentBook.id"
+        :scrollobserver="scrollobserver"
+      />
     </div>
+    <!-- </div> -->
     <div style="clear: both"></div>
   </div>
 </template>
@@ -176,6 +180,9 @@ export default {
       zoom: 50,
       pageInViewport: 1,
       inIndexdDB: -1, // nicht offline verfügbar
+      scrollobserver: null,
+      pageinview: 1,
+      curPage: 1,
     };
   },
   computed: {
@@ -183,7 +190,6 @@ export default {
       "curMarker",
       "markers",
       "currentBook",
-      "curPage",
       "seitenAnsicht",
       "PDF_URLs",
       "token",
@@ -194,26 +200,38 @@ export default {
   },
   async created() {
     const res = await this.checkIDBForKey(this.currentBook.id);
-    console.log("inIndexdDB verfügbar", this.currentBook.id, res);
+    // console.log("inIndexdDB verfügbar", this.currentBook.id, res);
     if (res) {
       this.inIndexdDB = 1;
       // inIndexdDB verfügbar
-      console.log("inIndexdDB verfügbar", this.currentBook.id);
+      // console.log("inIndexdDB verfügbar", this.currentBook.id);
     } else {
       this.inIndexdDB = 0;
     }
     if (this.token != "202cb963ac59075b964b07152d234b70") {
       this.$router.push("/login");
     }
+    this.scrollobserver = new IntersectionObserver(this.onElementObserved, {
+      // root: this.$el,
+      root: document.querySelector(".showAllPages"),
+      threshold: 0.2,
+    });
+  },
+  beforeUnmount() {
+    this.scrollobserver.disconnect();
   },
   mounted() {
-    this.setCurPage(1);
+    console.log("ShowBookMultiPages mounted");
+    // this.setCurPage(1);
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == this.currentBook.id);
     // console.log("book-----", this.book);
     this.setPagesArray();
     this.getMarkersFromDb();
+    setTimeout(() => {
+      this.curPage = 1;
+    }, 700);
     // [{bookId: xx, page: pp, markers: [{index: i, desc: d, x: p.x, y: p.y, color: c}, ...]}, ...]
     // TODO
   },
@@ -225,9 +243,18 @@ export default {
       "setModal",
       "setCurrentMarker",
       "getMarkersFromDb",
-      "setCurPage",
       "checkIDBForKey",
     ]),
+    onElementObserved(entries) {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (!isIntersecting) {
+          return;
+        }
+        // this.observer.unobserve(target);
+        console.log("Observed page ", target.dataset.no);
+        this.curPage = parseInt(target.dataset.no);
+      });
+    },
     toggleShowMarkers() {
       this.showMarkers = !this.showMarkers;
       if (!this.showMarkers) {
@@ -256,29 +283,34 @@ export default {
         this.pages.push(this.getImgUrl(i));
       }
     },
-    getElement(no) {
+    scrollToElement(no) {
+      // console.log("typeof", typeof no);
+      // console.log("no", no);
       let arg = "[data-page=page-" + no + "]";
-      // console.log("arg", arg);
-      this.target = document.querySelector(arg);
-      return this.target;
+      console.log("arg", document.querySelector(arg));
+      document.querySelector(arg).scrollIntoView({ behavior: "smooth" });
+    },
+    chgToPage(newPageNo) {
+      // this.setCurPage(newPageNo);
+      console.log("chgToPage", newPageNo, this.curPage);
+      this.scrollToElement(newPageNo);
     },
     chgPage(dir) {
       // console.log("chgPage", this.curPage);
-      let newPageNo = 1;
+      let newPageNo = this.curPage;
       if (dir == "next") {
-        if (this.curPage < this.book.pages - 1) {
+        if (this.curPage < this.book.pages) {
           newPageNo = this.curPage + 1;
-          this.setCurPage(newPageNo);
+          // this.setCurPage(newPageNo);
         }
       }
       if (dir == "prev") {
         if (this.curPage > 1) {
           newPageNo = this.curPage - 1;
-          this.setCurPage(newPageNo);
+          // this.setCurPage(newPageNo);
         }
       }
-      let pageBox = this.getElement(this.curPage);
-      pageBox.scrollIntoView();
+      this.scrollToElement(newPageNo);
     },
     getBox(target) {
       let rect = target.getBoundingClientRect();
@@ -330,7 +362,7 @@ export default {
 <style scroped lang="scss">
 body {
   background: #efefef;
-  overflow: hidden;
+  // overflow: hidden;
 }
 #watchScroll {
   height: calc(100vh - 120px);
