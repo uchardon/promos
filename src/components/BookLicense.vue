@@ -107,13 +107,16 @@
         </div>
         <div class="info_content">
           <p>
-            Sie können zusätzlich zu Ihrer erworbenen Ebook Version auch
-            Nutzungslizenzen für weitere Nutzer (z.B. Schüler) im
-            <a href="https://shop.strato.de/epages/244823.sf/" target="blank"
-              >Onlineshop erwerben</a
-            >. Bitte beachten Sie, das die Aktivierung nach Erwerb der Lizenzen
-            1-2 Werktage in Anspruch nehmen könnte, da jede Bestellung aus
-            sicherheitsgründen manuell geprüft und aktiviert wird.
+            Wenn Sie Bücher für Ihre Schüler erwerben, werden Ihrem Konto
+            zusätzliche Nutzerlizenzen zur Verfügung gestellt. Anschließend
+            können Sie diese Nutzerlizenzen an Ihre Schüler via E-Mail zuweisen.
+            Ihre Schüler werden automatisch mit persönlichen Zugangsdaten
+            eingeladen und haben Zugriff auf ihre eigene Ebookversion.
+          </p>
+          <p>
+            Bitte beachten Sie, das die Aktivierung nach Erwerb neuer Bücher
+            inkl. Ebook 1-2 Werktage in Anspruch nehmen könnte, da jede
+            Bestellung aus Sicherheitsgründen manuell geprüft / aktiviert wird.
           </p>
           <p>
             Die Lizenzen haben jeweils eine Laufzeit von 25 Monaten, beginnend

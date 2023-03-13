@@ -95,10 +95,11 @@
           <p>
             Nein. Als Einzelanwender haben Sie bereits die Printversion der
             Buchausgabe erworben. Somit steht Ihnen weiterhin kostenfrei die
-            digitale Version in der Promos Online Bibliothek zur Verfügung.<br /><br />Nur
-            wenn Sie vorhaben das Buch mit anderen Benutzern zu teilen oder
-            bspw. Schülern zur Verfügung stellen sind weitere Nutzungslizenzen
-            erforderlich.
+            digitale Version in der Promos Online Bibliothek zur Verfügung.<br /><br />
+            Wenn Sie weitere Printausgaben für Ihre Schüler erwerben, werden
+            diesen ebenfalls digitale Versionen in Form von Nutzerlizenzen zur
+            Verfügung gestellt. Die Nutzerlizenzen können Sie bequem in Ihrem
+            Account verwalten.
           </p>
         </div>
       </div>
@@ -140,12 +141,11 @@
           :class="{ active: state.currentTab == 7 }"
         >
           <p>
-            Sie können zusätzlich zu Ihrer erworbenen Ebook Version auch
-            Nutzungslizenzen für weitere Nutzer (z.B. Schüler) im
-            <a href="https://shop.strato.de/epages/244823.sf/" target="_blank"
-              >Onlineshop</a
-            >
-            erwerben.
+            Wenn Sie mit Ihrem Kundenkonto (Onlineshop) weitere Printausgaben
+            für Ihre Schüler erwerben, werden ihren Schüler ebenfalls digitale
+            Versionen des Buches zur Verfügung gestellt. Diese werden Ihrem
+            Konto (bib.promos) in Form von Nutzungslizenzen bereitgestellt, die
+            Sie Ihren Schülern via Mail-Adressen zuweisen können.
           </p>
         </div>
       </div>
