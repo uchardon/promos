@@ -7,13 +7,15 @@
     />
     <br /><br />
     <h2>
-      Haben Sie gewusst?<br />Mit Nutzerlizenzen können Sie Ihr Ebook teilen.
+      Haben Sie gewusst?<br />Sie können die Ebooks Ihrer Schüler mitverwalten.
     </h2>
     <br />
     <p>
-      Ganz einfach: In unserem Onlineshop weitere Benutzerlizenzen für Ihre
-      Schüler kaufen und anschließend in Ihrem Konto zuweisen. Ihre Schüler
-      werden automatisch mit persönlichen Zugangsdaten eingeladen.
+      Wenn Sie Bücher für Ihre Schüler erwerben, werden Ihrem Konto zusätzliche
+      Nutzerlizenzen zur Verfügung gestellt. Anschließend können Sie diese
+      Nutzerlizenzen an Ihre Schüler via E-Mail zuweisen. Ihre Schüler werden
+      automatisch mit persönlichen Zugangsdaten eingeladen und haben Zugriff auf
+      ihre eigene Ebookversion.
     </p>
 
     <p v-if="!online">offline</p>
