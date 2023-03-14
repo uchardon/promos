@@ -5,7 +5,8 @@
       <h2>Notiz hinzufügen</h2>
       <!-- <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p> -->
     </div>
-    <div class="text-input">
+
+    <div v-if="state.textarea" class="text-input">
       <!-- MARKERS: {{ markers }}--- <br />
       TO EDIT: {{ markerToEdit }}--- <br />
       FILTERED: {{ filteredMarkers }} -->
@@ -20,8 +21,16 @@
       >
       </textarea>
     </div>
+    <div v-else class="text-input">
+      <p>{{ markerToEdit.content.desc }}</p>
+    </div>
 
-    <div class="mod__inner-footer uniq edit-footer">
+    <div v-if="state.editButton" class="mod__inner-footer uniq edit-footer">
+      <button class="button save" @click.prevent="edit()">Bearbeiten</button>
+      <div style="clear: both"></div>
+    </div>
+
+    <div v-if="state.saveButton" class="mod__inner-footer uniq edit-footer">
       <button
         type="submit"
         class="button save"
@@ -58,10 +67,15 @@ export default {
   data() {
     return {
       marker: {},
+      state: {
+        textarea: false,
+        editButton: false,
+        saveButton: false,
+      }, // show edit
     };
   },
   computed: {
-    ...mapState(["markers", "markerToEdit"]),
+    ...mapState(["markers", "markerToEdit", "online"]),
     ...mapGetters(["getMarkersByBookpage"]),
     filteredMarkers() {
       return this.getMarkersByBookpage({
@@ -72,10 +86,53 @@ export default {
   },
   mounted() {
     this.marker = this.markerToEdit.content;
-    this.$refs.textinput.focus();
+    this.stateManager();
   },
   methods: {
     ...mapActions(["setModal", "saveMarkersToDB"]),
+    stateManager() {
+      if (this.online) {
+        // online
+        if (this.markerToEdit.todo == "edit") {
+          // Marker anzeigen
+          this.state = {
+            textarea: false,
+            editButton: true,
+            saveButton: false,
+          };
+        } else {
+          // Neuer Marker
+          this.state = {
+            textarea: true,
+            editButton: false,
+            saveButton: true,
+          };
+          // this.$refs.textinput.focus();
+        }
+      } else {
+        // offline Marker werden nur angezeigt
+        if (
+          this.markerToEdit.todo != "edit" &&
+          this.markerToEdit.content.desc == ""
+        ) {
+          this.markerToEdit.content.desc =
+            "Neue Marker können nur im onlinemodus angelegt werden!";
+        }
+        this.state = {
+          textarea: false,
+          editButton: false,
+          saveButton: false,
+        };
+      }
+    },
+    edit() {
+      this.state = {
+        textarea: true,
+        editButton: false,
+        saveButton: true,
+      };
+      // this.$refs.textinput.focus();
+    },
     deleteMarker() {
       this.filteredMarkers.splice(this.markerToEdit.content.index, 1);
       this.setIndex();

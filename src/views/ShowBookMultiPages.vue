@@ -13,7 +13,6 @@
     </AppHeaderEbook>
     <nav class="pageNav">
       <div v-if="userstate == 'customer'" class="centerNav">
-        {{ curPage }}
         <svg
           v-for="(color, index) in colors"
           :key="index"
@@ -286,9 +285,11 @@ export default {
     scrollToElement(no) {
       // console.log("typeof", typeof no);
       // console.log("no", no);
-      let arg = "[data-page=page-" + no + "]";
-      console.log("arg", document.querySelector(arg));
-      document.querySelector(arg).scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        let arg = "[data-page=page-" + no + "]";
+        console.log("arg", document.querySelector(arg));
+        document.querySelector(arg).scrollIntoView({ behavior: "smooth" });
+      }, 500);
     },
     chgToPage(newPageNo) {
       // this.setCurPage(newPageNo);
