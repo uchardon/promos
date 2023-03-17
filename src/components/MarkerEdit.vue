@@ -2,8 +2,9 @@
   <div class="edit-area inner">
     <div class="comment-title">
       <img src="@/assets/images/icons/kommentar-active.svg" />
-      <h2>Notiz hinzufügen</h2>
+      <h2 v-if="state.headline">Notiz hinzufügen</h2>
       <!-- <p>Dieser Kommentar ist für Ihre lizenzierten Benutzer sichtbar.</p> -->
+      <h2 v-if="!state.headline">Ihre Notiz</h2>
     </div>
 
     <div v-if="state.textarea" class="text-input">
@@ -22,7 +23,7 @@
       </textarea>
     </div>
     <div v-else class="text-input">
-      <p>{{ markerToEdit.content.desc }}</p>
+      <p style="padding-top: 50px">{{ markerToEdit.content.desc }}</p>
     </div>
 
     <div v-if="state.editButton" class="mod__inner-footer uniq edit-footer">
@@ -68,6 +69,7 @@ export default {
     return {
       marker: {},
       state: {
+        headline: false,
         textarea: false,
         editButton: false,
         saveButton: false,
@@ -96,6 +98,7 @@ export default {
         if (this.markerToEdit.todo == "edit") {
           // Marker anzeigen
           this.state = {
+            headline: false,
             textarea: false,
             editButton: true,
             saveButton: false,
@@ -103,6 +106,7 @@ export default {
         } else {
           // Neuer Marker
           this.state = {
+            headline: true,
             textarea: true,
             editButton: false,
             saveButton: true,
@@ -119,6 +123,7 @@ export default {
             "Neue Marker können nur im onlinemodus angelegt werden!";
         }
         this.state = {
+          headline: false,
           textarea: false,
           editButton: false,
           saveButton: false,
@@ -127,6 +132,7 @@ export default {
     },
     edit() {
       this.state = {
+        headline: true,
         textarea: true,
         editButton: false,
         saveButton: true,
