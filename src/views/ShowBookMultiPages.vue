@@ -360,7 +360,7 @@ export default {
 };
 </script>
 
-<style scroped lang="scss">
+<style scoped lang="scss">
 body {
   background: #efefef;
   // overflow: hidden;
