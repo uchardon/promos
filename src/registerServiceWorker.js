@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+// 29.03.2023, version 1.0.0
+
 import { register } from "register-service-worker";
 
 if (process.env.NODE_ENV === "production") {
