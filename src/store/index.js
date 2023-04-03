@@ -14,6 +14,8 @@ export default new Vuex.createStore({
     // dataUrl: "https://front.promosverlag.de/data/",
     url: "https://bib.promosverlag.de/api/",
     dataUrl: "https://bib.promosverlag.de/data/",
+    // url: "https://bib.promosverlag.net/api/",
+    // dataUrl: "https://bib.promosverlag.net/data/",
     // localdata: "data/",
     localdata: "data/",
     debug: false,

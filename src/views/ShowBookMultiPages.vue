@@ -194,6 +194,7 @@ export default {
       "token",
       "online",
       "userstate",
+      "dataUrl",
     ]),
     ...mapGetters(["getBooks"]),
   },
@@ -330,7 +331,8 @@ export default {
       return `${this.$store.state.dataUrl}${this.book.id}/page-${i}`;
     },
     getDataUrl() {
-      return `https://bib.promosverlag.de/data/${this.book.id}/`;
+      // return `https://bib.promosverlag.de/data/${this.book.id}/`;
+      return this.dataUrl + this.book.id + "/";
       // return `data/${this.book.id}/`;
     },
     setNewMarkerColor(color) {
