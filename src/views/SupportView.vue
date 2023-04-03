@@ -68,7 +68,7 @@
             gelöscht werden. Wir empfehlen daher das Konto zu parken und die
             Löschung nur in Sonderfällen zu beantragen. Den Antrag können Sie
             per Mail an die
-            <a href="mailto:support@promosverlag">support@promosverlag.de</a>
+            <a href="mailto:info@promosverlag">info@promosverlag.de</a>
             richten.
           </p>
         </div>
@@ -174,8 +174,7 @@
 
             Falls beide Kriterien erfüllt sein sollen und Sie weiterhin keine
             Lizenzen freigeschalten bekommen haben, wenden Sie sich bitte an den
-            Support (<a href="mailto:support@promosverlag"
-              >support@promosverlag.de</a
+            Support (<a href="mailto:info@promosverlag">info@promosverlag.de</a
             >), damit wir Ihr Konto manuell prüfen und ggfs. erweitern.
           </p>
         </div>
@@ -440,7 +439,7 @@
             <br /><br />
             Falls Sie weiterhin Probleme mit der Offline-Nutzung haben,
             schildern Sie uns bitte Ihre Problematik via Mail an die
-            <a href="mailto:support@promosverlag.de">support@promosverlag.de</a
+            <a href="mailto:info@promosverlag.de">info@promosverlag.de</a
             >.<br /><br />Hinweis: Mit dem Download werden keine offenen
             PDF-Daten o.ä. bereitgestellt. Der Download dient alleinig dazu das
             System für die Offline-Nutzung bereitzustellen. Die
@@ -477,9 +476,9 @@
           <p>
             Sie haben weitere Fragen und Ihre Frage ist nicht aufgeführt? Dann
             schreiben Sie uns gerne eine Mail an
-            <a href="mailto:support@promsoverlag.de">support@promsoverlag.de</a
-            >. Wir werden Ihnen schnellstmöglich weiterhelfen und ggfs. Ihre
-            Frage in unseren Katalog aufnehmen.
+            <a href="mailto:info@promsoverlag.de">info@promsoverlag.de</a>. Wir
+            werden Ihnen schnellstmöglich weiterhelfen und ggfs. Ihre Frage in
+            unseren Katalog aufnehmen.
           </p>
         </div>
       </div>
