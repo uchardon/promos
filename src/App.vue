@@ -7,7 +7,7 @@
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
     </AppHeader>
-    <AppHeaderMin v-else />
+    <AppHeaderMin v-if="$route.name != 'showBook' && token == ''" />
     <main
       :class="{
         wrapper: $route.name != 'useYourLink' && $route.name != 'gologin',
