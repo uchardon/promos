@@ -25,7 +25,7 @@ export default {
     async imgurl() {
       let newurl = "";
       let imageURL = `${this.localdata}${this.book.id}/thumb.jpg`;
-      console.log("imgurl not offline");
+      // console.log("imgurl not offline");
       await fetch(imageURL)
         .then((response) => {
           return response.blob();

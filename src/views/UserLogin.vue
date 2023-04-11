@@ -132,7 +132,7 @@ export default {
       this.setModal({ state: true, content: "ModalPassword" });
     },
     async login() {
-      console.log(" methode LOGIN ");
+      // console.log(" methode LOGIN ");
       let books = [];
       // console.log(" methods login try ");
       if (this.online) {

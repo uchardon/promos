@@ -153,7 +153,7 @@ export default {
       e.preventDefault();
       // console.log("deferredPrompt event was fired eee", e);
       this.deferredPrompt = e;
-      console.log("deferredPrompt event was fired", this.deferredPrompt);
+      // console.log("deferredPrompt event was fired", this.deferredPrompt);
       // showInstallPromotion();
     });
     if (this.token != "202cb963ac59075b964b07152d234b70") {
@@ -172,7 +172,7 @@ export default {
   methods: {
     ...mapActions(["setModal", "setCurrentBook", "checkIDBForKey"]),
     async appInstall() {
-      console.log("this.deferredPrompt", this.deferredPrompt);
+      // console.log("this.deferredPrompt", this.deferredPrompt);
       this.hideInstallPromotion();
       this.deferredPrompt.prompt();
       const { outcome } = await this.deferredPrompt.userChoice;
@@ -180,7 +180,7 @@ export default {
       this.deferredPrompt = null;
     },
     hideInstallPromotion() {
-      console.log("hideInstallPromotion");
+      // console.log("hideInstallPromotion");
     },
     modalAppDownload() {
       this.setModal({ state: true, content: "ModalAppDownload" });
@@ -196,7 +196,7 @@ export default {
           }, 700);
         }
       }
-      console.log("->", this.books.length, this.checkCount);
+      // console.log("->", this.books.length, this.checkCount);
     },
     showBook(book) {
       // console.log("book->", book);
@@ -206,7 +206,7 @@ export default {
     async checkBookOfflinestatus(bookid) {
       if (!this.online) {
         const res = await this.checkIDBForKey(bookid);
-        console.log("buch--verfügbar", res);
+        // console.log("buch--verfügbar", res);
         if (res) {
           // offline verfügbar
           return true;
@@ -220,7 +220,7 @@ export default {
     },
     async showBookJPGs(book) {
       let bookIsAvailable = await this.checkBookOfflinestatus(book.id);
-      console.log("bookIsAvailable", bookIsAvailable);
+      // console.log("bookIsAvailable", bookIsAvailable);
       if (bookIsAvailable) {
         this.setCurrentBook(book);
         this.$router.push({ name: "showBook" });

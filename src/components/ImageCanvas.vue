@@ -104,7 +104,7 @@ export default {
     },
   },
   mounted() {
-    console.log("ImageCanvas mounted");
+    // console.log("ImageCanvas mounted");
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
     this.book = this.books.find((b) => b.id == this.bookid);
@@ -140,7 +140,7 @@ export default {
     // },
     async imgurl(inIndexdDB) {
       // let key = "buch_" + this.bookid;
-      console.log("imgurl", inIndexdDB);
+      // console.log("imgurl", inIndexdDB);
       let newurl = "";
       if (inIndexdDB != 1) {
         // nicht inIndexdDB verfügbar
@@ -158,7 +158,7 @@ export default {
           });
       } else {
         // inIndexdDB verfügbar
-        console.log("imgurl is inIndexdDB");
+        // console.log("imgurl is inIndexdDB");
         let key = `b${this.bookid}p${this.no - 1}`;
         newurl = await this.getImageURL(key);
       }

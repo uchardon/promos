@@ -251,7 +251,7 @@ export default {
           return;
         }
         // this.observer.unobserve(target);
-        console.log("Observed page ", target.dataset.no);
+        // console.log("Observed page ", target.dataset.no);
         this.curPage = parseInt(target.dataset.no);
       });
     },
