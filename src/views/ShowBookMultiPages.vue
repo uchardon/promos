@@ -221,7 +221,7 @@ export default {
     this.scrollobserver.disconnect();
   },
   mounted() {
-    console.log("ShowBookMultiPages mounted");
+    // console.log("ShowBookMultiPages mounted");
     // this.setCurPage(1);
     // console.log("bookId-->", bookId);
     this.books = this.getBooks;
@@ -385,7 +385,7 @@ header {
 }
 main header {
   display: block;
-  position: absolute;
+  position: fixed;
 }
 
 h1 {
