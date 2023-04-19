@@ -321,6 +321,7 @@ export default new Vuex.createStore({
       if (!response.error) {
         dispatch("getSubusers");
       }
+      return response;
     },
     deleteSubuser: async ({ state, dispatch }, payload) => {
       const response = await Axios.post(state.url + "subuser.php", {

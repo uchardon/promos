@@ -65,6 +65,10 @@
             :class="{ used: sub.lastuse != '0000-00-00' }"
           >
             <span>{{ sub.email }}</span>
+            <span v-if="sub.lastuse == '0000-00-00'">(nicht aktiviert)</span>
+            <span v-if="sub.lastuse != '0000-00-00'"
+              >(gültig bis {{ gerDate(sub.lastuse) }} )</span
+            >
             <button
               v-if="sub.lastuse == '0000-00-00'"
               class="button delete"
@@ -181,6 +185,10 @@ export default {
       "sendNotificationToSubuser",
       "setModal",
     ]),
+    gerDate(d) {
+      const gerdate = new Date(d);
+      return gerdate.toLocaleDateString("de-DE");
+    },
     supportlink() {
       this.$router.push({ name: "support" });
       this.setModal(false);
@@ -226,7 +234,8 @@ export default {
         book_kunde_id: this.currentBook.kb_id,
         lastuse: "0000-00-00",
       };
-      this.saveNewSubuser(newSubuser);
+      let xx = this.saveNewSubuser(newSubuser);
+      console.log("========PW==========", xx);
       let payload = {
         username: this.user.vorname + " " + this.user.nachname,
         email: this.subuser.email,
