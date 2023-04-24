@@ -87,6 +87,9 @@
         class="new_license"
       >
         <h6>Neue Lizenz für diese Buch vergeben</h6>
+        <div v-if="state.error == 'mailIsUsed'">
+          E-Mail bereits in Benutzung
+        </div>
         <form @submit.prevent="saveNewSub()">
           <input
             v-model="subuser.email"
@@ -156,6 +159,7 @@ export default {
       state: {
         subPage: "BookLicense",
         offline: false,
+        error: "",
       },
     };
   },
@@ -221,29 +225,36 @@ export default {
 
       return password;
     },
-    saveNewSub() {
-      console.log("saveNewSub");
-      this.currentBook.usedLicense++;
-      this.id++;
-      let pw = this.generatePassword();
-      let newSubuser = {
-        kunde_id: this.currentUser.id,
-        book_id: this.currentBook.id,
-        email: this.subuser.email,
-        password: pw,
-        book_kunde_id: this.currentBook.kb_id,
-        lastuse: "0000-00-00",
-      };
-      let xx = this.saveNewSubuser(newSubuser);
-      console.log("========PW==========", xx);
-      let payload = {
-        username: this.user.vorname + " " + this.user.nachname,
-        email: this.subuser.email,
-        book: this.currentBook.title,
-        password: pw,
-      };
-      this.sendNotificationToSubuser(payload);
-      this.subuser.email = "";
+    async saveNewSub() {
+      // console.log("saveNewSub");
+      let found = this.subusers.find((s) => s.email == this.subuser.email);
+      console.log("XXXXXXXXXXXXXXXXXXXXXXXXX F E ", found, this.subuser.email);
+      this.state.error = "";
+      if (found == null) {
+        this.currentBook.usedLicense++;
+        this.id++;
+        let pw = this.generatePassword();
+        let newSubuser = {
+          kunde_id: this.currentUser.id,
+          book_id: this.currentBook.id,
+          email: this.subuser.email,
+          password: pw,
+          book_kunde_id: this.currentBook.kb_id,
+          lastuse: "0000-00-00",
+        };
+        let pword = await this.saveNewSubuser(newSubuser);
+        let payload = {
+          username: this.user.vorname + " " + this.user.nachname,
+          email: this.subuser.email,
+          book: this.currentBook.title,
+          password: pword.data,
+        };
+        console.log("========payl=========", payload);
+        this.sendNotificationToSubuser(payload);
+        this.subuser.email = "";
+      } else {
+        this.state.error = "mailIsUsed";
+      }
     },
     updateSubUser() {
       console.log("saveNewSub");

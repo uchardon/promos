@@ -1,12 +1,12 @@
 <template>
-  <header class="header">
+  <header class="header appHeaderEbook">
     <div id="headerDesktop" class="header__inner">
       <div class="big click" @click="$router.push({ name: 'mybooks' })">
         <img src="@/assets/images/icons/back.svg" />
       </div>
       <div class="BookPages">
         <div v-if="!focusInput" class="inputpage" @click="focusInput = true">
-          <div class="pagenumber">{{ pageinview }}</div>
+          <div class="pagenumber">{{ minusOne(pageinview) }}</div>
         </div>
         <input
           v-if="focusInput"
@@ -19,7 +19,7 @@
           onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
           @change="chgPage()"
         />
-        <span>/ {{ maxpages }}</span>
+        <span>/ {{ minusOne(maxpages) }}</span>
       </div>
       <div class="inhalt inhaltPreview pointer" @click="showIndex()">
         <img src="@/assets/images/icons/threebar.svg" />
@@ -47,15 +47,22 @@
         <img src="@/assets/images/icons/back.svg" />
       </div>
       <div class="BookPages">
+        <div v-if="!focusInput" class="inputpage" @click="focusInput = true">
+          <div class="pagenumber">{{ minusOne(pageinview) }}</div>
+        </div>
         <input
+          v-if="focusInput"
+          v-model="currentPage"
           type="number"
           maxlength="3"
           placeholder="1"
           onclick="this.placeholder=''"
           onfocus="this.select()"
           onblur="this.placeholder=!this.placeholder?'1':this.placeholder;"
+          @change="chgPage()"
         />
-        <span>/ 55</span>
+
+        <span>/ {{ minusOne(maxpages) }}</span>
       </div>
       <div class="inhalt inhaltLesezeichen pointer" @click="showIndex()">
         <img src="@/assets/images/icons/threebar.svg" />
@@ -94,6 +101,9 @@ export default {
   },
   methods: {
     ...mapActions(["setModal", "setCurPage", "setSeitenAnsicht"]),
+    minusOne(num) {
+      return num--;
+    },
     showIndex() {
       console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
@@ -323,7 +333,7 @@ header {
   main {
     overflow-y: hidden;
   }
-  .header {
+  .header.header {
     display: block;
     position: fixed;
     width: 100%;

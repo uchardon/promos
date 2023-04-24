@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header appHeaderMin">
     <div id="headerDesktop" class="header__inner">
       <div class="header__inner-logo">
         <img src="@/assets/images/promos-logo-header.svg" />

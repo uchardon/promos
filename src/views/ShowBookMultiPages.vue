@@ -294,8 +294,9 @@ export default {
     },
     chgToPage(newPageNo) {
       // this.setCurPage(newPageNo);
+      let pno = parseInt(newPageNo) + 1;
       console.log("chgToPage", newPageNo, this.curPage);
-      this.scrollToElement(newPageNo);
+      this.scrollToElement(pno);
     },
     chgPage(dir) {
       // console.log("chgPage", this.curPage);

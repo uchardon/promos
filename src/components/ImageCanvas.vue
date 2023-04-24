@@ -16,7 +16,7 @@
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
-      <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
+      <div v-if="no > 0" class="pageno">Seite {{ minusOne(no) }}</div>
       <div v-else class="pageno">&nbsp;</div>
       <img :alt="book.title" :data-imgno="no" @load="resizeEvent()" />
     </div>
@@ -131,6 +131,9 @@ export default {
       "saveMarkersToDB",
       "getImageURL",
     ]),
+    minusOne(num) {
+      return num--;
+    },
     zoomFaktor() {
       return this.zoom / 100;
     },
