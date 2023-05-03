@@ -16,7 +16,7 @@
         @edit-marker="editMarker(index)"
       >
       </ImgMarkerSvg>
-      <div v-if="no > 0" class="pageno">Seite {{ no }}</div>
+      <div v-if="no > 0" class="pageno">Seite {{ minusOne(no) }}</div>
       <div v-else class="pageno">&nbsp;</div>
       <pdf
         v-if="pdfurl != ''"
@@ -129,6 +129,10 @@ export default {
     async getKeys() {
       this.dbKeys = await keys();
       console.log("is KEY-yyy: ", this.dbKeys);
+    },
+    minusOne(num) {
+      let back = parseInt(num, 10) - 1;
+      return back;
     },
     generatePDFurl() {
       let key = "buch_" + this.bookid;

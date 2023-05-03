@@ -6,7 +6,9 @@
       </div>
       <div class="BookPages">
         <div v-if="!focusInput" class="inputpage" @click="focusInput = true">
-          <div class="pagenumber">{{ minusOne(pageinview) }}</div>
+          <div class="pagenumber">
+            {{ minusOne(pageinview) }}
+          </div>
         </div>
         <input
           v-if="focusInput"
@@ -102,7 +104,8 @@ export default {
   methods: {
     ...mapActions(["setModal", "setCurPage", "setSeitenAnsicht"]),
     minusOne(num) {
-      return num--;
+      let back = parseInt(num, 10) - 1;
+      return back;
     },
     showIndex() {
       console.log("showIndex");

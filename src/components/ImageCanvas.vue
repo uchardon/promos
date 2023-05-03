@@ -132,7 +132,8 @@ export default {
       "getImageURL",
     ]),
     minusOne(num) {
-      return num--;
+      let back = parseInt(num, 10) - 1;
+      return back;
     },
     zoomFaktor() {
       return this.zoom / 100;

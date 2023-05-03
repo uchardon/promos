@@ -82,7 +82,7 @@ ul {
   justify-content: space-between;
   border-bottom: 1px solid #efefef;
   cursor: pointer;
-  height: 50px;
+  // height: 50px;
   line-height: 50px;
   background: #fafbfe;
   margin-bottom: 10px;
