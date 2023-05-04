@@ -45,7 +45,8 @@ export default {
       return this.target;
     },
     chgPage(pageNo) {
-      let pageBox = this.getElement(pageNo);
+      let pNomb = pageNo + 1;
+      let pageBox = this.getElement(pNomb);
       this.setCurPage(pageNo);
       pageBox.scrollIntoView({ behavior: "smooth" });
       this.setModal(false);
@@ -83,11 +84,13 @@ ul {
   border-bottom: 1px solid #efefef;
   cursor: pointer;
   // height: 50px;
-  line-height: 50px;
+  // line-height: 50px;
+  line-height: 20px;
+  padding: 15px 25px;
   background: #fafbfe;
   margin-bottom: 10px;
   border-radius: 10px;
-  padding: 0px 25px;
+  // padding: 0px 25px;
   &:hover {
     background-color: #2699fb;
     color: #fff;
