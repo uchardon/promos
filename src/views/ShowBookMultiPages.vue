@@ -3,6 +3,7 @@
     class="showPages"
     :class="{ hideMarkers: !showMarkers }"
     :pageInViewport="pageInViewport"
+    @contextmenu.prevent="handler($event)"
   >
     <AppHeaderEbook
       v-if="$route.name == 'showBook'"
@@ -245,6 +246,10 @@ export default {
       "getMarkersFromDb",
       "checkIDBForKey",
     ]),
+    handler(e) {
+      //do stuff
+      console.log("no right klick", e);
+    },
     onElementObserved(entries) {
       entries.forEach(({ target, isIntersecting }) => {
         if (!isIntersecting) {
@@ -300,16 +305,23 @@ export default {
     },
     chgPage(dir) {
       // console.log("chgPage", this.curPage);
+      // seitenAnsicht
+      let pagesToChg = 1;
+      let maxP = this.book.pages;
+      if (this.setSeitenAnsicht == "double") {
+        pagesToChg = 2;
+        maxP = this.book.pages - 1;
+      }
       let newPageNo = this.curPage;
       if (dir == "next") {
-        if (this.curPage < this.book.pages) {
-          newPageNo = this.curPage + 1;
+        if (this.curPage < maxP) {
+          newPageNo = this.curPage + pagesToChg;
           // this.setCurPage(newPageNo);
         }
       }
       if (dir == "prev") {
-        if (this.curPage > 1) {
-          newPageNo = this.curPage - 1;
+        if (this.curPage > pagesToChg) {
+          newPageNo = this.curPage - pagesToChg;
           // this.setCurPage(newPageNo);
         }
       }

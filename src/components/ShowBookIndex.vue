@@ -47,7 +47,8 @@ export default {
     chgPage(pageNo) {
       let pNomb = pageNo + 1;
       let pageBox = this.getElement(pNomb);
-      this.setCurPage(pageNo);
+      this.setCurPage(pNomb);
+      console.log("scrollIntoView page ", pNomb);
       pageBox.scrollIntoView({ behavior: "smooth" });
       this.setModal(false);
     },

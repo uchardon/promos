@@ -476,7 +476,7 @@
           <p>
             Sie haben weitere Fragen und Ihre Frage ist nicht aufgeführt? Dann
             schreiben Sie uns gerne eine Mail an
-            <a href="mailto:info@promsoverlag.de">info@promsoverlag.de</a>. Wir
+            <a href="mailto:info@promosverlag.de">info@promosverlag.de</a>. Wir
             werden Ihnen schnellstmöglich weiterhelfen und ggfs. Ihre Frage in
             unseren Katalog aufnehmen.
           </p>

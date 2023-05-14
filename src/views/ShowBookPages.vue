@@ -110,12 +110,6 @@ export default {
       currentMarker: {},
     };
   },
-  beforeMount() {
-    window.addEventListener("beforeunload", this.preventNav);
-  },
-  beforeUnmount() {
-    window.removeEventListener("beforeunload", this.preventNav);
-  },
   mounted() {
     let bookId = this.$store.state.currentBook.id;
     console.log("bookId-->", bookId);
@@ -136,11 +130,6 @@ export default {
     debug(p) {
       console.log(p);
       this.resizeEvent();
-    },
-    preventNav(event) {
-      if (!this.isEditing) return;
-      event.preventDefault();
-      event.returnValue = "";
     },
     chgPage(dir) {
       if (dir == "next") {
