@@ -210,7 +210,8 @@ export default {
       this.inIndexdDB = 0;
     }
     if (this.token != "202cb963ac59075b964b07152d234b70") {
-      this.$router.push("/login");
+      // this.$router.push("/");
+      window.location = "https://bib.promosverlag.de/";
     }
     this.scrollobserver = new IntersectionObserver(this.onElementObserved, {
       // root: this.$el,
@@ -225,9 +226,15 @@ export default {
     // console.log("ShowBookMultiPages mounted");
     // this.setCurPage(1);
     // console.log("bookId-->", bookId);
+    // if (this.currentBook.id === undefined) {
+    //   console.log("book id -", this.currentBook.id);
+    //   this.$router.push("/mybooks");
+    // }
     this.books = this.getBooks;
+
     this.book = this.books.find((b) => b.id == this.currentBook.id);
     // console.log("book-----", this.book);
+
     this.setPagesArray();
     this.getMarkersFromDb();
     setTimeout(() => {

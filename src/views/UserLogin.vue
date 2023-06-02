@@ -119,6 +119,17 @@ export default {
       this.email = "kutschuk@schwarzkupfer.de";
     }
   },
+  mounted() {
+    if (sessionStorage.getItem("us") && sessionStorage.getItem("pa")) {
+      const pa = sessionStorage.getItem("pa");
+      const us = sessionStorage.getItem("us");
+      if (pa != "" && us != "") {
+        this.email = us;
+        this.password = pa;
+        this.login();
+      }
+    }
+  },
   methods: {
     ...mapActions([
       "SET_USERDATA",
@@ -148,6 +159,8 @@ export default {
             this.msg = "Falsche Logindaten";
           } else {
             // set userdata in db
+            sessionStorage.setItem("us", this.email);
+            sessionStorage.setItem("pa", this.password);
             const payload = {
               token: response.token,
               user: response.user,

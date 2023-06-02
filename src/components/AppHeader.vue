@@ -38,9 +38,7 @@
         "
         class="logout"
       >
-        <router-link class="" :to="{ name: 'gologin' }">
-          <img src="@/assets/logout.svg" alt="" />
-        </router-link>
+        <img src="@/assets/logout.svg" alt="" @click.prevent="logout()" />
       </div>
       <div
         v-if="
@@ -88,6 +86,10 @@ export default {
   name: "AppHeader",
   methods: {
     ...mapState(["userstate"]),
+    logout() {
+      sessionStorage.clear();
+      this.$router.push({ path: "/login" });
+    },
   },
 };
 </script>

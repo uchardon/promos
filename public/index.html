@@ -20,6 +20,14 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script type="text/javascript">
+      const onConfirmRefresh = function (event) {
+        event.preventDefault();
+        return event.returnValue = "Are you sure you want to leave the page?";
+      }
+
+      window.addEventListener("beforeunload", onConfirmRefresh, { capture: true });
+    </script>
   </body>
 
 </html>
