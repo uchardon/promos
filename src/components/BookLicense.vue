@@ -228,7 +228,7 @@ export default {
     async saveNewSub() {
       // console.log("saveNewSub");
       let found = this.subusers.find((s) => s.email == this.subuser.email);
-      console.log("XXXXXXXXXXXXXXXXXXXXXXXXX F E ", found, this.subuser.email);
+      // console.log("XXXXXXXXXXXXXXXXXXXXXXXXX F E ", found, this.subuser.email);
       this.state.error = "";
       if (found == null) {
         this.currentBook.usedLicense++;
@@ -249,7 +249,7 @@ export default {
           book: this.currentBook.title,
           password: pword.data,
         };
-        console.log("========payl=========", payload);
+        // console.log("========payl=========", payload);
         this.sendNotificationToSubuser(payload);
         this.subuser.email = "";
       } else {
@@ -257,7 +257,7 @@ export default {
       }
     },
     updateSubUser() {
-      console.log("saveNewSub");
+      // console.log("saveNewSub");
     },
   },
   template: "#book-license",

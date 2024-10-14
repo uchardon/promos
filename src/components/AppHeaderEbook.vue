@@ -108,11 +108,10 @@ export default {
       return back;
     },
     showIndex() {
-      console.log("showIndex");
       this.setModal({ state: true, content: "ShowBookIndex" });
     },
     chgPage() {
-      console.log("chgPage");
+      // console.log("chgPage");
       // let pageBox = this.getElement(pageNo);
       // this.setCurPage(pageNo);
       // pageBox.scrollIntoView();

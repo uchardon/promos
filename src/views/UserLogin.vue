@@ -5,7 +5,12 @@
         <img src="@/assets/images/sample.png" alt="" />
       </div>
 
-      <form action="#" class="login__form" @submit.prevent="login">
+      <form
+        action="#"
+        class="login__form"
+        autocomplete="off"
+        @submit.prevent="login"
+      >
         <div class="login__form-inner">
           <div class="login__form-logo" style="width: 100%">
             <!-- <<h2>Hallo {{ vorname }} {{ nachname }}</h2>> -->
@@ -43,6 +48,14 @@
             style="padding: 20px 0px"
           >
             Login
+          </button>
+          <button
+            type="button"
+            class="button secondary"
+            style="padding: 20px 0"
+            @click.prevent="deleteCookie(['us', 'pw'])"
+          >
+            Anmeldedaten löschen
           </button>
           <a
             v-if="online"
@@ -120,16 +133,18 @@ export default {
     }
   },
   mounted() {
-    if (sessionStorage.getItem("us") && sessionStorage.getItem("pa")) {
-      const pa = sessionStorage.getItem("pa");
-      const us = sessionStorage.getItem("us");
+    const us = this.getCookie("us");
+    const pa = this.getCookie("pa");
+
+    if (us !== undefined && pa !== undefined) {
       if (pa != "" && us != "") {
         this.email = us;
         this.password = pa;
-        this.login();
+        // this.login(); // uncomment for  AUTOLOGIN
       }
     }
   },
+
   methods: {
     ...mapActions([
       "SET_USERDATA",
@@ -141,6 +156,51 @@ export default {
     showModalPassword() {
       // console.log("showIndex");
       this.setModal({ state: true, content: "ModalPassword" });
+    },
+    getCookie(name) {
+      let cookieValue = undefined;
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        const parts = cookie.split("=");
+        if (parts[0] === name) {
+          cookieValue = parts[1];
+          break;
+        }
+      }
+      return decodeURIComponent(cookieValue);
+    },
+    setCookie(name, value, options = {}) {
+      options = {
+        path: "/",
+        // add other defaults here if necessary
+        ...options,
+      };
+
+      if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+      }
+
+      let updatedCookie =
+        encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+      for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+          updatedCookie += "=" + optionValue;
+        }
+      }
+
+      document.cookie = updatedCookie;
+      // example setCookie('user', 'John', {secure: true, 'max-age': 3600});
+    },
+    deleteCookie(names) {
+      names.forEach((name) => {
+        this.setCookie(name, "", {
+          "max-age": -1,
+        });
+      });
     },
     async login() {
       // console.log(" methode LOGIN ");
@@ -159,8 +219,14 @@ export default {
             this.msg = "Falsche Logindaten";
           } else {
             // set userdata in db
-            sessionStorage.setItem("us", this.email);
-            sessionStorage.setItem("pa", this.password);
+            this.setCookie("pa", this.password, {
+              secure: true,
+              "max-age": 2419200,
+            });
+            this.setCookie("us", this.email, {
+              secure: true,
+              "max-age": 2419200,
+            });
             const payload = {
               token: response.token,
               user: response.user,

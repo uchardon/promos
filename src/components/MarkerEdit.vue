@@ -149,7 +149,7 @@ export default {
 
       if (this.markerToEdit.content.index == -1) {
         // console.log("NEW MARKER");
-        console.log("xfilteredMarkersxx", this.filteredMarkers);
+        // console.log("xfilteredMarkersxx", this.filteredMarkers);
         if (this.markerToEdit.content.desc != "") {
           // Zeilenumbrüche sind in json nicht erlaubt
           this.markerToEdit.content.desc =
@@ -171,7 +171,7 @@ export default {
       this.setModal(false, "");
     },
     setIndex() {
-      console.log("xfilteredMarkersxx", this.filteredMarkers);
+      // console.log("xfilteredMarkersxx", this.filteredMarkers);
       this.filteredMarkers.forEach((m, i) => {
         m.index = i;
       });

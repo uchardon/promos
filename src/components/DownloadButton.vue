@@ -10,8 +10,13 @@
       Download
     </button>
 
-    <button v-if="offline == 1 && state.online" class="download btn offline">
-      Offline verfügbar
+    <button
+      v-if="offline == 1 && state.online"
+      class="download btn offline"
+      title="Buch offline verfügbar"
+      @click="freeMemory()"
+    >
+      Speicher freigeben
     </button>
     <button v-if="!state.online" class="download btn disabled">
       Download nicht möglich
@@ -59,7 +64,21 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["setModal", "checkIDBForKey", "SET_BOOKDOWNLOAD"]),
+    ...mapActions([
+      "setModal",
+      "checkIDBForKey",
+      "delImageIDB",
+      "SET_BOOKDOWNLOAD",
+    ]),
+    // async delImages() {
+    //   for (let i = 0; this.bookDownload.maxpages > i; i++) {
+    //     let key = `b${this.bookDownload.bookid}p${i}`;
+    //     let payload = {
+    //       key: key,
+    //     };
+    //     await this.delImageIDB(payload);
+    //   }
+    // },
     async checkBookOfflinestatus() {
       const res = await this.checkIDBForKey(this.bookid);
       // console.log("buch--verfügbar", res);
@@ -76,13 +95,25 @@ export default {
       }
     },
     loadForOfflineUse() {
-      console.log("bookid", this.bookid);
-      console.log("maxpages", this.maxpages);
-      console.log("state start");
+      // console.log("bookid", this.bookid);
+      // console.log("maxpages", this.maxpages);
+      // console.log("state start");
       this.SET_BOOKDOWNLOAD({ key: "bookid", value: this.bookid });
       this.SET_BOOKDOWNLOAD({ key: "maxpages", value: this.maxpages });
       this.SET_BOOKDOWNLOAD({ key: "state", value: "start" });
       this.setModal({ state: true, content: "ModalDownload" });
+    },
+    async freeMemory() {
+      this.SET_BOOKDOWNLOAD({ key: "bookid", value: this.bookid });
+      this.SET_BOOKDOWNLOAD({ key: "maxpages", value: this.maxpages });
+      for (let i = 0; this.bookDownload.maxpages > i; i++) {
+        let key = `b${this.bookDownload.bookid}p${i}`;
+        let payload = {
+          key: key,
+        };
+        await this.delImageIDB(payload);
+      }
+      this.checkBookOfflinestatus();
     },
   },
 };

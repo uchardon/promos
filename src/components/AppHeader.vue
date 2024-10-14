@@ -49,7 +49,36 @@
         class="header__inner-account"
       >
         <span v-if="userstate == 'customer'" class="online"></span>
-        <slot></slot>
+        <span class="username" @click="showUserInfo()"><slot></slot></span>
+        <div class="userInfo">
+          <form action="#" @submit.prevent="chgPassword()">
+            <div v-if="error != ''" class="mess">
+              {{ error }}
+            </div>
+            <label for="pass1">
+              neues Passwort<br />
+              <input
+                id="pass1"
+                v-model="newPass1"
+                type="text"
+                required
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Muss min. eine Zahl und einen Grossbuchstaben und min. 8 Zeichen enthalten. "
+              />
+            </label>
+            <label for="pass2">
+              neues Passwort wiederholen<br />
+              <input id="pass2" v-model="newPass2" type="text" required />
+            </label>
+            <label for="oldPass">
+              alte Passwort<br />
+              <input id="oldPass" v-model="oldPass" type="text" required />
+            </label>
+            <button type="submit" class="btn btn-primary">
+              Passwort ändern
+            </button>
+          </form>
+        </div>
       </div>
     </div>
     <div id="headerMobile">
@@ -80,15 +109,47 @@
   </header>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "AppHeader",
+  data() {
+    return {
+      newPass1: "",
+      newPass2: "",
+      oldPass: "",
+      error: "",
+    };
+  },
   methods: {
     ...mapState(["userstate"]),
+    ...mapActions(["updateUserPassword"]),
     logout() {
       sessionStorage.clear();
       this.$router.push({ path: "/login" });
+    },
+    showUserInfo() {
+      document.querySelector(".userInfo").classList.toggle("active");
+    },
+    chgPassword() {
+      this.error = "";
+      // this.oldPass = "" =check= this.$store.state.user.password
+      if (this.newPass1 == this.newPass2) {
+        console.log("ok");
+        this.updateUserPassword({
+          password: this.oldPass,
+          newpassword: this.newPass1,
+          email: this.$store.state.user.email,
+        });
+        this.oldPass = "";
+        this.newPass1 = "";
+        this.newPass2 = "";
+        document.querySelector(".userInfo").classList.toggle("active");
+      } else {
+        console.error("nok");
+        this.error =
+          "Passwort stimmt nicht überein. Bitte versuchen Sie es erneut.";
+      }
     },
   },
 };
@@ -104,6 +165,38 @@ header {
   background: #101820 !important;
   padding: 0px;
   margin: 0px;
+}
+.userInfo {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  width: 500px;
+  max-width: 90vw;
+  background: #fff;
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  box-shadow: 3px 3px 10px #00000099;
+  & form {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+  }
+  line-height: 1.2em;
+  & label {
+    padding-block: 1rem;
+  }
+  & input {
+    padding: 0.3rem;
+    background: #eee;
+    border-bottom: 1px solid #000;
+    margin-block-start: 5px;
+    font-weight: 400;
+    line-height: 1.2em;
+  }
+}
+.userInfo.active {
+  display: block;
 }
 .header__inner {
   display: block;
@@ -162,6 +255,15 @@ header {
   margin-top: 17px;
   opacity: 0.8;
 }
+.logout {
+  background: #fb2682;
+  padding: 0 10px;
+}
+
+.logout img {
+  height: 50%;
+  margin-top: 33%;
+}
 .logout a:hover {
   opacity: 1;
 }
@@ -170,6 +272,7 @@ header {
   margin-top: 10%;
 }
 .header__inner-account {
+  position: relative;
   float: right;
   font-size: 16px;
   line-height: 70px;

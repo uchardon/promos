@@ -4,7 +4,7 @@
     :disabled="!offline"
     @click="$emit('showBookJpgs', book)"
   >
-    <span v-if="offline">Buch öffnen</span>
+    <span v-if="offline">Weiterlesen</span>
     <span v-else>nicht verfügbar</span>
   </button>
 </template>
@@ -12,7 +12,7 @@
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "ShowBookButton",
+  name: "ShowBookOnPageButton",
   props: {
     // eslint-disable-next-line
     book: {
@@ -43,6 +43,14 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(["checkIDBForKey"]),
+    /**
+     * Checks if the book is available offline by calling the checkIDBForKey function.
+     * If the book is available offline, sets the offline variable to true.
+     * If the book is not available offline, sets the offline variable to false.
+     * If the app is online, sets the offline variable to true.
+     *
+     * @return {Promise<void>} - A Promise that resolves when the function has finished executing.
+     */
     async checkBookOfflinestatus() {
       if (!this.online) {
         const res = await this.checkIDBForKey(this.book.id);
@@ -58,11 +66,22 @@ export default {
         this.offline = true;
       }
     },
+    /**
+     * Executes the checkBookOfflinestatus function every 500ms for 10 times.
+     *
+     * @return {void}
+     */
     checkLoop() {
       for (let i = 0; i < 10; i++) {
         setTimeout(this.checkBookOfflinestatus(), i * 500);
       }
     },
+    /**
+     * Loads the book for offline use by setting the necessary data in the book download state
+     * and opening the modal for download confirmation.
+     *
+     * @return {void}
+     */
     loadForOfflineUse() {
       // console.log("bookid", this.bookid);
       // console.log("maxpages", this.maxpages);

@@ -136,7 +136,7 @@ export default {
   methods: {
     ...mapActions(["setModal"]),
     async sendPW() {
-      console.log("sendPW");
+      // console.log("sendPW");
       this.pwstate = "wait";
       if (this.email != "") {
         const response = await Axios.post(this.url + "mailpw.php", {

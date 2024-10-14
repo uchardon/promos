@@ -53,6 +53,7 @@
           </div>
           <div class="buttons">
             <ShowBookButton :book="book" @show-book-jpgs="showBookJPGs" />
+            <ShowBookOnPageButton :book="book" @show-book-jpgs="showBookJPGs" />
             <button
               v-if="book.maxLicense <= 1 && userstate == 'customer'"
               class="adminlicences btn"
@@ -116,6 +117,7 @@
 import AuthService from "@/services/AuthService.js";
 import DownloadButton from "@/components/DownloadButton.vue";
 import ShowBookButton from "@/components/ShowBookButton.vue";
+import ShowBookOnPageButton from "@/components/ShowBookOnPageButton.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
 import { mapActions, mapState } from "vuex";
 
@@ -124,6 +126,7 @@ export default {
     DownloadButton,
     ThumbNail,
     ShowBookButton,
+    ShowBookOnPageButton,
   },
   props: [],
   emits: [],

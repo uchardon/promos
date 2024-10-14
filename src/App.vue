@@ -6,6 +6,7 @@
     <AppHeader v-if="$route.name != 'showBook' && token != ''">
       {{ $store.state.user.vorname }}
       {{ $store.state.user.nachname }}
+      {{ $store.state.user }}
     </AppHeader>
     <AppHeaderMin v-if="$route.name != 'showBook' && token == ''" />
     <main

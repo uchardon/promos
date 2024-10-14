@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import {
   idb_set,
   idb_get,
+  idb_del,
   idb_fileToBlob,
   idb_blobToArrayBuffer,
   idb_arrayBufferToBlob,
@@ -14,6 +15,9 @@ export default new Vuex.createStore({
     // dataUrl: "https://front.promosverlag.de/data/",
     url: "https://bib.promosverlag.de/api/",
     dataUrl: "https://bib.promosverlag.de/data/",
+    // url: "https://test.promos-verlag.de/api/",
+    // dataUrl: "https://test.promo-sverlag.de/data/",
+    // url: "/api/",
     // url: "https://bib.promosverlag.net/api/",
     // dataUrl: "https://bib.promosverlag.net/data/",
     // localdata: "data/",
@@ -94,7 +98,7 @@ export default new Vuex.createStore({
     RESET: (state) => {
       // Object.assign(state, getDefaultState());
       if (state.debug) {
-        console.log("STATE ", state);
+        // console.log("STATE ", state);
       }
     },
     SET_BOOKSINSTORE: (state, books) => {
@@ -122,9 +126,10 @@ export default new Vuex.createStore({
     SET_USER: (state, user) => {
       state.user = user;
     },
+
     UPDATE_BOOKDOWNLOAD: (state, payload) => {
       if (state.debug) {
-        console.log(`KEY ${payload.key} VAL ${payload.value}.`);
+        // console.log(`KEY ${payload.key} VAL ${payload.value}.`);
       }
       switch (payload.key) {
         case "bookid":
@@ -138,7 +143,7 @@ export default new Vuex.createStore({
           break;
 
         default:
-          console.log(`Sorry, we are out of ${payload.key}.`);
+        // console.log(`Sorry, we are out of ${payload.key}.`);
       }
     },
     setBooks: (state, payload) => {
@@ -193,22 +198,29 @@ export default new Vuex.createStore({
     saveImageIDB: async ({ state }, payload) => {
       // payload [key: 'b'bokkId'p'pageid, url:url]
       if (state.debug) {
-        console.log("saveImageIDB", payload, state.online);
+        // console.log("saveImageIDB", payload, state.online);
       }
       const blob = await idb_fileToBlob(payload.url);
       const ab = await idb_blobToArrayBuffer(blob);
       await idb_set(payload.key, ab);
     },
+    delImageIDB: async ({ state }, payload) => {
+      // payload [key: 'b'bokkId'p'pageid, url:url]
+      if (state.debug) {
+        console.log("delImageIDB", payload);
+      }
+      await idb_del(payload.key);
+    },
     getImageIDB: async ({ state }, key) => {
       if (state.debug) {
-        console.log("getImageIDB", key, state.online);
+        // console.log("getImageIDB", key, state.online);
       }
       const ab = await idb_get(key);
       return ab;
     },
     getImageURL: async ({ state }, key) => {
       if (state.debug) {
-        console.log("getImageURL", key, state.online);
+        // console.log("getImageURL", key, state.online);
       }
       const ab = await idb_get(key);
       const blob = await idb_arrayBufferToBlob(ab);
@@ -218,7 +230,7 @@ export default new Vuex.createStore({
     },
     checkIDBForKey: async ({ state }, bookid) => {
       if (state.debug) {
-        console.log("checkIDBForKey x", bookid, state.online);
+        // console.log("checkIDBForKey x", bookid, state.online);
       }
       let key = `b${bookid}p0`;
       let res = await await idb_get(key);
@@ -282,9 +294,10 @@ export default new Vuex.createStore({
         // console.log("MARKERSxxxx", response.data);
         // console.log("MARKERS", response.data.markers);
       } catch (error) {
-        console.error("Load Markers fom DB failed! (in store) ");
+        // console.error("Load Markers fom DB failed! (in store) ");
       }
     },
+
     saveMarkersToDB: async ({ state }) => {
       try {
         const response = await Axios.post(state.url + "marker.php", {
@@ -297,7 +310,7 @@ export default new Vuex.createStore({
           console.log("RESULT", response);
         }
       } catch (error) {
-        console.error("Load Markers fom DB failed! (in store) ");
+        // console.error("Load Markers fom DB failed! (in store) ");
       }
     },
     getSubusers: async ({ state, commit }) => {
@@ -317,12 +330,26 @@ export default new Vuex.createStore({
         todo: "savesub",
         subData: payload,
       });
-      console.log("RESPONSE saveNewSubuser: ", response);
+      // console.log("RESPONSE saveNewSubuser: ", response);
       if (!response.error) {
         dispatch("getSubusers");
       }
       return response;
     },
+    updateUserPassword: async ({ state }, payload) => {
+      console.log("🚀 ~ updateUserPassword: ~ payload:", payload);
+      console.log("🚀 ~ updateUserPassword: ~ user:", state.user.email);
+      const response = await Axios.post(state.url + "kunden.php", {
+        toDo: "updatePW",
+        payload: payload, // { email: email, password: password, newpassword: newpassword }
+      });
+      console.log("RESPONSE saveNewSubuser: ", response);
+
+      if (!response.error) {
+        // todo dispatch("getSubusers");
+      }
+      return true;
+    }, // TODO: update user password
     deleteSubuser: async ({ state, dispatch }, payload) => {
       const response = await Axios.post(state.url + "subuser.php", {
         todo: "delsub",

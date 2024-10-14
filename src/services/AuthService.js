@@ -5,6 +5,7 @@ import axios from "axios";
 // const url = "http://promos-verlag.de/v2/api/";
 const url = "https://bib.promosverlag.de/api/";
 // const url = "https://bib.promosverlag.net/api/";
+// const url = "https://test.promos-verlag.de/api/";
 
 export default {
   async login(payload) {

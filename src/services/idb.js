@@ -19,6 +19,11 @@ async function idb_get(key) {
   return (await dbPromise).get("keyval", key);
 }
 
+async function idb_del(key) {
+  console.log("DEL", key);
+  return (await dbPromise).delete("keyval", key);
+}
+
 async function idb_set(key, val) {
   console.log("SET", key, val);
   return (await dbPromise).put("keyval", val, key);
@@ -63,6 +68,7 @@ async function idb_blobToArrayBuffer(blob) {
 module.exports = {
   idb_get,
   idb_set,
+  idb_del,
   idb_keys,
   idb_getAll,
   idb_fileToBlob,

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      @import "https://unpkg.com/open-props";
+      @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+      * {
+        --col-orange: #f6a81a;
+        --col-brown: #764c05;
+        --col-light-brown: #eca883;
+      }
+
+      @layer reset, defaults, header, template;
+
+
+      @layer defaults {
+        .content {
+          width: min(calc(80% - 2rem), 80rem);
+          margin-inline: auto;
+        }
+
+        section,
+        .header,
+        .footer {
+          padding: 0;
+        }
+
+        .full-width {
+          box-shadow: 0 0 0 100vmax var(--bg-col);
+          clip-path: inset(0 -100vmax);
+        }
+
+        .bgorange {
+          --bg-col: var(--col-orange);
+          color: #eee;
+        }
+
+        .content {
+          & h1 {
+            --bs-heading-color: #fff;
+            color: #fff;
+            background: var(--col-brown);
+            padding-inline: var(--size-fluid-2);
+          }
+
+          & h2.daten {
+            --bs-heading-color: --col-light-brown;
+            color: var(--col-light-brown);
+          }
+
+          & h3.daten {
+            --bs-heading-color: --col-light-brown;
+            color: var(--col-light-brown);
+          }
+
+          & h4.daten {
+            --bs-heading-color: --col-light-brown;
+            color: var(--col-light-brown);
+          }
+        }
+      }
+
+      @layer template {
+        body {
+          font-family: "Open Sans", sans-serif;
+          background: rgb(1, 1, 1);
+          background: -moz-linear-gradient(180deg, rgba(1, 1, 1, 1) 0%, rgba(74, 74, 74, 1) 100%);
+          background: -webkit-linear-gradient(180deg, rgba(1, 1, 1, 1) 0%, rgba(74, 74, 74, 1) 100%);
+          background: linear-gradient(180deg, rgba(1, 1, 1, 1) 0%, rgba(74, 74, 74, 1) 100%);
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#010101", endColorstr="#4a4a4a", GradientType=1);
+          min-height: 100vh;
+          background-repeat: no-repeat;
+        }
+      }
+
+      main p {
+        color: #fff;
+      }
+
+      main li {
+        color: #fff;
+      }
+
+      footer {
+        background-color: var(--col-orange);
+        padding: var(--size-fluid-1);
+        margin-top: auto;
+      }
+
+      .com-content-article__body {
+        padding-inline: var(--size-fluid-2);
+      }
+
+      img.one {
+        padding: 5px 10px 10px 0;
+      }
+
+      header {
+        background-image: url(/images/header.png);
+        aspect-ratio: 898/150;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+
+        & h1 {
+          --bs-heading-color: #fff;
+          color: #fff;
+          background: var(--col-brown);
+          padding-inline: var(--size-fluid-2);
+        }
+
+        & h2.daten {
+          --bs-heading-color: --col-light-brown;
+          color: var(--col-light-brown);
+        }
+
+        & h3.daten {
+          --bs-heading-color: --col-light-brown;
+          color: var(--col-light-brown);
+        }
+
+        & h4.daten {
+          --bs-heading-color: --col-light-brown;
+          color: var(--col-light-brown);
+        }
+      }
+
+      main a {
+        color: #eee;
+      }
+
+      footer p {
+        text-align: center;
+      }
+
+      body {
+        background-color: #4a4a4a;
+      }
+    </style>
+  </head>
+
+  <body>
+
+  </body>
+
+</html>
