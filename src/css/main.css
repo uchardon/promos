@@ -1819,7 +1819,7 @@ p.sm {
   -moz-transition: all 0.2s ease-in-out 0s;
 }
 .faqItem__body p {
-  max-width: 580px;
+  max-width: 100%;
 }
 .faqItem__body.active {
   max-height: 5000px;
