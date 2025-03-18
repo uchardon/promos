@@ -508,7 +508,7 @@ export default {
   },
   methods: {
     chgCurrentTab(p) {
-      console.log("==chgCurrentTab=", p, this.state.currentTab);
+      // console.log("==chgCurrentTab=", p, this.state.currentTab);
       if (this.state.currentTab == p) {
         this.state.currentTab = 0;
       } else {

@@ -35,6 +35,9 @@
           href="my-book-saved.html"
           class="bookCard"
         >
+          <div v-if="book.laufzeit != '0000-00-00'" class="laufzeit">
+            {{ getTimeDifference(book.laufzeit) }}
+          </div>
           <div
             v-if="book.maxLicense > 1"
             class="adminlicences license pointer"
@@ -182,6 +185,26 @@ export default {
       console.log(`User response to the install prompt: ${outcome}`);
       this.deferredPrompt = null;
     },
+    formatDateToGerman(dateString) {
+      if (!dateString) return "";
+      const [year, month, day] = dateString.split("-");
+      return `${day}.${month}.${year}`;
+    },
+    getTimeDifference(dateString) {
+      const givenDate = new Date(dateString);
+      const currentDate = new Date();
+      const diffInMilliseconds = givenDate - currentDate;
+
+      if (diffInMilliseconds <= 0) return "Nutzungsdauer überschritten";
+
+      const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+      if (diffInDays < 40) {
+        return `noch ${diffInDays} Tage`;
+      } else {
+        const diffInMonths = Math.ceil(diffInDays / 30);
+        return `noch ${diffInMonths} Monate`;
+      }
+    },
     hideInstallPromotion() {
       // console.log("hideInstallPromotion");
     },
@@ -245,6 +268,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.laufzeit {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: #2799fa;
+  font-size: 0.9em;
+}
 button.btn.bopen:disabled {
   background-color: #eee;
 }

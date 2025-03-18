@@ -300,14 +300,14 @@ export default {
       // console.log("no", no);
       setTimeout(() => {
         let arg = "[data-page=page-" + no + "]";
-        console.log("arg", document.querySelector(arg));
+        // console.log("arg", document.querySelector(arg));
         document.querySelector(arg).scrollIntoView({ behavior: "smooth" });
       }, 500);
     },
     chgToPage(newPageNo) {
       // this.setCurPage(newPageNo);
       let pno = parseInt(newPageNo) + 1;
-      console.log("chgToPage", newPageNo, this.curPage);
+      // console.log("chgToPage", newPageNo, this.curPage);
       this.scrollToElement(pno);
     },
     chgPage(dir) {

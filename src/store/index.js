@@ -337,8 +337,8 @@ export default new Vuex.createStore({
       return response;
     },
     updateUserPassword: async ({ state }, payload) => {
-      console.log("🚀 ~ updateUserPassword: ~ payload:", payload);
-      console.log("🚀 ~ updateUserPassword: ~ user:", state.user.email);
+      // console.log("🚀 ~ updateUserPassword: ~ payload:", payload);
+      // console.log("🚀 ~ updateUserPassword: ~ user:", state.user.email);
       const response = await Axios.post(state.url + "kunden.php", {
         toDo: "updatePW",
         payload: payload, // { email: email, password: password, newpassword: newpassword }

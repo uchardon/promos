@@ -127,7 +127,7 @@ export default {
     // }
     if (window.location.href.indexOf("localhost") >= 0) {
       // Development mode
-      console.log("Development mode");
+      // console.log("Development mode");
       this.password = "krbb8jhg";
       this.email = "kutschuk@schwarzkupfer.de";
     }
@@ -238,10 +238,10 @@ export default {
 
             if (response.userstate == "subuser") {
               books = await this.GET_BOOKSSUBUSER(response.user.email);
-              console.log(
-                "userdaten in store schreiben Bücher einlesen",
-                books
-              );
+              // console.log(
+              //   "userdaten in store schreiben Bücher einlesen",
+              //   books
+              // );
             } else {
               books = await this.getBooks(response.user.id);
             }

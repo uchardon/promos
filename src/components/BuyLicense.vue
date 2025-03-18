@@ -21,11 +21,7 @@
     <p v-if="!online">offline</p>
 
     <div class="buttons">
-      <button
-        href="https://shop.strato.de/epages/244823.sf/"
-        class="btn"
-        target="_blank"
-      >
+      <button href="https://shop.promosverlag.de" class="btn" target="_blank">
         Onlineshop
       </button>
       <button class="btn" @click="setModal(false, '')">Ok</button>
